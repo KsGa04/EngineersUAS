@@ -1,0 +1,120 @@
+swagger: '2.0'
+info:
+  description: "API для StudentSearch"
+  version: "1.0.0"
+  title: "StudentSearch API"
+host: "localhost:5000"
+basePath: "/"
+tags:
+  - name: "auth"
+    description: "Авторизация и регистрация"
+  - name: "protected"
+    description: "Защищенные API"
+schemes:
+  - "http"
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - "auth"
+      summary: "Регистрация пользователя"
+      description: "Создание новой учетной записи"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "formData"
+          name: "email"
+          type: "string"
+          required: true
+          description: "Email пользователя"
+        - in: "formData"
+          name: "password"
+          type: "string"
+          required: true
+          description: "Пароль пользователя"
+        - in: "formData"
+          name: "role"
+          type: "string"
+          required: true
+          description: "Роль пользователя (student, employer, admin)"
+          enum:
+            - "student"
+            - "employer"
+            - "admin"
+        - in: "formData"
+          name: "first_name"
+          type: "string"
+          required: true
+          description: "Имя пользователя"
+        - in: "formData"
+          name: "last_name"
+          type: "string"
+          required: true
+          description: "Фамилия пользователя"
+        - in: "formData"
+          name: "phone"
+          type: "string"
+          required: false
+          description: "Телефон пользователя"
+        - in: "formData"
+          name: "telegram_username"
+          type: "string"
+          required: false
+          description: "Имя пользователя в Telegram"
+        - in: "formData"
+          name: "city"
+          type: "string"
+          required: false
+          description: "Город проживания пользователя"
+        - in: "formData"
+          name: "image"
+          type: "file"
+          required: false
+          description: "Изображение профиля пользователя (опционально)"
+      responses:
+        201:
+          description: "Пользователь успешно зарегистрирован"
+        400:
+          description: "Пользователь уже существует"
+
+  /api/auth/login:
+    post:
+      tags:
+        - "auth"
+      summary: "Авторизация пользователя"
+      description: "Вход в систему"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Данные для входа"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        200:
+          description: "Успешная авторизация"
+        401:
+          description: "Неверные данные"
+
+  /api/auth/protected:
+    get:
+      tags:
+        - "protected"
+      summary: "Защищенный маршрут"
+      description: "Доступен только авторизованным пользователям"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Успешный доступ"
