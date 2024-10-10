@@ -1,13 +1,15 @@
-from Client_Api.extensions import db
+from sqlalchemy import Column, Integer, Enum, BLOB, String, TIMESTAMP, ForeignKey, Text
+from sqlalchemy.orm import relationship
+
+from Client_Api.extensions import db, current_timestamp
+
 
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Искусственный первичный ключ
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    sent_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), primary_key=True)
+    content = Column(Text, nullable=False)
+    sent_at = Column(TIMESTAMP, default=current_timestamp)
 
-    # Переименовываем 'user' на 'notification_user'
-    user = db.relationship('User', backref=db.backref('user', cascade="all, delete-orphan"))
+    user = relationship("User")

@@ -4,26 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/EngineersUAS.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/job.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/jobApplication.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/jobSkills.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/language.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/languageResume.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/notification.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/resume.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/resumeSkills.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/session.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/skill.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Добавление основных моделек, автоизации и тестов">
+      <change afterPath="$PROJECT_DIR$/Client_Test/test_reg_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/extensions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/extensions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Test/test_auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Test/test_auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/job.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/job.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/jobApplication.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/jobApplication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/jobSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/jobSkills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/language.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/language.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/languageResume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/languageResume.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/notification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/notification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/resume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resume.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/resumeSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resumeSkills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/skill.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/skill.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +39,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KsGa04&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KsGa04/EngineersUAS.git&quot;,
+    &quot;accountId&quot;: &quot;c356d938-3a88-4cb4-9326-2103a1517764&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -52,16 +63,24 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
     "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
     "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
     "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
     "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
     "Python tests.Python tests in test_auth_api.py.executor": "Run",
+    "Python tests.Python tests in test_reg_api.py.executor": "Run",
     "Python.app (1).executor": "Run",
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS"
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -71,8 +90,30 @@
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client.Server" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in test_auth_api.py">
-    <configuration name="Python tests for test_auth_api.test_missing_required_fields" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.app">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EngineersUAS" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client_Server" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Client_Server/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_auth_api.test_invalid_credentials" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,11 +124,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_auth_api.test_missing_required_fields&quot;" />
+      <option name="_new_target" value="&quot;test_auth_api.test_invalid_credentials&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_auth_api.test_null_values" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_auth_api.test_missing_email_or_password" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -98,11 +139,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_auth_api.test_null_values&quot;" />
+      <option name="_new_target" value="&quot;test_auth_api.test_missing_email_or_password&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_auth_api.test_successful_registration" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_auth_api.test_session_update_on_login" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,11 +154,11 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_auth_api.test_successful_registration&quot;" />
+      <option name="_new_target" value="&quot;test_auth_api.test_session_update_on_login&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_auth_api.test_user_already_exists" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_auth_api.test_token_expiry" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,32 +169,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_auth_api.test_user_already_exists&quot;" />
+      <option name="_new_target" value="&quot;test_auth_api.test_token_expiry&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests in test_auth_api.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="EngineersUAS" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client_Test" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Client_Test/test_auth_api.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests in test_auth_api.py" />
-        <item itemvalue="Python tests.Python tests for test_auth_api.test_null_values" />
-        <item itemvalue="Python tests.Python tests for test_auth_api.test_missing_required_fields" />
-        <item itemvalue="Python tests.Python tests for test_auth_api.test_user_already_exists" />
-        <item itemvalue="Python tests.Python tests for test_auth_api.test_successful_registration" />
+        <item itemvalue="Python.app" />
+        <item itemvalue="Python tests.Python tests for test_auth_api.test_token_expiry" />
+        <item itemvalue="Python tests.Python tests for test_auth_api.test_session_update_on_login" />
+        <item itemvalue="Python tests.Python tests for test_auth_api.test_missing_email_or_password" />
+        <item itemvalue="Python tests.Python tests for test_auth_api.test_invalid_credentials" />
       </list>
     </recent_temporary>
   </component>
@@ -173,6 +199,30 @@
       <option name="presentableId" value="Default" />
       <updated>1727941314513</updated>
     </task>
+    <task id="LOCAL-00001" summary="Добавление основных моделек, автоизации и тестов">
+      <option name="closed" value="true" />
+      <created>1728049239977</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1728049239977</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Добавление основных моделек, автоизации и тестов" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавление основных моделек, автоизации и тестов" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
+          <line>104</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

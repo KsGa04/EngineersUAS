@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_cors import CORS
+
 from Client_Api.extensions import db, jwt  # Импортируем расширения
 from Client_Api.auth_api import auth_api  # Подключаем API для авторизации
 from Client_Server.config import Config  # Указываем полный путь до config
@@ -52,4 +54,5 @@ def get_users():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    CORS(app)
+    app.run()

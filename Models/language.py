@@ -1,8 +1,11 @@
-from Client_Api.extensions import db
+from sqlalchemy import Column, Integer, Enum, BLOB, String, TIMESTAMP
+
+from Client_Api.extensions import db, current_timestamp
 
 
 class Language(db.Model):
-    __tablename__ = 'language'
+    __tablename__ = 'languages'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(255), nullable=False)
+    created_at = Column(TIMESTAMP, default=current_timestamp)

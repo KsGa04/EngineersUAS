@@ -4,18 +4,13 @@ from sqlalchemy.orm import relationship
 from Client_Api.extensions import db, current_timestamp
 
 
-class Job(db.Model):
-    __tablename__ = 'jobs'
+class Specialty(db.Model):
+    __tablename__ = 'specialties'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    employer_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    title = Column(String(255))
-    description = Column(Text)
-    requirements = Column(Text)
-    location = Column(String(255))
-    salary_range = Column(String(50))
-    specialty = Column(String(255))
+    name = Column(String(255), nullable=False)
+    university_id = Column(Integer, ForeignKey('universities.id', ondelete='CASCADE'), nullable=False)
     created_at = Column(TIMESTAMP, default=current_timestamp)
     updated_at = Column(TIMESTAMP, default=current_timestamp, onupdate=current_timestamp)
 
-    employer = relationship("User")
+    university = relationship("University")

@@ -1,6 +1,10 @@
+from datetime import timezone, datetime, timedelta
+
 from flask import Blueprint, request, jsonify
+from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 from Client_Api.extensions import db  # Импортируем db отсюда
+from Models import Session
 from Models.user import User
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -62,12 +66,62 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    user = User.query.filter_by(email=email).first()
-    if not user or not check_password_hash(user.password, password):
+    # Проверка на отсутствие обязательных полей
+    if not email or not password:
+        return jsonify({"msg": "Missing required fields"}), 400
+
+    # Выполняем сырой SQL-запрос для получения данных о пользователе
+    query = text("SELECT * FROM users WHERE email = :email")
+    result = db.session.execute(query, {"email": email}).fetchone()
+
+    if result is None:
         return jsonify({"msg": "Invalid credentials"}), 401
 
-    access_token = create_access_token(identity=user.id)
-    return jsonify(access_token=access_token)
+    # Явное преобразование результата в словарь
+    user = {
+        "id": result.id,
+        "email": result.email,
+        "password": result.password,
+        "role": result.role,
+        "first_name": result.first_name,
+        "last_name": result.last_name,
+        "phone": result.phone,
+        "telegram_username": result.telegram_username,
+        "city": result.city,
+        "image": result.image,
+        "created_at": result.created_at,
+        "updated_at": result.updated_at
+    }
+
+    # Проверяем хеш пароля
+    if not check_password_hash(user['password'], password):
+        return jsonify({"msg": "Invalid credentials"}), 401
+
+    # Создаем токен доступа, срок жизни токена 60 минут
+    expires_in_minutes = 60
+    access_token = create_access_token(identity=user['id'], expires_delta=timedelta(minutes=expires_in_minutes))
+
+    # Проверяем, есть ли уже сессия для этого пользователя
+    session = Session.query.filter_by(user_id=user['id']).first()
+
+    if session:
+        # Обновляем существующую сессию
+        session.token = access_token
+        session.created_at = datetime.now(timezone.utc)
+        session.ended_at = datetime.now(timezone.utc) + timedelta(minutes=expires_in_minutes)
+    else:
+        # Создаем новую сессию
+        new_session = Session(
+            user_id=user['id'],
+            token=access_token,
+            expires_in_minutes=expires_in_minutes
+        )
+        db.session.add(new_session)
+
+    db.session.commit()
+
+    return jsonify(access_token=access_token), 200
+
 
 
 # Пример защищённого маршрута

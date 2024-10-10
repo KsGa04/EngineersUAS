@@ -1,32 +1,27 @@
-from datetime import datetime, timezone
+from sqlalchemy import Column, Integer, Enum, BLOB, String, TIMESTAMP, ForeignKey, Text
+from sqlalchemy.orm import relationship
 
-from Client_Api.extensions import db
+from Client_Api.extensions import db, current_timestamp
 
 
 class Resume(db.Model):
     __tablename__ = 'resumes'
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    title = db.Column(db.String(255))
-    summary = db.Column(db.Text)
-    education = db.Column(db.String(255))
-    group_number = db.Column(db.String(50))
-    fpv_experience = db.Column(db.Text)
-    programming_languages = db.Column(db.Text)
-    radiophysics_knowledge = db.Column(db.Text)
-    circuitry_knowledge = db.Column(db.Text)
-    three_d_modeling_experience = db.Column(db.Text)
-    controllers_experience = db.Column(db.Text)
-    composite_materials_experience = db.Column(db.Text)
-    management_skills = db.Column(db.Text)
-    other_skills = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    university_id = Column(Integer, ForeignKey('universities.id', ondelete='CASCADE'), nullable=False)
+    specialty_id = Column(Integer, ForeignKey('specialties.id', ondelete='CASCADE'), nullable=False)
+    group_id = Column(Integer, ForeignKey('groups.id', ondelete='CASCADE'), nullable=False)
+    title = Column(String(255))
+    summary = Column(Text)
+    project_description = Column(Text)
+    results = Column(Text)
+    personal_projects = Column(Text)
+    portfolio_links = Column(Text)
+    created_at = Column(TIMESTAMP, default=current_timestamp)
+    updated_at = Column(TIMESTAMP, default=current_timestamp, onupdate=current_timestamp)
 
-    # Связи
-    skills = db.relationship('Skill', secondary='resume_skills', lazy='subquery',
-                             backref=db.backref('resumes', lazy=True))
-    job_applications = db.relationship('JobApplication', backref='resume', cascade="all, delete-orphan", lazy=True)
-    languages = db.relationship('Language', secondary='language_resume', lazy='subquery',
-                                backref=db.backref('resumes', lazy=True))
+    user = relationship("User")
+    university = relationship("University")
+    specialty = relationship("Specialty")
+    group = relationship("Group")

@@ -3,19 +3,13 @@ from sqlalchemy.orm import relationship
 
 from Client_Api.extensions import db, current_timestamp
 
-
-class Job(db.Model):
-    __tablename__ = 'jobs'
+class Group(db.Model):
+    __tablename__ = 'groups'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    employer_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    title = Column(String(255))
-    description = Column(Text)
-    requirements = Column(Text)
-    location = Column(String(255))
-    salary_range = Column(String(50))
-    specialty = Column(String(255))
+    group_number = Column(String(50), nullable=False)
+    specialty_id = Column(Integer, ForeignKey('specialties.id', ondelete='CASCADE'), nullable=False)
     created_at = Column(TIMESTAMP, default=current_timestamp)
     updated_at = Column(TIMESTAMP, default=current_timestamp, onupdate=current_timestamp)
 
-    employer = relationship("User")
+    specialty = relationship("Specialty")

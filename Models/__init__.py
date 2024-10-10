@@ -3,9 +3,14 @@ from .resume import Resume
 from .job import Job
 from .jobApplication import JobApplication
 from .skill import Skill
-from .resumeSkills import ResumeSkills
-from .jobSkills import JobSkills
+from .resumeSkills import ResumeSkill
+from .jobSkills import JobSkill
 from .language import Language
-from .languageResume import LanguageResume
+from .languageResume import ResumeLanguage
 from .session import Session
 from .notification import Notification
+from .university import University
+from .specialty import Specialty
+from .group import Group
+from .assignment import Assignment
+from .assignmentSkill import AssignmentSkill

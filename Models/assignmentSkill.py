@@ -3,13 +3,12 @@ from sqlalchemy.orm import relationship
 
 from Client_Api.extensions import db, current_timestamp
 
-
-class JobSkill(db.Model):
-    __tablename__ = 'job_skills'
+class AssignmentSkill(db.Model):
+    __tablename__ = 'assignment_skills'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    job_id = Column(Integer, ForeignKey('jobs.id', ondelete='CASCADE'), nullable=False)
+    assignment_id = Column(Integer, ForeignKey('assignments.id', ondelete='CASCADE'), nullable=False)
     skill_id = Column(Integer, ForeignKey('skills.id', ondelete='CASCADE'), nullable=False)
 
-    job = relationship("Job")
+    assignment = relationship("Assignment")
     skill = relationship("Skill")
