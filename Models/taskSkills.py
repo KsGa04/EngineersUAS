@@ -1,4 +1,4 @@
-from sqlalchemy.testing import db
+from Client_Api.extensions import db
 
 
 class TaskSkills(db.Model):

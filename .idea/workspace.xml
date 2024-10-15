@@ -6,24 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Изменение бд">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/assignment.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/assignmentSkill.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/direction.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/direction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/education.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/education.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/group.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/group.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/job.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/jobApplication.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/jobSkills.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/language.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/languageResume.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/notification.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/projectSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/projectSkills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/projects.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/projects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/resume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resume.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/resumeSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resumeSkills.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/session.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/skill.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/specialty.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/role.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/skills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/skills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/taskSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/taskSkills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/university.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/university.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/universityDirection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/universityDirection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/workExperience.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/workExperience.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +233,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728977454857</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Изменение бд, создан README.md">
+      <option name="closed" value="true" />
+      <created>1728978348143</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1728978348143</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Изменение бд">
+      <option name="closed" value="true" />
+      <created>1728978376285</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1728978376285</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,18 +266,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Добавление основных моделек, автоизации и тестов" />
     <MESSAGE value="Изменение бд, тестов" />
+    <MESSAGE value="Изменение бд, создан README.md" />
     <MESSAGE value="Изменение бд" />
     <option name="LAST_COMMIT_MESSAGE" value="Изменение бд" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>104</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

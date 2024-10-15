@@ -1,3 +1,4 @@
+from .user import User
 from .direction import Direction
 from .education import Education
 from .group import Group
@@ -11,7 +12,6 @@ from .tasks import Tasks
 from .taskSkills import TaskSkills
 from .university import University
 from .universityDirection import UniversityDirection
-from .user import User
 from .workExperience import WorkExperience
 
 

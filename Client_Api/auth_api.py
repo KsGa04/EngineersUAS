@@ -4,7 +4,6 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 from Client_Api.extensions import db  # Импортируем db отсюда
-from Models import Session
 from Models.user import User
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -17,12 +16,10 @@ def register():
     data = request.form.to_dict()  # Получаем данные формы
     email = data.get('email')
     password = data.get('password')
-    role = data.get('role')
+    role = data.get('role_rel.role_name')
     first_name = data.get('first_name')
     last_name = data.get('last_name')
     phone = data.get('phone')
-    telegram_username = data.get('telegram_username')
-    city = data.get('city')
 
     if not email or not password or not first_name or not last_name:
         return jsonify({'msg': 'Missing required fields'}), 400
@@ -47,8 +44,6 @@ def register():
         first_name=first_name,
         last_name=last_name,
         phone=phone,
-        telegram_username=telegram_username,
-        city=city,
         image=image
     )
 
@@ -100,23 +95,6 @@ def login():
     # Создаем токен доступа, срок жизни токена 60 минут
     expires_in_minutes = 60
     access_token = create_access_token(identity=user['id'], expires_delta=timedelta(minutes=expires_in_minutes))
-
-    # Проверяем, есть ли уже сессия для этого пользователя
-    session = Session.query.filter_by(user_id=user['id']).first()
-
-    if session:
-        # Обновляем существующую сессию
-        session.token = access_token
-        session.created_at = datetime.now(timezone.utc)
-        session.ended_at = datetime.now(timezone.utc) + timedelta(minutes=expires_in_minutes)
-    else:
-        # Создаем новую сессию
-        new_session = Session(
-            user_id=user['id'],
-            token=access_token,
-            expires_in_minutes=expires_in_minutes
-        )
-        db.session.add(new_session)
 
     db.session.commit()
 
