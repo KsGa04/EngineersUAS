@@ -1,0 +1,8 @@
+from sqlalchemy.testing import db
+
+
+class TaskSkills(db.Model):
+    __tablename__ = 'task_skills'
+    id = db.Column(db.Integer, primary_key=True)
+    id_task = db.Column(db.Integer, db.ForeignKey('tasks.id_task'))
+    id_skill = db.Column(db.Integer, db.ForeignKey('skills.id_skill'))
