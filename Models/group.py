@@ -1,15 +1,10 @@
-from sqlalchemy import Column, Integer, Enum, BLOB, String, TIMESTAMP, ForeignKey, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy.testing import db
 
-from Client_Api.extensions import db, current_timestamp
 
 class Group(db.Model):
-    __tablename__ = 'groups'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    group_number = Column(String(50), nullable=False)
-    specialty_id = Column(Integer, ForeignKey('specialties.id', ondelete='CASCADE'), nullable=False)
-    created_at = Column(TIMESTAMP, default=current_timestamp)
-    updated_at = Column(TIMESTAMP, default=current_timestamp, onupdate=current_timestamp)
-
-    specialty = relationship("Specialty")
+    __tablename__ = 'group'
+    id_group = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(50))
+    start_year = db.Column(db.Integer)
+    id_university = db.Column(db.Integer, db.ForeignKey('university.id_university'))
+    id_direction = db.Column(db.Integer, db.ForeignKey('direction.id_direction'))

@@ -4,25 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Добавление основных моделек, автоизации и тестов">
-      <change afterPath="$PROJECT_DIR$/Client_Test/test_reg_api.py" afterDir="false" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Изменение бд">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/extensions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/extensions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Test/test_auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Test/test_auth_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/job.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/job.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/jobApplication.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/jobApplication.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/jobSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/jobSkills.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/language.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/language.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/languageResume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/languageResume.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/notification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/notification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/assignment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/assignmentSkill.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/group.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/group.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/job.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/jobApplication.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/jobSkills.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/language.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/languageResume.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/notification.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/resume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resume.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/resumeSkills.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resumeSkills.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/skill.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/skill.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/session.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/skill.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/specialty.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/university.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/university.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +39,8 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -60,29 +63,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
-    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
-    "Python tests.Python tests in test_auth_api.py.executor": "Run",
-    "Python tests.Python tests in test_reg_api.py.executor": "Run",
-    "Python.app (1).executor": "Run",
-    "Python.app.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python tests.Python tests for test_auth_api.test_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_invalid_credentials.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_missing_required_fields.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_null_values.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_session_update_on_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_successful_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_successful_registration.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_token_expiry.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_reg_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_auth_api.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_reg_api.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\ClientServer" />
@@ -207,12 +210,49 @@
       <option name="project" value="LOCAL" />
       <updated>1728049239977</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Изменение бд, тестов">
+      <option name="closed" value="true" />
+      <created>1728559237440</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728559237440</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Изменение бд">
+      <option name="closed" value="true" />
+      <created>1728977395859</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1728977395859</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Изменение бд">
+      <option name="closed" value="true" />
+      <created>1728977454857</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728977454857</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Добавление основных моделек, автоизации и тестов" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавление основных моделек, автоизации и тестов" />
+    <MESSAGE value="Изменение бд, тестов" />
+    <MESSAGE value="Изменение бд" />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменение бд" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

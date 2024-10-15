@@ -1,15 +1,8 @@
-from sqlalchemy import Column, Integer, Enum, BLOB, String, TIMESTAMP, ForeignKey, Text
-from sqlalchemy.orm import relationship
-
-from Client_Api.extensions import db, current_timestamp
+from sqlalchemy.testing import db
 
 
-class ResumeSkill(db.Model):
+class ResumeSkills(db.Model):
     __tablename__ = 'resume_skills'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    resume_id = Column(Integer, ForeignKey('resumes.id', ondelete='CASCADE'), nullable=False)
-    skill_id = Column(Integer, ForeignKey('skills.id', ondelete='CASCADE'), nullable=False)
-
-    resume = relationship("Resume")
-    skill = relationship("Skill")
+    id = db.Column(db.Integer, primary_key=True)
+    id_resume = db.Column(db.Integer, db.ForeignKey('resume.id_resume'))
+    id_skill = db.Column(db.Integer, db.ForeignKey('skills.id_skill'))

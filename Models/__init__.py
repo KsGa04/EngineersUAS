@@ -1,16 +1,22 @@
-from .user import User
-from .resume import Resume
-from .job import Job
-from .jobApplication import JobApplication
-from .skill import Skill
-from .resumeSkills import ResumeSkill
-from .jobSkills import JobSkill
-from .language import Language
-from .languageResume import ResumeLanguage
-from .session import Session
-from .notification import Notification
-from .university import University
-from .specialty import Specialty
+from .direction import Direction
+from .education import Education
 from .group import Group
-from .assignment import Assignment
-from .assignmentSkill import AssignmentSkill
+from .projects import Projects
+from .projectSkills import ProjectSkills
+from .resume import Resume
+from .resumeSkills import ResumeSkills
+from .role import Roles
+from .skills import Skills
+from .tasks import Tasks
+from .taskSkills import TaskSkills
+from .university import University
+from .universityDirection import UniversityDirection
+from .user import User
+from .workExperience import WorkExperience
+
+
+
+
+
+
+
