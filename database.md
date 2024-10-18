@@ -1,210 +1,147 @@
 # Схема базы данных
 
-## Table: `users`
-### Таблица "Пользователи" предназначена для хранения информации о студентах/выпускниках
-| Column Name       | Data Type                                   | Constraints                         |
-|-------------------|---------------------------------------------|-------------------------------------|
-| id                | INT                                         | AUTO_INCREMENT, PRIMARY KEY         |
-| email             | VARCHAR(255)                                | UNIQUE, NOT NULL                    |
-| password          | VARCHAR(255)                                | NOT NULL                            |
-| role              | ENUM('student', 'employer', 'UEM', 'admin') | NOT NULL                            |
-| first_name        | VARCHAR(100)                                | NOT NULL                            |
-| last_name         | VARCHAR(100)                                | NOT NULL                            |
-| phone             | VARCHAR(20)                                 |                                     |
-| telegram_username | VARCHAR(50)                                 |                                     |
-| city              | VARCHAR(255)                                |                                     |
-| image             | BLOB                                        |                                     |
-| created_at        | TIMESTAMP                                   | DEFAULT CURRENT_TIMESTAMP           |
-| updated_at        | TIMESTAMP                                   | DEFAULT CURRENT_TIMESTAMP ON UPDATE |
+# Структура базы данных
 
----
+## 1. Таблица `roles` (Роли)
+Описание ролей пользователей.
 
-## Table: `universities`
-### Таблица "Университет" предназначена для хранения информации об университетах пользователи которых имеются в бд
-| Column Name | Data Type    | Constraints                         |
-|-------------|--------------|-------------------------------------|
-| id          | INT          | AUTO_INCREMENT, PRIMARY KEY         |
-| name        | VARCHAR(255) | NOT NULL                            |
-| city        | VARCHAR(255) | NOT NULL                            |
-| created_at  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP           |
-| updated_at  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE |
+| Поле        | Тип                              | Описание                               |
+|-------------|----------------------------------|----------------------------------------|
+| `id_role`   | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор роли.         |
+| `role_name` | VARCHAR(100)                     | Название роли (например, Студент, HR). |
 
----
+## 2. Таблица `user` (Пользователи)
+Содержит информацию о пользователях.
 
-## Table: `specialties`
-### Таблица "Специальности/направления" предназначена для хранения информации о направлениях в университете
-| Column Name   | Data Type    | Constraints                                               |
-|---------------|--------------|-----------------------------------------------------------|
-| id            | INT          | AUTO_INCREMENT, PRIMARY KEY                               |
-| name          | VARCHAR(255) | NOT NULL                                                  |
-| university_id | INT          | FOREIGN KEY REFERENCES universities(id) ON DELETE CASCADE |
-| created_at    | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                 |
-| updated_at    | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE                       |
+| Поле             | Тип                              | Описание                                              |
+|------------------|----------------------------------|-------------------------------------------------------|
+| `id_user`        | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор пользователя.                |
+| `first_name`     | VARCHAR(255)                     | Имя пользователя.                                     |
+| `last_name`      | VARCHAR(255)                     | Фамилия пользователя.                                 |
+| `middle_name`    | VARCHAR(255)                     | Отчество пользователя (опционально).                  |
+| `email`          | VARCHAR(255), UNIQUE             | Электронная почта пользователя.                       |
+| `phone`          | VARCHAR(20)                      | Номер телефона пользователя.                          |
+| `password`       | VARCHAR(255)                     | Хэшированный пароль пользователя.                     |
+| `birth_date`     | DATE                             | Дата рождения пользователя.                           |
+| `role`           | INT                              | Ссылка на роль пользователя (внешний ключ).           |
+| `created_at`     | TIMESTAMP                        | Дата и время создания пользователя.                   |
+| `last_login`     | TIMESTAMP                        | Дата и время последнего входа.                        |
+| `account_status` | VARCHAR(50)                      | Статус аккаунта (например, активен или заблокирован). |
+| `profile_photo`  | VARCHAR(255)                     | Ссылка на фото профиля пользователя (опционально).    |
+| `address`        | VARCHAR(255)                     | Адрес пользователя (опционально).                     |
 
----
+## 3. Таблица `resume` (Резюме)
+Содержит информацию о резюме пользователей.
 
-## Table: `groups`
-### Таблица "Группы" предназначена для хранения информации о группах в университете
-| Column Name  | Data Type   | Constraints                                              |
-|--------------|-------------|----------------------------------------------------------|
-| id           | INT         | AUTO_INCREMENT, PRIMARY KEY                              |
-| group_number | VARCHAR(50) | NOT NULL                                                 |
-| specialty_id | INT         | FOREIGN KEY REFERENCES specialties(id) ON DELETE CASCADE |
-| created_at   | TIMESTAMP   | DEFAULT CURRENT_TIMESTAMP                                |
-| updated_at   | TIMESTAMP   | DEFAULT CURRENT_TIMESTAMP ON UPDATE                      |
+| Поле                | Тип                              | Описание                               |
+|---------------------|----------------------------------|----------------------------------------|
+| `id_resume`         | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор резюме.       |
+| `id_user`           | INT                              | Ссылка на пользователя (внешний ключ). |
+| `resume_title`      | VARCHAR(255)                     | Заголовок резюме.                      |
+| `short_description` | TEXT                             | Краткое описание.                      |
+| `about_me`          | TEXT                             | Описание о себе.                       |
 
----
+## 4. Таблица `work_experience` (Опыт работы)
+Содержит информацию о предыдущем опыте работы.
 
-## Table: `assignments`
-### Таблица "Задания" предназначена для хранения информации о заданиях, которые выполняют студенты на своих направлениях
-| Column Name | Data Type                            | Constraints                                         |
-|-------------|--------------------------------------|-----------------------------------------------------|
-| id          | INT                                  | AUTO_INCREMENT, PRIMARY KEY                         |
-| title       | VARCHAR(255)                         | NOT NULL                                            |
-| description | TEXT                                 |                                                     |
-| group_id    | INT                                  | FOREIGN KEY REFERENCES groups(id) ON DELETE CASCADE |
-| type        | ENUM('lab', 'coursework', 'diploma') | NOT NULL                                            |
-| created_at  | TIMESTAMP                            | DEFAULT CURRENT_TIMESTAMP                           |
-| updated_at  | TIMESTAMP                            | DEFAULT CURRENT_TIMESTAMP ON UPDATE                 |
+| Поле               | Тип                              | Описание                               |
+|--------------------|----------------------------------|----------------------------------------|
+| `id_experience`    | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор опыта работы. |
+| `id_resume`        | INT                              | Ссылка на резюме (внешний ключ).       |
+| `company_name`     | VARCHAR(255)                     | Название компании.                     |
+| `position`         | VARCHAR(255)                     | Должность.                             |
+| `work_period`      | DATE                             | Период работы.                         |
+| `responsibilities` | TEXT                             | Обязанности на работе.                 |
 
----
+## 5. Таблица `education` (Образование)
+Содержит информацию об образовании пользователя.
 
-## Table: `skills`
-### Таблица "Навыки" предназначена для хранения информации о навыках
-| Column Name         | Data Type                   | Constraints                        |
-|---------------------|-----------------------------|------------------------------------|
-| id                  | INT                         | AUTO_INCREMENT, PRIMARY KEY        |
-| name                | VARCHAR(255)                | NOT NULL                           |
-| created_at          | TIMESTAMP                   | DEFAULT CURRENT_TIMESTAMP          |
+| Поле            | Тип                              | Описание                                |
+|-----------------|----------------------------------|-----------------------------------------|
+| `id_education`  | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор образования.   |
+| `id_resume`     | INT                              | Ссылка на резюме (внешний ключ).        |
+| `id_university` | INT                              | Ссылка на университет (внешний ключ).   |
+| `id_direction`  | INT                              | Ссылка на направление (внешний ключ).   |
+| `group_number`  | INT                              | Номер группы.                           |
+| `start_date`    | DATE                             | Дата начала обучения.                   |
+| `end_date`      | DATE                             | Дата окончания обучения.                |
+| `status`        | VARCHAR(50)                      | Статус обучения (учится или выпускник). |
 
----
+## 6. Таблица `projects` (Проекты)
+Содержит информацию о проектах пользователя.
 
-## Table: `assignment_skills`
-### Таблица "Задания_навыки" смежная таблица между "Заданиями" и "Навыками". Т.к под каждым заданием должны указываться навыки, которые были необходимы для выполнения задания
-| Column Name   | Data Type | Constraints                                              |
-|---------------|-----------|----------------------------------------------------------|
-| id            | INT       | AUTO_INCREMENT, PRIMARY KEY                              |
-| assignment_id | INT       | FOREIGN KEY REFERENCES assignments(id) ON DELETE CASCADE |
-| skill_id      | INT       | FOREIGN KEY REFERENCES skills(id) ON DELETE CASCADE      |
+| Поле                  | Тип                              | Описание                             |
+|-----------------------|----------------------------------|--------------------------------------|
+| `id_project`          | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор проекта.    |
+| `id_resume`           | INT                              | Ссылка на резюме (внешний ключ).     |
+| `project_name`        | VARCHAR(255)                     | Название проекта.                    |
+| `project_description` | TEXT                             | Описание проекта.                    |
+| `technologies_used`   | VARCHAR(255)                     | Используемые технологии.             |
+| `project_link`        | VARCHAR(255)                     | Ссылка на проект (например, GitHub). |
 
----
+## 7. Таблица `university` (Университет)
+Содержит информацию об университетах.
 
-## Table: `user_groups`
-### Таблица "Студенты_группы" смежная таблица между "Пользователями" и "Группами". Т.к студент может как закончить к примеру бакалавриат, так и уже обучаться в магистратуре
-| Column Name | Data Type | Constraints                                         |
-|-------------|-----------|-----------------------------------------------------|
-| id          | INT       | AUTO_INCREMENT, PRIMARY KEY                         |
-| user_id     | INT       | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE  |
-| group_id    | INT       | FOREIGN KEY REFERENCES groups(id) ON DELETE CASCADE |
+| Поле            | Тип                              | Описание                               |
+|-----------------|----------------------------------|----------------------------------------|
+| `id_university` | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор университета. |
+| `short_name`    | VARCHAR(100)                     | Краткое название университета.         |
+| `full_name`     | VARCHAR(255)                     | Полное название университета.          |
+| `location`      | VARCHAR(255)                     | Местоположение университета.           |
+| `website`       | VARCHAR(255)                     | Сайт университета.                     |
+| `contact_info`  | VARCHAR(255)                     | Контактные данные университета.        |
 
----
+## 8. Таблица `direction` (Направление)
+Содержит информацию о направлениях обучения.
 
-## Table: `resumes`
-### Таблица "Резюме" предназначена для хранения информации о резюме пользователя
-| Column Name         | Data Type    | Constraints                                               |
-|---------------------|--------------|-----------------------------------------------------------|
-| id                  | INT          | AUTO_INCREMENT, PRIMARY KEY                               |
-| user_id             | INT          | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE        |
-| university_id       | INT          | FOREIGN KEY REFERENCES universities(id) ON DELETE CASCADE |
-| specialty_id        | INT          | FOREIGN KEY REFERENCES specialties(id) ON DELETE CASCADE  |
-| group_id            | INT          | FOREIGN KEY REFERENCES groups(id) ON DELETE CASCADE       |
-| title               | VARCHAR(255) |                                                           |
-| summary             | TEXT         |                                                           |
-| project_description | TEXT         | Описание проектов (дипломы, лабораторные задания)         |
-| results             | TEXT         | Конечный результат работы                                 |
-| personal_projects   | TEXT         | Персональные проекты (pet-проекты)                        |
-| portfolio_links     | TEXT         | Ссылки на GitHub или примеры работ                        |
-| created_at          | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                 |
-| updated_at          | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE                       |
+| Поле             | Тип                              | Описание                              |
+|------------------|----------------------------------|---------------------------------------|
+| `id_direction`   | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор направления. |
+| `direction_code` | VARCHAR(50)                      | Код направления.                      |
+| `direction_name` | VARCHAR(255)                     | Название направления.                 |
 
----
+## 9. Таблица `university_direction` (Связь университетов и направлений)
+Связывает университеты и направления.
 
-## Table: `resume_skills`
-### Таблица "Резюме_навыки" смежная таблица между "Резюме" и "Навыками". Т.к пользователь может владеть множеством навыков, и также этими навыками может владеть другой пользователь
-| Column Name | Data Type | Constraints                                          |
-|-------------|-----------|------------------------------------------------------|
-| id          | INT       | AUTO_INCREMENT, PRIMARY KEY                          |
-| resume_id   | INT       | FOREIGN KEY REFERENCES resumes(id) ON DELETE CASCADE |
-| skill_id    | INT       | FOREIGN KEY REFERENCES skills(id) ON DELETE CASCADE  |
+| Поле            | Тип                              | Описание                              |
+|-----------------|----------------------------------|---------------------------------------|
+| `id`            | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор связи.       |
+| `id_university` | INT                              | Ссылка на университет (внешний ключ). |
+| `id_direction`  | INT                              | Ссылка на направление (внешний ключ). |
 
----
+## 10. Таблица `group` (Группа)
+Содержит информацию о студенческих группах.
 
-## Table: `languages`
-### Таблица "Языки" предназначена для хранения информации о языках
-| Column Name         | Data Type                   | Constraints                        |
-|---------------------|-----------------------------|------------------------------------|
-| id                  | INT                         | AUTO_INCREMENT, PRIMARY KEY        |
-| name                | VARCHAR(255)                | NOT NULL                           |
-| created_at          | TIMESTAMP                   | DEFAULT CURRENT_TIMESTAMP          |
+| Поле            | Тип                              | Описание                              |
+|-----------------|----------------------------------|---------------------------------------|
+| `id_group`      | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор группы.      |
+| `group_name`    | VARCHAR(50)                      | Название группы.                      |
+| `start_year`    | INT                              | Год начала обучения в группе.         |
+| `id_university` | INT                              | Ссылка на университет (внешний ключ). |
+| `id_direction`  | INT                              | Ссылка на направление (внешний ключ). |
 
----
+## 11. Таблица `tasks` (Задачи)
+Содержит информацию о задачах (лабораторных, курсовых и т.д.).
 
-## Table: `resume_languages`
-### Таблица "Резюме_языки" смежная таблица между "Резюме" и "Языки". Т.к пользователь может владеть множеством навыков, и также этими навыками может владеть другой пользователь
-| Column Name       | Data Type                                              | Constraints                                            |
-|-------------------|--------------------------------------------------------|--------------------------------------------------------|
-| id                | INT                                                    | AUTO_INCREMENT, PRIMARY KEY                            |
-| resume_id         | INT                                                    | FOREIGN KEY REFERENCES resumes(id) ON DELETE CASCADE   |
-| language_id       | INT                                                    | FOREIGN KEY REFERENCES languages(id) ON DELETE CASCADE |
-| proficiency_level | ENUM('beginner', 'intermediate', 'advanced', 'fluent') | NOT NULL                                               |
+| Поле               | Тип                              | Описание                                    |
+|--------------------|----------------------------------|---------------------------------------------|
+| `id_task`          | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор задачи.            |
+| `task_name`        | VARCHAR(255)                     | Название задачи.                            |
+| `task_type`        | VARCHAR(50)                      | Тип задачи (лабораторная, курсовая и т.д.). |
+| `id_group`         | INT                              | Ссылка на группу (внешний ключ).            |
+| `task_description` | TEXT                             | Описание задачи.                            |
 
----
+## 12. Таблица `skills` (Навыки)
+Справочник навыков.
 
-## Table: `jobs`
-### Таблица "Вакансии" предназначена для хранения информации о вакансиях
-| Column Name  | Data Type    | Constraints                                        |
-|--------------|--------------|----------------------------------------------------|
-| id           | INT          | AUTO_INCREMENT, PRIMARY KEY                        |
-| employer_id  | INT          | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE |
-| title        | VARCHAR(255) |                                                    |
-| description  | TEXT         |                                                    |
-| requirements | TEXT         |                                                    |
-| location     | VARCHAR(255) | Регион публикации вакансии                         |
-| salary_range | VARCHAR(50)  | Уровень заработной платы                           |
-| specialty    | VARCHAR(255) | Специальность или должность                        |
-| created_at   | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                          |
-| updated_at   | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE                |
+| Поле         | Тип                              | Описание                                 |
+|--------------|----------------------------------|------------------------------------------|
+| `id_skill`   | INT, PRIMARY KEY, AUTO_INCREMENT | Уникальный идентификатор навыка.         |
+| `skill_name` | VARCHAR(100)                     | Название навыка (например, Python, SQL). |
 
----
+## Промежуточные таблицы
 
-## Table: `job_applications`
-### Таблица "Отклики" смежная таблица между "Вакансиями" и "Пользователями". Т.к пользователь может откликнуться на множество вакансий, и также на одну вакансию может быть множество откликов
-| Column Name | Data Type                                           | Constraints                                          |
-|-------------|-----------------------------------------------------|------------------------------------------------------|
-| id          | INT                                                 | AUTO_INCREMENT, PRIMARY KEY                          |
-| user_id     | INT                                                 | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE   |
-| job_id      | INT                                                 | FOREIGN KEY REFERENCES jobs(id) ON DELETE CASCADE    |
-| resume_id   | INT                                                 | FOREIGN KEY REFERENCES resumes(id) ON DELETE CASCADE |
-| status      | ENUM('pending', 'reviewed', 'accepted', 'rejected') | DEFAULT 'pending'                                    |
-| applied_at  | TIMESTAMP                                           | DEFAULT CURRENT_TIMESTAMP                            |
+### 13. Таблица `resume_skills` (Связь резюме и навыков)
+Связывает навыки и резюме.
 
----
-
-## Table: `job_skills`
-### Таблица "Вакансии_навыки" смежная таблица между "Вакансии" и "Навыками". Т.к на одну вакансию может требоваться несколько навыков, и один навык может требоваться на множество вакансию
-| Column Name | Data Type | Constraints                                         |
-|-------------|-----------|-----------------------------------------------------|
-| id          | INT       | AUTO_INCREMENT, PRIMARY KEY                         |
-| job_id      | INT       | FOREIGN KEY REFERENCES jobs(id) ON DELETE CASCADE   |
-| skill_id    | INT       | FOREIGN KEY REFERENCES skills(id) ON DELETE CASCADE |
-
----
-
-## Table: `sessions`
-### Таблица "Сессии" предназначена для хранения информации о посещаемости пользователей
-| Column Name | Data Type    | Constraints                                        |
-|-------------|--------------|----------------------------------------------------|
-| user_id     | INT          | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE |
-| token       | VARCHAR(255) | UNIQUE, NOT NULL                                   |
-| created_at  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                          |
-| deadline_at | TIMESTAMP    | NULL                                               |
-
----
-
-## Table: `notifications`
-### Таблица "Уведомления" предназначена для хранения информации о уведомлениях пользователей
-| Column Name | Data Type | Constraints                                        |
-|-------------|-----------|----------------------------------------------------|
-| user_id     | INT       | FOREIGN KEY REFERENCES users(id) ON DELETE CASCADE |
-| content     | TEXT      | NOT NULL                                           |
-| sent_at     | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP                          |
+| Пол

@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Изменение бд">
+      <change afterPath="$PROJECT_DIR$/Client_Api/static/images/image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Api/static/images/image_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client_Api/static/images/logo_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/degree.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/organization.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/responsibility.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/responsibilitySkill.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/socialNetworkType.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/universityDegree.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/userSocialNetwork.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/work.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/workOrganization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/direction.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/direction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/education.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/education.py" afterDir="false" />
@@ -22,7 +35,7 @@
       <change beforePath="$PROJECT_DIR$/Models/university.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/university.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/universityDirection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/universityDirection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/workExperience.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/workExperience.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.md" beforeDir="false" afterPath="$PROJECT_DIR$/database.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,15 +94,20 @@
     &quot;Python.app.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS/Client_Server/templates&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\ClientServer" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\ClientApi" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client.Server" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static\images" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app">
@@ -249,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728978376285</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Изменение бд">
+      <option name="closed" value="true" />
+      <created>1728981050076</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1728981050076</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -269,5 +295,31 @@
     <MESSAGE value="Изменение бд, создан README.md" />
     <MESSAGE value="Изменение бд" />
     <option name="LAST_COMMIT_MESSAGE" value="Изменение бд" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/generate_resume_api.py</url>
+          <line>14</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/generate_resume_api.py</url>
+          <line>17</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Server/app.py</url>
+          <line>79</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Server/app.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
