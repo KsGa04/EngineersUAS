@@ -3,8 +3,8 @@ from datetime import date
 from flask import render_template, Blueprint
 
 from Client_Api.extensions import db
-from Models import User, Education, Skill, ResumeSkill, Resume, Task, TaskSkill, Responsibility, \
-    Project, ProjectSkill
+from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
+    Projects, ProjectSkills
 from Models.work import Work
 
 
@@ -36,7 +36,7 @@ def generate_resume(user_id):
     experience_list = Work.query.filter_by(id_resume=resume.id_resume).all()
 
     # Получение навыков через связь с резюме
-    skills = db.session.query(Skill).join(ResumeSkill).filter(ResumeSkill.id_resume == resume.id_resume).all()
+    skills = db.session.query(Skills).join(ResumeSkills).filter(ResumeSkills.id_resume == resume.id_resume).all()
 
     # Получаем задачи и навыки для каждого образования по номеру группы
     tasks_by_education = {}
@@ -44,12 +44,12 @@ def generate_resume(user_id):
 
     for education in education_list:
         group_number = education.group_number
-        tasks = Task.query.filter_by(id_group=group_number).all()
+        tasks = Tasks.query.filter_by(id_group=group_number).all()
         tasks_by_education[group_number] = tasks
 
         # Получение навыков для каждой задачи
         for task in tasks:
-            task_skills = db.session.query(Skill).join(TaskSkill).filter(TaskSkill.id_task == task.id_task).all()
+            task_skills = db.session.query(Skills).join(TaskSkills).filter(TaskSkills.id_task == task.id_task).all()
             skills_by_task[task.id_task] = task_skills
 
     # Добавляем обязанности для каждого опыта работы
@@ -60,13 +60,13 @@ def generate_resume(user_id):
         responsibilities = Responsibility.query.filter_by(id_work=experience.id_work).all()
         responsibilities_by_experience[experience.id_work] = responsibilities
 
-    projects = Project.query.filter_by(id_resume=resume.id_resume).all()
+    projects = Projects.query.filter_by(id_resume=resume.id_resume).all()
 
     # Получение навыков для каждого проекта
     project_skills = {}
     for project in projects:
-        skills_for_project = db.session.query(Skill).join(ProjectSkill).filter(
-            ProjectSkill.id_project == project.id_project).all()
+        skills_for_project = db.session.query(Skills).join(ProjectSkills).filter(
+            ProjectSkills.id_project == project.id_project).all()
         project_skills[project.id_project] = skills_for_project
 
     # Вычисляем возраст
