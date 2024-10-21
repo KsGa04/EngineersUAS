@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, jsonify
 
 from Client_Api.extensions import db
 from Models import User, Education, Skill, ResumeSkill, Resume, Task, TaskSkill, Responsibility, \

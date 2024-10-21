@@ -10,6 +10,10 @@ tags:
     description: "Авторизация и регистрация"
   - name: "protected"
     description: "Защищенные API"
+  - name: "resume"
+    description: "API для генерации резюме"
+  - name: "skills"
+    description: "API получения навыков"
 schemes:
   - "http"
 paths:
@@ -118,8 +122,10 @@ paths:
       responses:
         200:
           description: "Успешный доступ"
-  /api/resume/pattern1/{user_id}:
+  /pattern1/{user_id}:
     get:
+      tags:
+        - "resume"
       summary: "Получить резюме пользователя"
       description: "Возвращает резюме пользователя по его ID"
       parameters:
@@ -141,6 +147,63 @@ paths:
           description: "Пользователь или резюме не найдены"
         '500':
           description: "Ошибка на стороне сервера"
+  /get/skills:
+    get:
+      tags:
+        - "skills"
+      summary: Get all skills
+      description: Returns a list of all available skills.
+      responses:
+        '200':
+          description: A list of skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id_skill:
+                      type: integer
+                      description: The ID of the skill.
+                      example: 1
+                    skill_name:
+                      type: string
+                      description: The name of the skill.
+                      example: Python
+        '500':
+          description: Server error
+  /api/student/{student_id}/skills:
+    get:
+      tags:
+        - "skills"
+      summary: Get all skills for a specific student
+      description: Returns a list of skills for a student by student ID.
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the student
+      responses:
+        '200':
+          description: A list of skills
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student_id:
+                    type: integer
+                    example: 1
+                  skills:
+                    type: array
+                    items:
+                      type: string
+                      example: Python
+        '404':
+          description: Student or resume not found
 components:
   schemas:
     User:

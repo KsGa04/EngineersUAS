@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по API и генерации резюме">
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/css/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume2.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/images/image.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/images/image_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/images/logo_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/static/images/students-image.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/templates/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume2.html" afterDir="false" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Шаблон резюме и наброски первой страницы">
+      <change afterPath="$PROJECT_DIR$/Client_Api/get_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/work.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/work.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.md" beforeDir="false" afterPath="$PROJECT_DIR$/database.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,13 +22,18 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
         <option value="Dockerfile" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -58,30 +59,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_invalid_credentials.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_required_fields.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_null_values.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_session_update_on_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_registration.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_token_expiry.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_reg_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_auth_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_reg_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS/Client_Server/static/images&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests in test_auth_api.py.executor": "Run",
+    "Python tests.Python tests in test_reg_api.py.executor": "Run",
+    "Python.app (1).executor": "Run",
+    "Python.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "generate-resume-api",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS/Client_Server/static/images",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
@@ -276,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729502125105</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Шаблон резюме и наброски первой страницы">
+      <option name="closed" value="true" />
+      <created>1729503447911</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1729503447911</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,7 +305,8 @@
     <MESSAGE value="Изменение бд, создан README.md" />
     <MESSAGE value="Изменение бд" />
     <MESSAGE value="Корректировки по API и генерации резюме" />
-    <option name="LAST_COMMIT_MESSAGE" value="Корректировки по API и генерации резюме" />
+    <MESSAGE value="Шаблон резюме и наброски первой страницы" />
+    <option name="LAST_COMMIT_MESSAGE" value="Шаблон резюме и наброски первой страницы" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
