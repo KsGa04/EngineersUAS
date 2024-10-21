@@ -118,3 +118,134 @@ paths:
       responses:
         200:
           description: "Успешный доступ"
+  /api/resume/pattern1/{user_id}:
+    get:
+      summary: "Получить резюме пользователя"
+      description: "Возвращает резюме пользователя по его ID"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: "Идентификатор пользователя"
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "Успешное получение резюме"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumeResponse'
+        '404':
+          description: "Пользователь или резюме не найдены"
+        '500':
+          description: "Ошибка на стороне сервера"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: "ID пользователя"
+        name:
+          type: string
+          description: "Имя пользователя"
+        email:
+          type: string
+          description: "Email пользователя"
+        birth_date:
+          type: string
+          format: date
+          description: "Дата рождения пользователя"
+
+    ResumeResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        education_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Education'
+        experience_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Experience'
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        age:
+          type: string
+          description: "Возраст пользователя"
+
+    Education:
+      type: object
+      properties:
+        degree_name:
+          type: string
+          description: "Название степени"
+        university_name:
+          type: string
+          description: "Название университета"
+        start_date:
+          type: string
+          format: date
+          description: "Дата начала обучения"
+        end_date:
+          type: string
+          format: date
+          description: "Дата окончания обучения"
+
+    Experience:
+      type: object
+      properties:
+        position:
+          type: string
+          description: "Должность"
+        organization_name:
+          type: string
+          description: "Название компании"
+        start_date:
+          type: string
+          format: date
+          description: "Дата начала работы"
+        end_date:
+          type: string
+          format: date
+          description: "Дата окончания работы"
+        responsibilities:
+          type: array
+          items:
+            type: string
+            description: "Обязанности на данной должности"
+
+    Skill:
+      type: object
+      properties:
+        skill_name:
+          type: string
+          description: "Название навыка"
+
+    Project:
+      type: object
+      properties:
+        project_name:
+          type: string
+          description: "Название проекта"
+        project_description:
+          type: string
+          description: "Описание проекта"
+        project_link:
+          type: string
+          description: "Ссылка на проект"
+        project_skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
