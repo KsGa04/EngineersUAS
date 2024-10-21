@@ -1,0 +1,373 @@
+/* Общий контейнер */
+.resume-container {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+}
+
+/* Шапка с логотипом и телефоном */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f6f6f6;
+    border-bottom: 2px solid #ccc;
+}
+
+.logo-img {
+    width: 120px;
+    height: auto;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.5;
+}
+.contact-logo {
+    display: flex;
+    align-items: center;
+    line-height: 0.5;
+}
+.icon img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.contact-info strong {
+    font-size: 18px;
+    font-weight: bold;
+    width: 60%;
+}
+
+/* Основная сетка */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* Левая колонка (основной контент) */
+.left-column {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.education-section, .experience-section {
+    margin-bottom: 20px;
+}
+
+.education-item, .experience-item {
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 18px;
+    background-color: #413A6A;
+    border-radius: 3px;
+    padding: 5px;
+    color: white;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+ul {
+    padding-left: 0;
+    padding-inline-start: 10px;
+}
+
+ul li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+ol {
+    padding-inline-start: 10px;
+    font-size: 14px;
+}
+/* Правая колонка */
+.right-column {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Фото профиля */
+.profile-picture img {
+    width: 160px;
+    height: 200px;
+    border-radius: 20%;
+    margin-bottom: 20px;
+}
+
+/* Контактная информация */
+.contact-info {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Навыки */
+.skills-section ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.skills-section ul li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Описание */
+.about-me p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.about-me a {
+    font-size: 14px;
+    text-align: left;
+    color: black;
+}
+
+.direction {
+    line-height: 0.3;
+    font-size:15px;
+    margin-top: 5px;
+}
+.website {
+    margin-top:20px;
+    font-style: italic;
+    margin-bottom: 2px;
+}
+.dir {
+    color: #555;
+    font-style: italic;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between; /* Разместить название слева, а год обучения справа */
+    align-items: center;
+    margin-bottom: 5px;
+    line-height: 0.5;
+}
+.experience-header b {
+    font-size:17px;
+    padding-bottom: 0px;
+    line-height: 0.5;
+}
+.experience-year {
+    font-size: 14px;
+    color: #555;
+    text-align: right;
+}
+/* Секция обязанностей */
+.responsibilities-section {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* Заголовок для обязанностей */
+.responsibilities-section h5 {
+    font-size: 16px;
+    color: black;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* Список обязанностей */
+.responsibilities-section ul {
+    padding-left: 20px;
+    list-style-type: disc; /* Маркированный список */
+}
+
+/* Каждый элемент списка обязанностей */
+.responsibilities-section ul li {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+
+
+.education-section {
+    margin-bottom: 20px;
+}
+
+/* Блок каждого элемента образования */
+.education-item {
+    margin-bottom: 15px;
+}
+.education-item .projects {
+    font-size:16px;
+    line-height:2;
+}
+/* Flex-контейнер для заголовков образования и годов */
+.education-header {
+    display: flex;
+    justify-content: space-between; /* Разместить название слева, а год обучения справа */
+    align-items: center;
+    margin-bottom: 5px;
+    line-height: 0.5;
+}
+.education-header b {
+    font-size:17px;
+    padding-bottom: 0px;
+    line-height: 0.5;
+}
+
+.education-year {
+    font-size: 14px;
+    color: #555;
+    text-align: right;
+}
+/* Стиль для заголовка задач */
+.tasks-section {
+    margin-top: 10px;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;  /* Линия для разделения */
+}
+
+/* Заголовок для секции задач */
+.tasks-section h4 {
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 10px;
+    margin-top: 4px;
+}
+
+/* Flex-контейнер для заголовков задач и описания */
+.task-header {
+    display: flex;
+    justify-content: space-between; /* Разместить название слева, описание или срок выполнения справа */
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Заголовок задачи */
+.task-header b {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Дата или другая информация для задачи */
+.task-year {
+    font-size: 14px;
+    color: #555;
+    text-align: right;
+}
+
+/* Список задач */
+.tasks-section ol {
+    padding-left: 20px;
+    list-style-type: decimal;
+}
+.task-type-chip {
+    background-color: #413A6A;  /* Синий фон */
+    color: white;  /* Белый текст */
+    padding: 3px 8px;
+    border-radius: 12px;  /* Скругленные углы, чтобы чип выглядел как метка */
+    font-size: 12px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;  /* Центрирование по вертикали */
+}
+/* Каждый элемент задачи */
+.tasks-section li {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #333;
+}
+
+/* Секция навыков */
+.skills-section {
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Заголовок для навыков */
+.skills-section h5 {
+    font-weight: normal;
+    font-size: 15px;
+    margin-bottom: 3px;
+    margin-top: 0px;
+}
+
+/* Контейнер для навыков, чтобы они шли по горизонтали */
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;  /* Перенос на новую строку, если навыков слишком много */
+    gap: 10px;
+    margin-bottom: 10px;/* Отступы между навыками */
+}
+
+/* Мини-блок для каждого навыка */
+.skill-chip {
+    background-color: #e0e0e0;  /* Светло-серый фон для каждого навыка */
+    color: #333;  /* Цвет текста */
+    padding: 5px 10px;
+    border-radius: 20px;  /* Скругленные углы для чипсов */
+    font-size: 14px;
+    display: inline-block;
+    white-space: nowrap;  /* Запрет на перенос текста внутри */
+}
+/* Основная секция проектов */
+.projects-section {
+    margin-bottom: 20px;
+    width:100%;
+}
+
+/* Блок каждого проекта */
+.project-item {
+    background-color: #f6f6f6; /* В стиле всего резюме */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+/* Название проекта */
+.project-item p strong {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Описание проекта */
+.project-item p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+/* Ссылка на проект */
+.project-item a {
+    text-decoration: none;
+    color: #007BFF;
+    font-size: 14px;
+}
+
+.project-item a:hover {
+    text-decoration: underline;
+}

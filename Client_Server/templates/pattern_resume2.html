@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Template 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pattern_resume2.css') }}">
+</head>
+<body>
+    <div class="resume-container">
+        <!-- Левая колонка -->
+        <div class="left-column">
+            <!-- Фото и контакты -->
+            <div class="profile-info">
+                <img src="{{ url_for('static', filename='images/image.png') }}" alt="Profile Photo" class="profile-photo">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                <p>{{ user.email }}</p>
+                <p>{{ user.phone }}</p>
+            </div>
+            <section class="personal-qualities-section">
+                <h2>Обо мне</h2>
+                <p>{{resume.about_me}}</p>
+            </section>
+            <!-- Навыки -->
+            <section class="skills-section">
+                <h2>Навыки</h2>
+                <ul>
+                    {% for skill in skills %}
+                    <li>{{ skill.skill_name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="right-column">
+            <!-- Образование -->
+            <section class="education-section">
+                <h2>Образование</h2>
+                {% for education in education_list %}
+                <div class="education-item">
+                    <h3>{{ education.degree.degree_name }}</h3>
+                    <p><strong>{{ education.university.full_name }}</strong> ({{ education.start_date }} - {{ education.end_date }})</p>
+                    <p><em>{{ education.direction.direction_code }} - {{ education.direction.direction_name }}</em></p>
+                </div>
+
+                <!-- Задачи, связанные с образовательным учреждением -->
+                <div class="tasks-section">
+                    <h4>Задачи:</h4>
+                    {% if tasks_by_education[education.group_number] %}
+                    <ol>
+                        {% for task in tasks_by_education[education.group_number] %}
+                        <li>
+                            <div class="task-header">
+                                <b>{{ task.task_name }}</b>
+                                <!-- Элемент для типа задачи -->
+                                <span class="task-type-chip">{{ task.task_type }}</span>
+                            </div>
+                            <p class="task-description">{{ task.task_description }}</p>
+
+                            <!-- Навыки, связанные с задачей -->
+                            <div class="skills-section">
+                                <h5>Используемые навыки:</h5>
+                                <div class="skills-list">
+                                    {% if skills_by_task[task.id_task] %}
+                                    {% for skill in skills_by_task[task.id_task] %}
+                                    <div class="skill-chip">{{ skill.skill_name }}</div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <p>Нет связанных навыков</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <p>Нет задач для данной группы.</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </section>
+
+            <!-- Опыт работы -->
+            <section class="experience-section">
+                <h2>Опыт работы</h2>
+                {% for experience in experience_list %}
+                <div class="experience-item">
+                    <h3>{{ experience.position }}</h3>
+                    <p><strong>{{ experience.organizations[0].organization_name }}</strong> ({{ experience.start_date }} - {{ experience.end_date }})</p>
+                    <p><em>{{ experience.organizations[0].location }}</em></p>
+
+                    <!-- Обязанности -->
+                    <div class="responsibilities-section">
+                        <h4>Обязанности:</h4>
+                        <ol>
+                            {% for responsibility in responsibilities_by_experience[experience.id_work] %}
+                            <li>{{ responsibility.responsibility }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+
+            <!-- Проекты -->
+            <section class="projects-section">
+                <h2>Проекты</h2>
+                {% for project in projects %}
+                <div class="project-item">
+                    <h3>{{ project.project_name }}</h3>
+                    <p><strong>Описание:</strong> {{ project.project_description }}</p>
+                    <a href="{{ project.project_link }}" class="project-link">Ссылка на проект</a>
+
+                    <!-- Навыки, используемые в проекте -->
+                    <div class="skills-section">
+                        <h5>Используемые навыки:</h5>
+                        <div class="skills-list">
+                            {% if project_skills[project.id_project] %}
+                            {% for skill in project_skills[project.id_project] %}
+                            <div class="skill-chip">{{ skill.skill_name }}</div>
+                            {% endfor %}
+                            {% else %}
+                            <p>Навыков не найдено для этого проекта</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>
