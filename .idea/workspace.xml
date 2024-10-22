@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Шаблон резюме и наброски первой страницы">
-      <change afterPath="$PROJECT_DIR$/Client_Api/get_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/work.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/work.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.md" beforeDir="false" afterPath="$PROJECT_DIR$/database.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +75,7 @@
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "generate-resume-api",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS/Client_Server/static/images",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/RobosoftBot",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -320,6 +316,16 @@
           <url>file://$PROJECT_DIR$/Client_Api/generate_resume_api.py</url>
           <line>32</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
