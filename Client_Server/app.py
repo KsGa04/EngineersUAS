@@ -5,6 +5,7 @@ import requests
 from flask import Flask, render_template
 from flask_cors import CORS
 
+from Client_Api.approach_to_universities import university_api
 from Client_Api.extensions import db, jwt  # Импортируем расширения
 from Client_Api.auth_api import auth_api  # Подключаем API для авторизации
 from Client_Api.get_data import get_api
@@ -39,6 +40,7 @@ app.register_blueprint(resume_api, url_prefix='/api/resume')
 app.register_blueprint(universal_api)
 app.register_blueprint(get_api)
 app.register_blueprint(github_api, url_prefix='/api/github')
+app.register_blueprint(university_api)
 
 @app.route('/')
 def index():

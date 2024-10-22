@@ -18,6 +18,8 @@ tags:
     description: "Парсер данных из соц.сетей"
   - name: "all"
     description: "Необходимые API"
+  - name: "Universities"
+    description: "API для работы с университетами"
 schemes:
   - "http"
 paths:
@@ -178,8 +180,8 @@ paths:
     get:
       tags:
         - "skills"
-      summary: Get all skills
-      description: Returns a list of all available skills.
+      summary: "Получает все навыки"
+      description: "Возвращает список всех навыков в бд"
       responses:
         '200':
           description: A list of skills
@@ -204,8 +206,8 @@ paths:
     get:
       tags:
         - "skills"
-      summary: Get all skills for a specific student
-      description: Returns a list of skills for a student by student ID.
+      summary: "Получить все навыки по резюме пользователя"
+      description: "Возвращается список навыков конкретного пользователя"
       parameters:
         - name: student_id
           in: path
@@ -231,6 +233,50 @@ paths:
                       example: Python
         '404':
           description: Student or resume not found
+  /project/{id_project}/skills:
+    get:
+      tags:
+        - "skills"
+      summary: "Получить навыки по проекту"
+      description: "Возвращает список навыков, связанных с указанным проектом."
+      parameters:
+        - name: "id_project"
+          in: "path"
+          description: "ID проекта"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Успешный запрос"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Skill"
+        400:
+          description: "Ошибка запроса"
+    /task/{id_task}/skills:
+      get:
+        tags:
+          - "skills"
+        summary: "Получить навыки по задаче"
+        description: "Возвращает список навыков, связанных с указанной задачей."
+        parameters:
+          - name: "id_task"
+            in: "path"
+            description: "ID задачи"
+            required: true
+            type: "integer"
+            format: "int64"
+        responses:
+          200:
+            description: "Успешный запрос"
+            schema:
+              type: "array"
+              items:
+                $ref: "#/definitions/Skill"
+          400:
+            description: "Ошибка запроса"
   /api/github/repos:
     get:
       tags:
@@ -282,6 +328,133 @@ paths:
           description: Неверный запрос
         '500':
           description: Ошибка сервера
+  /api/github/add_repos:
+    get:
+      tags:
+        - "parser"
+      summary: "Получение репозиториев и добавление проектов в базу данных"
+      description: "Возвращает список репозиториев с GitHub и добавляет проекты в базу данных."
+      parameters:
+        - name: "github_url"
+          in: "query"
+          description: "URL профиля GitHub пользователя"
+          required: true
+          type: "string"
+        - name: "resume_id"
+          in: "query"
+          description: "ID резюме, к которому будут привязаны проекты"
+          required: true
+          type: "integer"
+        - name: "token"
+          in: "query"
+          description: "GitHub Access Token (необязательный)"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "Успешный запрос"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RepositoryInfo"
+        400:
+          description: "Ошибка запроса"
+        500:
+          description: "Ошибка на сервере"
+  /get/universities:
+    get:
+      tags:
+        - "Universities"
+      summary: "Получить список всех университетов"
+      description: "Возвращает список всех университетов"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Успешный ответ. Список университетов."
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id_university:
+                  type: "integer"
+                short_name:
+                  type: "string"
+                full_name:
+                  type: "string"
+                location:
+                  type: "string"
+                website:
+                  type: "string"
+                contact_info:
+                  type: "string"
+        404:
+          description: "Университеты не найдены"
+
+  /get/university/{id_university}/directions:
+    get:
+      tags:
+        - "Universities"
+      summary: "Получить направления для конкретного университета"
+      description: "Возвращает список направлений для университета по его ID"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id_university"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "ID университета"
+      responses:
+        200:
+          description: "Успешный ответ. Список направлений."
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id_direction:
+                  type: "integer"
+                direction_code:
+                  type: "string"
+                direction_name:
+                  type: "string"
+        404:
+          description: "Направления не найдены для этого университета"
+
+  /get/university/{id_university}/groups:
+    get:
+      tags:
+        - "Universities"
+      summary: "Получить список групп для конкретного университета"
+      description: "Возвращает список групп для университета по его ID"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id_university"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "ID университета"
+      responses:
+        200:
+          description: "Успешный ответ. Список групп."
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id_group:
+                  type: "integer"
+                group_name:
+                  type: "string"
+                start_year:
+                  type: "integer"
+                id_direction:
+                  type: "integer"
+        404:
+          description: "Группы не найдены для этого университета"
 components:
   schemas:
     User:
