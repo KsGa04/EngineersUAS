@@ -1,7 +1,7 @@
 from Client_Api.extensions import db
 
 
-class TaskSkill(db.Model):
+class TaskSkills(db.Model):
     __tablename__ = 'task_skills'
 
     id = db.Column(db.Integer, primary_key=True)

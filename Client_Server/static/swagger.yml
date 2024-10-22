@@ -17,6 +17,27 @@ tags:
 schemes:
   - "http"
 paths:
+  /api/{table_name}:
+    post:
+      summary: "Добавить данные в указаную таблицу"
+      parameters:
+        - name: "table_name"
+          in: "path"
+          required: true
+          description: "Таблица, куда добавить данные"
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Данные"
+          required: true
+          schema:
+            type: "object"
+      responses:
+        200:
+          description: "Добавлено в таблицу"
+        400:
+          description: "He добавлено"
+
   /api/auth/register:
     post:
       tags:
