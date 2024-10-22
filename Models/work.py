@@ -11,7 +11,7 @@ class Work(db.Model):
     end_date = db.Column(db.Date)
 
     # Связь с резюме
-    resume = db.relationship('Resume', back_populates='works')
+    resume = db.relationship('Resume', back_populates='works', overlaps="related_resume")
 
     # Связь с организацией через WorkOrganization
     organizations = db.relationship('Organization', secondary='work_organization', backref='works')
