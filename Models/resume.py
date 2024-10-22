@@ -10,4 +10,4 @@ class Resume(db.Model):
 
     works = db.relationship('Work', backref='related_resume', lazy=True)
     educations = db.relationship('Education', backref='resume')
-    projects = db.relationship('Project', backref='resume')
+    projects = db.relationship('Projects', backref='resume')

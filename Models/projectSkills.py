@@ -1,7 +1,7 @@
 from Client_Api.extensions import db
 
 
-class ProjectSkill(db.Model):
+class ProjectSkills(db.Model):
     __tablename__ = 'project_skills'
 
     id = db.Column(db.Integer, primary_key=True)

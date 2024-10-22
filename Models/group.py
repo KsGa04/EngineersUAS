@@ -1,7 +1,7 @@
 from Client_Api.extensions import db
 
 
-class GroupNumber(db.Model):
+class Group(db.Model):
     __tablename__ = 'groups_number'
 
     id_group = db.Column(db.Integer, primary_key=True)

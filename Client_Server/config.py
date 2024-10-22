@@ -6,7 +6,7 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'super-secret-jwt-key')
 
     # Production database URI
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'mysql+mysqlconnector://root@localhost:3306/engineersuas_db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'mysql+mysqlconnector://root@localhost:3306/engineersuas_test')
 
     # Test database URI
     SQLALCHEMY_DATABASE_URI_TEST = os.getenv('DATABASE_URL_TEST',
