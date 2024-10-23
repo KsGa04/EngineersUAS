@@ -1,4 +1,4 @@
-swagger: '2.0'
+openapi: 3.0.3
 info:
   description: "API для StudentSearch"
   version: "1.0.0"
@@ -22,17 +22,73 @@ paths:
           required: true
           description: "Таблица, куда добавить данные"
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Данные"
-          required: true
-          schema:
-            type: "object"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
       responses:
         200:
           description: "Добавлено в таблицу"
         400:
           description: "He добавлено"
+    get:
+      summary: "Получить данные из указаной таблицы"
+      parameters:
+        - name: "table_name"
+          in: "path"
+          required: true
+          description: "Таблица, откуда брать данные"
+          type: "string"
+        - name: "filters"
+          in: "query"
+          description: "Условие"
+          required: false
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+          style: form
+          explode: true
+      responses:
+        200:
+          description: "Получено"
+        400:
+          description: "He получено"
+    put:
+      summary: "Изменить данные в указаной таблицы"
+      parameters:
+        - name: "table_name"
+          in: "path"
+          required: true
+          description: "Таблица, откуда брать данные"
+          type: "string"
+        - name: "filters"
+          in: "query"
+          description: "Условие"
+          required: true
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+          style: form
+          explode: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        200:
+          description: "изменено"
+        400:
+          description: "He изменено"
 
   /api/auth/register:
     post:
@@ -110,18 +166,20 @@ paths:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Данные для входа"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              email:
-                type: "string"
-              password:
-                type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
       responses:
         200:
           description: "Успешная авторизация"
