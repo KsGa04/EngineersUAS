@@ -48,6 +48,8 @@ paths:
         400:
           description: "He добавлено"
     get:
+      tags:
+        - "all"
       summary: "Получить данные из указаной таблицы"
       parameters:
         - name: "table_name"
@@ -71,6 +73,8 @@ paths:
         400:
           description: "He получено"
     put:
+      tags:
+        - "all"
       summary: "Изменить данные в указаной таблицы"
       parameters:
         - name: "table_name"
