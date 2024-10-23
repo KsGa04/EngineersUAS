@@ -342,109 +342,407 @@ paths:
           description: Ошибка сервера
 components:
   schemas:
+    # Описание таблицы users
     User:
+      type: object
+      properties:
+        id_user:
+          type: integer
+          description: 'Primary key'
+        first_name:
+          type: string
+          description: 'First name of the user'
+        last_name:
+          type: string
+          description: 'Last name of the user'
+        middle_name:
+          type: string
+          description: 'Middle name of the user (optional)'
+        email:
+          type: string
+          description: 'Email address'
+        phone:
+          type: string
+          description: 'Phone number'
+        password:
+          type: string
+          description: 'Password (hashed)'
+        birth_date:
+          type: string
+          format: date
+          description: 'Birth date of the user'
+        role_id:
+          type: integer
+          description: 'Foreign key referencing roles'
+        created_at:
+          type: string
+          format: date-time
+          description: 'Timestamp when the user was created'
+        last_login:
+          type: string
+          format: date-time
+          description: 'Timestamp of the last login'
+        profile_photo:
+          type: string
+          description: 'Profile photo (binary data)'
+        address:
+          type: string
+          description: 'User address'
+
+    # Описание таблицы roles
+    Role:
+      type: object
+      properties:
+        id_role:
+          type: integer
+          description: 'Primary key for role'
+        role_name:
+          type: string
+          description: 'Role name'
+
+    # Описание таблицы resume
+    Resume:
+      type: object
+      properties:
+        id_resume:
+          type: integer
+          description: 'Primary key for resume'
+        id_user:
+          type: integer
+          description: 'Foreign key referencing users'
+        about_me:
+          type: string
+          description: 'Description about the user'
+
+    # Описание таблицы university
+    University:
+      type: object
+      properties:
+        id_university:
+          type: integer
+          description: 'Primary key for university'
+        short_name:
+          type: string
+          description: 'Short name of the university'
+        full_name:
+          type: string
+          description: 'Full name of the university'
+        location:
+          type: string
+          description: 'Location of the university'
+        website:
+          type: string
+          description: 'Website of the university'
+        contact_info:
+          type: string
+          description: 'Contact information'
+
+    # Описание таблицы degree
+    Degree:
+      type: object
+      properties:
+        id_degree:
+          type: integer
+          description: 'Primary key for degree'
+        degree_name:
+          type: string
+          description: 'Name of the degree'
+
+    # Описание промежуточной таблицы university_degree
+    UniversityDegree:
       type: object
       properties:
         id:
           type: integer
-          description: "ID пользователя"
-        name:
-          type: string
-          description: "Имя пользователя"
-        email:
-          type: string
-          description: "Email пользователя"
-        birth_date:
-          type: string
-          format: date
-          description: "Дата рождения пользователя"
+          description: 'Primary key for university_degree'
+        id_university:
+          type: integer
+          description: 'Foreign key referencing university'
+        id_degree:
+          type: integer
+          description: 'Foreign key referencing degree'
 
-    ResumeResponse:
+    # Описание таблицы direction
+    Direction:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/User'
-        education_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Education'
-        experience_list:
-          type: array
-          items:
-            $ref: '#/components/schemas/Experience'
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/Skill'
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Project'
-        age:
+        id_direction:
+          type: integer
+          description: 'Primary key for direction'
+        direction_code:
           type: string
-          description: "Возраст пользователя"
+          description: 'Code of the direction'
+        direction_name:
+          type: string
+          description: 'Name of the direction'
 
+    # Описание промежуточной таблицы university_direction
+    UniversityDirection:
+      type: object
+      properties:
+        id_university_direction:
+          type: integer
+          description: 'Primary key for university_direction'
+        id_university:
+          type: integer
+          description: 'Foreign key referencing university'
+        id_direction:
+          type: integer
+          description: 'Foreign key referencing direction'
+
+    # Описание таблицы groups_number
+    Group:
+      type: object
+      properties:
+        id_group:
+          type: integer
+          description: 'Primary key for groups'
+        group_name:
+          type: string
+          description: 'Name of the group'
+        start_year:
+          type: integer
+          description: 'Start year of the group'
+        id_university:
+          type: integer
+          description: 'Foreign key referencing university'
+        id_education:
+          type: integer
+          description: 'Foreign key referencing education'
+        id_direction:
+          type: integer
+          description: 'Foreign key referencing direction'
+
+    # Описание таблицы tasks
+    Task:
+      type: object
+      properties:
+        id_task:
+          type: integer
+          description: 'Primary key for task'
+        task_name:
+          type: string
+          description: 'Name of the task'
+        task_type:
+          type: string
+          description: 'Type of the task'
+        id_group:
+          type: integer
+          description: 'Foreign key referencing groups_number'
+        task_description:
+          type: string
+          description: 'Description of the task'
+
+    # Описание таблицы organization
+    Organization:
+      type: object
+      properties:
+        id_organization:
+          type: integer
+          description: 'Primary key for organization'
+        organization_name:
+          type: string
+          description: 'Name of the organization'
+        location:
+          type: string
+          description: 'Location of the organization'
+        website:
+          type: string
+          description: 'Website of the organization'
+
+    # Описание таблицы work
+    Work:
+      type: object
+      properties:
+        id_work:
+          type: integer
+          description: 'Primary key for work'
+        id_resume:
+          type: integer
+          description: 'Foreign key referencing resume'
+        position:
+          type: string
+          description: 'Position at work'
+        start_date:
+          type: string
+          format: date
+          description: 'Start date of the work'
+        end_date:
+          type: string
+          format: date
+          description: 'End date of the work'
+      # Описание таблицы educations
     Education:
       type: object
       properties:
-        degree_name:
-          type: string
-          description: "Название степени"
-        university_name:
-          type: string
-          description: "Название университета"
+        id_education:
+          type: integer
+          description: 'Primary key for education'
+        id_resume:
+          type: integer
+          description: 'Foreign key referencing resume'
+        id_university:
+          type: integer
+          description: 'Foreign key referencing university'
+        id_degree:
+          type: integer
+          description: 'Foreign key referencing degree'
+        id_direction:
+          type: integer
+          description: 'Foreign key referencing direction'
+        group_number:
+          type: integer
+          description: 'Foreign key referencing group'
         start_date:
           type: string
           format: date
-          description: "Дата начала обучения"
+          description: 'Start date of education'
         end_date:
           type: string
           format: date
-          description: "Дата окончания обучения"
-
-    Experience:
+          description: 'End date of education'
+        status:
+          type: string
+          description: 'Status of education (e.g., completed, in-progress)'
+    # Описание таблицы work_organization
+    WorkOrganization:
       type: object
       properties:
-        position:
-          type: string
-          description: "Должность"
-        organization_name:
-          type: string
-          description: "Название компании"
-        start_date:
-          type: string
-          format: date
-          description: "Дата начала работы"
-        end_date:
-          type: string
-          format: date
-          description: "Дата окончания работы"
-        responsibilities:
-          type: array
-          items:
-            type: string
-            description: "Обязанности на данной должности"
+        id:
+          type: integer
+          description: 'Primary key for work-organization relationship'
+        id_work:
+          type: integer
+          description: 'Foreign key referencing work'
+        id_organization:
+          type: integer
+          description: 'Foreign key referencing organization'
 
-    Skill:
+    # Описание таблицы responsibilities
+    Responsibility:
       type: object
       properties:
-        skill_name:
+        id_responsibility:
+          type: integer
+          description: 'Primary key for responsibility'
+        id_work:
+          type: integer
+          description: 'Foreign key referencing work'
+        responsibility:
           type: string
-          description: "Название навыка"
+          description: 'Description of the responsibility'
 
+    # Описание таблицы projects
     Project:
       type: object
       properties:
+        id_project:
+          type: integer
+          description: 'Primary key for project'
+        id_resume:
+          type: integer
+          description: 'Foreign key referencing resume'
         project_name:
           type: string
-          description: "Название проекта"
+          description: 'Name of the project'
         project_description:
           type: string
-          description: "Описание проекта"
+          description: 'Description of the project'
         project_link:
           type: string
-          description: "Ссылка на проект"
-        project_skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/Skill'
+          description: 'Link to the project'
+
+    # Описание таблицы skills
+    Skill:
+      type: object
+      properties:
+        id_skill:
+          type: integer
+          description: 'Primary key for skill'
+        skill_name:
+          type: string
+          description: 'Name of the skill'
+
+    # Описание промежуточной таблицы resume_skills
+    ResumeSkill:
+      type: object
+      properties:
+        id_resume_skills:
+          type: integer
+          description: 'Primary key for resume-skill relationship'
+        id_resume:
+          type: integer
+          description: 'Foreign key referencing resume'
+        id_skill:
+          type: integer
+          description: 'Foreign key referencing skill'
+
+    # Описание промежуточной таблицы task_skills
+    TaskSkill:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Primary key for task-skill relationship'
+        id_task:
+          type: integer
+          description: 'Foreign key referencing task'
+        id_skill:
+          type: integer
+          description: 'Foreign key referencing skill'
+
+    # Описание промежуточной таблицы responsibility_skills
+    ResponsibilitySkill:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Primary key for responsibility-skill relationship'
+        id_responsibility:
+          type: integer
+          description: 'Foreign key referencing responsibility'
+        id_skill:
+          type: integer
+          description: 'Foreign key referencing skill'
+
+    # Описание промежуточной таблицы project_skills
+    ProjectSkill:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 'Primary key for project-skill relationship'
+        id_project:
+          type: integer
+          description: 'Foreign key referencing project'
+        id_skill:
+          type: integer
+          description: 'Foreign key referencing skill'
+
+    # Описание таблицы social_network_types
+    SocialNetworkType:
+      type: object
+      properties:
+        id_social_network_type:
+          type: integer
+          description: 'Primary key for social network type'
+        network_name:
+          type: string
+          description: 'Name of the social network (e.g., LinkedIn, GitHub)'
+
+    # Описание таблицы user_social_networks
+    UserSocialNetwork:
+      type: object
+      properties:
+        id_user_social_network:
+          type: integer
+          description: 'Primary key for user-social network relationship'
+        id_resume:
+          type: integer
+          description: 'Foreign key referencing resume'
+        id_social_network_type:
+          type: integer
+          description: 'Foreign key referencing social network type'
+        network_link:
+          type: string
+          description: 'Link to the user’s social network profile'
