@@ -4,8 +4,10 @@ import importlib
 
 universal_api = Blueprint('universal_api', __name__)
 
+
 def upper_first(text):
     return text[0].upper() + text[1:]
+
 
 @universal_api.route('/api/<table_name>', methods=['POST'])
 def universal_post(table_name):
@@ -30,6 +32,7 @@ def universal_post(table_name):
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
 
+
 @universal_api.route('/api/<table_name>', methods=['GET'])
 def universal_get(table_name):
     try:
@@ -50,14 +53,15 @@ def universal_get(table_name):
             results = ModelClass.query.filter_by(**query_params).all()
 
         results_dict = [result.__dict__ for result in results]
-        
+
         for result in results_dict:
             result.pop('_sa_instance_state', None)
         print(results_dict)
         return jsonify(results_dict), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
-    
+
+
 @universal_api.route('/api/<table_name>', methods=['PUT'])
 def universal_put(table_name):
     try:
@@ -74,7 +78,7 @@ def universal_put(table_name):
     print(data)
     try:
         record = ModelClass.query.filter_by(**query_params).one()
-        
+
         for key, value in data.items():
             if hasattr(record, key):
                 setattr(record, key, value)

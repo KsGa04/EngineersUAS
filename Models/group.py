@@ -8,5 +8,4 @@ class Group(db.Model):
     group_name = db.Column(db.String(50))
     start_year = db.Column(db.Integer)
     id_university = db.Column(db.Integer, db.ForeignKey('university.id_university'), nullable=False)
-    id_education = db.Column(db.Integer, db.ForeignKey('educations.id_education'), nullable=False)
     id_direction = db.Column(db.Integer, db.ForeignKey('direction.id_direction'), nullable=False)

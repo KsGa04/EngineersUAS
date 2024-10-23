@@ -3,6 +3,9 @@ import requests
 from langchain_community.chat_models import GigaChat
 from langchain_core.messages import SystemMessage
 
+from Client_Api.extensions import db
+from Models import Skills, Projects, ProjectSkills
+
 # Инициализация GigaChat
 giga = GigaChat(
     credentials="N2Q2MjFiYmUtN2IwNy00ODNhLTk3MGQtOTUyNmQyYjAyNTY1Ojg4MzBkMmIwLThlMzItNDQyNi1hYzI1LTQ0ZmI0MWVkYmI2Mg==",
@@ -133,3 +136,97 @@ def get_repos():
         })
 
     return jsonify(repo_info_list), 200
+
+
+# Вспомогательная функция для добавления навыков, чтобы избежать дублирования
+def add_skill(skill_name):
+    skill = Skills.query.filter_by(skill_name=skill_name).first()
+    if skill is None:
+        new_skill = Skills(skill_name=skill_name)
+        db.session.add(new_skill)
+        db.session.commit()
+        return new_skill.id_skill
+    return skill.id_skill
+
+
+# Функция для добавления проектов в базу данных
+def add_project(repo_data, resume_id):
+    # Проверяем, существует ли проект с таким именем (по ссылке GitHub)
+    existing_project = Projects.query.filter_by(project_link=repo_data['project_link']).first()
+
+    if existing_project is None:
+        # Добавляем новый проект
+        new_project = Projects(
+            id_resume=resume_id,
+            project_name=repo_data['name'],
+            project_description=repo_data['description'],
+            project_link=repo_data['project_link']
+        )
+        db.session.add(new_project)
+        db.session.commit()
+
+        # Добавляем навыки (языки программирования и топики) к проекту
+        for skill_name in repo_data['languages'] + repo_data['topics']:
+            skill_id = add_skill(skill_name)
+            # Добавляем связь проекта с навыком
+            project_skill = ProjectSkills(id_project=new_project.id_project, id_skill=skill_id)
+            db.session.add(project_skill)
+
+        db.session.commit()
+        return new_project
+    return existing_project
+
+
+# Маршрут для получения репозиториев и добавления их как проекты в базу данных
+@github_api.route('/add_repos', methods=['GET'])
+def post_repos():
+    github_url = request.args.get('github_url')
+    resume_id = request.args.get('resume_id')
+    token = request.args.get('token', "your_default_token")
+
+    if not github_url or not resume_id:
+        return jsonify({"error": "GitHub URL и resume_id обязательны"}), 400
+
+    username = get_username_from_url(github_url)
+    repos = get_repositories(username, token)
+
+    if repos is None:
+        return jsonify({"error": "Не удалось получить репозитории"}), 500
+
+    repo_info_list = []
+    for repo in repos:
+        repo_name = repo['name']
+        repo_description = repo['description'] or "Описание отсутствует"
+        repo_languages = get_languages(repo['full_name'], token)
+        repo_topics = get_topics(repo['full_name'], token)
+        repo_readme_content = get_readme_content(repo['full_name'], token)
+
+        repo_data = {
+            "name": repo_name,
+            "description": repo_description,
+            "languages": repo_languages,
+            "topics": repo_topics,
+            "readme_content": repo_readme_content,
+            "project_link": repo['html_url']  # URL проекта на GitHub
+        }
+
+        # Генерация описания проекта с помощью нейросети
+        generated_description = generate_description(repo_data)
+        repo_data['generated_description'] = generated_description
+
+        # Добавляем проект в базу данных
+        project = add_project(repo_data, resume_id)
+
+        # Добавляем информацию о проекте в список
+        repo_info_list.append({
+            "name": project.project_name,
+            "description": project.project_description,
+            "languages": repo_languages,
+            "topics": repo_topics,
+            "readme_content": repo_readme_content,
+            "project_link": project.project_link,
+            "generated_description": generated_description
+        })
+
+    return jsonify(repo_info_list), 200
+

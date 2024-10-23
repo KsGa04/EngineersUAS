@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Шаблон резюме и наброски первой страницы">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
-    </list>
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Изменение README.md" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,8 +69,8 @@
     "Python.app (1).executor": "Run",
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "generate-resume-api",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/RobosoftBot",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/python_advanced",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -281,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729503447911</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Изменение README.md">
+      <option name="closed" value="true" />
+      <created>1729589519045</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1729589519045</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -302,7 +305,8 @@
     <MESSAGE value="Изменение бд" />
     <MESSAGE value="Корректировки по API и генерации резюме" />
     <MESSAGE value="Шаблон резюме и наброски первой страницы" />
-    <option name="LAST_COMMIT_MESSAGE" value="Шаблон резюме и наброски первой страницы" />
+    <MESSAGE value="Изменение README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменение README.md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
