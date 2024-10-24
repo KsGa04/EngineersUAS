@@ -5,24 +5,6 @@ from Models import Group, UniversityDirection, University
 university_api = Blueprint('university_api', __name__)
 
 
-@university_api.route('/get/universities', methods=['GET'])
-def get_universities():
-    # Извлечение всех университетов из базы данных
-    universities = University.query.all()
-
-    # Преобразование данных в формат JSON
-    university_list = [{
-        "id_university": university.id_university,
-        "short_name": university.short_name,
-        "full_name": university.full_name,
-        "location": university.location,
-        "website": university.website,
-        "contact_info": university.contact_info
-    } for university in universities]
-
-    return jsonify(university_list), 200
-
-
 @university_api.route('/get/university/<int:id_university>/directions', methods=['GET'])
 def get_university_directions(id_university):
     # Получаем направления для конкретного университета по id_university

@@ -3,9 +3,9 @@ from datetime import timezone, datetime, timedelta
 from flask import Blueprint, request, jsonify
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
-from Client_Api.extensions import db  # Импортируем db отсюда
 from Models.user import User
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token
+from Client_Server.app import db
 
 auth_api = Blueprint('auth_api', __name__)
 
@@ -99,12 +99,3 @@ def login():
     db.session.commit()
 
     return jsonify(access_token=access_token), 200
-
-
-
-# Пример защищённого маршрута
-@auth_api.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
