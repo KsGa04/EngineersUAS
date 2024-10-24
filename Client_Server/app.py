@@ -9,6 +9,7 @@ from Client_Api.extensions import db, jwt  # Импортируем расшир
 from Client_Api.auth_api import auth_api  # Подключаем API для авторизации
 from Client_Api.get_data import get_api
 from Client_Api.get_github_repositories import github_api
+from Client_Api.get_gitlab_repositories import gitlab_api
 from Client_Server.config import Config  # Указываем полный путь до config
 from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -39,6 +40,7 @@ app.register_blueprint(resume_api, url_prefix='/api/resume')
 app.register_blueprint(universal_api)
 app.register_blueprint(get_api)
 app.register_blueprint(github_api, url_prefix='/api/github')
+app.register_blueprint(gitlab_api, url_prefix='/api/gitlab')
 
 @app.route('/')
 def index():
