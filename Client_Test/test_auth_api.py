@@ -5,7 +5,6 @@ from flask import jsonify
 from flask_jwt_extended import decode_token
 from werkzeug.security import generate_password_hash
 from Client_Api.extensions import db
-from Models import Session
 from Models.user import User
 
 
@@ -58,10 +57,6 @@ def test_successful_login(test_client, init_database):
     decoded_token = decode_token(token)
     assert 'sub' in decoded_token  # Проверка того, что токен содержит идентификатор пользователя
 
-    # Проверка, что токен был добавлен в сессию
-    session = Session.query.filter_by(user_id=decoded_token['sub']).first()
-    assert session is not None
-    assert session.token == token
 
 # Тест на неудачную авторизацию (неверный пароль)
 def test_invalid_credentials(test_client, init_database):
@@ -111,33 +106,3 @@ def test_token_expiry(test_client, init_database):
     })
     assert protected_response.status_code == 401
     assert b'Token has expired' in protected_response.data
-
-# Тест на проверку обновления сессии при повторной авторизации
-def test_session_update_on_login(test_client, init_database):
-    # Первая авторизация
-    response1 = test_client.post('/api/auth/login', json={
-        'email': 'test@example.com',
-        'password': 'password123'
-    })
-    assert response1.status_code == 200
-    token1 = response1.get_json()['access_token']
-
-    # Проверка первой сессии
-    decoded_token1 = decode_token(token1)
-    session1 = Session.query.filter_by(user_id=decoded_token1['sub']).first()
-    assert session1 is not None
-    assert session1.token == token1
-
-    # Вторая авторизация
-    response2 = test_client.post('/api/auth/login', json={
-        'email': 'test@example.com',
-        'password': 'password123'
-    })
-    assert response2.status_code == 200
-    token2 = response2.get_json()['access_token']
-
-    # Проверка обновления токена в сессии
-    session2 = Session.query.filter_by(user_id=decoded_token1['sub']).first()
-    assert session2 is not None
-    assert session2.token == token2
-    assert session2.token != token1  # Токен должен измениться

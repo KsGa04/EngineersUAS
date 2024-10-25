@@ -8,8 +8,10 @@ class Config:
     # Production database URI
     SQLALCHEMY_DATABASE_URI = r"mysql+mysqlconnector://gen_user:1\}&\/N\j2-\xL@185.247.185.50:3306/default_db"
 
-    # Test database URI
-    SQLALCHEMY_DATABASE_URI_TEST = os.getenv('DATABASE_URL_TEST',
-                                             'mysql+mysqlconnector://root@localhost:3306/engineersuas_test')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+class TestingConfig(Config):
+    TESTING = True
+    # Используйте тестовую базу данных
+    SQLALCHEMY_DATABASE_URI = r"mysql+mysqlconnector://gen_user:1\}&\/N\j2-\xL@185.247.185.50:3306/kip_test_db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False

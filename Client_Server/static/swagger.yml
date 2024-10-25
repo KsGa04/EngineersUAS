@@ -426,37 +426,6 @@ paths:
           description: "Ошибка запроса"
         500:
           description: "Ошибка на сервере"
-  /get/universities:
-    get:
-      tags:
-        - "Universities"
-      summary: "Получить список всех университетов"
-      description: "Возвращает список всех университетов"
-      produces:
-        - "application/json"
-      responses:
-        200:
-          description: "Успешный ответ. Список университетов."
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                id_university:
-                  type: "integer"
-                short_name:
-                  type: "string"
-                full_name:
-                  type: "string"
-                location:
-                  type: "string"
-                website:
-                  type: "string"
-                contact_info:
-                  type: "string"
-        404:
-          description: "Университеты не найдены"
-
   /get/university/{id_university}/directions:
     get:
       tags:
