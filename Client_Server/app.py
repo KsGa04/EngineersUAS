@@ -36,7 +36,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 # Регистрируем все API из Client_Api
-app.register_blueprint(auth_api, url_prefix='/auth')  # Префикс для маршрутов авторизации
+app.register_blueprint(auth_api)  # Префикс для маршрутов авторизации
 app.register_blueprint(resume_api, url_prefix='/api/resume')
 app.register_blueprint(universal_api)
 app.register_blueprint(get_api)

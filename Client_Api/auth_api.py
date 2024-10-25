@@ -10,25 +10,37 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 auth_api = Blueprint('auth_api', __name__)
 
-
 # Регистрация пользователя
 @auth_api.route('/register', methods=['POST'])
 def register():
     data = request.json
 
-    # Извлекаем данные из запроса
-    email = data.get('email')
-    password = data.get('password')
-    first_name = data.get('first_name')
-    last_name = data.get('last_name')
-    is_employer = data.get('is_employer')  # Чекбокс работодатель
-    university_name = data.get('university')  # Название университета
-    group_name = data.get('group')  # Название группы
+    # Проверка обязательных полей
+    required_fields = ['email', 'password', 'first_name', 'last_name', 'is_employer']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"msg": f"{field} is required"}), 400
 
-    # Хэшируем пароль для безопасного хранения
+    email = data['email']
+    password = data['password']
+    first_name = data['first_name']
+    last_name = data['last_name']
+    is_employer = data['is_employer']
+    university_name = data.get('university')  # Учитываем, если поле отсутствует
+    group_name = data.get('group')
+
+    # Проверка уникальности email
+    if User.query.filter_by(email=email).first():
+        return jsonify({"msg": "User with this email already exists"}), 409
+
+    # Проверка длины пароля
+    if len(password) < 8:
+        return jsonify({"msg": "Password must be at least 8 characters long"}), 400
+
+    # Хэшируем пароль
     hashed_password = generate_password_hash(password)
 
-    # Регистрация пользователя
+    # Создание пользователя
     user = User(
         first_name=first_name,
         last_name=last_name,
@@ -36,14 +48,16 @@ def register():
         password=hashed_password
     )
     db.session.add(user)
-    db.session.flush()  # Генерирует id для пользователя перед добавлением других записей
+    db.session.flush()  # Генерирует id для пользователя
 
-    # Если пользователь - работодатель, сохраняем только его данные
     if is_employer:
         db.session.commit()
         return jsonify({"msg": "Employer registered successfully"}), 201
 
-    # Для студентов добавляем также записи в таблицы `resume` и `educations`
+    # Проверка дополнительных полей для студентов
+    if not university_name or not group_name:
+        return jsonify({"msg": "University and group are required for student registration"}), 400
+
     # Находим университет по названию
     university = University.query.filter_by(full_name=university_name).first()
     if not university:
@@ -54,30 +68,26 @@ def register():
     if not group:
         return jsonify({"msg": "Group not found"}), 404
 
-    # Получаем направление по ID направления из группы
+    # Получаем направление
     direction_id = group.id_direction
 
     # Создаем запись в таблице `resume`
-    resume = Resume(
-        id_user=user.id_user,
-        about_me=""
-    )
+    resume = Resume(id_user=user.id_user, about_me="")
     db.session.add(resume)
-    db.session.flush()  # Генерирует id для резюме перед добавлением в таблицу `educations`
+    db.session.flush()  # Генерирует id для резюме
 
     # Создаем запись в таблице `educations`
     education = Education(
         id_resume=resume.id_resume,
         id_university=university.id_university,
-        id_degree=1,  # Здесь предполагается степень, замените на подходящую
+        id_degree=1,  # Предположим, что id_degree передан правильно
         id_direction=direction_id,
         group_number=group.id_group,
         start_date=date.today(),
-        status="active"  # Установите статус по необходимости
+        status="active"
     )
     db.session.add(education)
 
-    # Сохраняем все изменения
     db.session.commit()
 
     return jsonify({"msg": "Student registered successfully"}), 201
@@ -113,12 +123,3 @@ def login():
     }
 
     return jsonify({"msg": "Успешная авторизация"}), 200
-
-
-
-# Пример защищённого маршрута
-@auth_api.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200

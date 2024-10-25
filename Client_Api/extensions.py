@@ -10,3 +10,4 @@ jwt = JWTManager()
 
 def current_timestamp():
     return datetime.now(timezone.utc)
+

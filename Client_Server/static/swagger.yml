@@ -105,7 +105,7 @@ paths:
           description: "изменено"
         400:
           description: "He изменено"
-  /auth/register:
+  /register:
     post:
       tags:
         - "auth"
@@ -186,7 +186,7 @@ paths:
                     type: string
                     example: "University not found"
 
-  /auth/login:
+  /login:
     post:
       tags:
         - "auth"
