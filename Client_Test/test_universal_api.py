@@ -1,57 +1,43 @@
 import pytest
-from flask import Flask
-
 from Client_Api.extensions import db
-from Client_Server.app import app
 from Client_Server.config import TestingConfig
-# Подключите ваше приложение и базу данных
-from Models import Role, User, Resume  # Импортируйте необходимые модели
+from Models import Role, User, Resume
+from Client_Server.app import create_app
 
+app = create_app(TestingConfig)
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def test_client():
-    # Применяем тестовую конфигурацию
-    app.config.from_object(TestingConfig)  # Подключаем тестовый конфиг
+    with app.test_client() as client:
+        yield client
 
-    # Создаем тестовый клиент
-    with app.test_client() as testing_client:
-        with app.app_context():
-            # Инициализация базы данных для тестов
-            db.create_all()  # Создаем все таблицы
-            yield testing_client  # Тесты выполняются здесь
-            db.session.remove()
-            db.drop_all()  # Удаляем все таблицы после теста
-
-
-@pytest.fixture
-def add_test_data():
-    # Добавляем тестовые данные
-    def _add_test_data():
-        role = Role(role_name="Student")
-        user = User(first_name="John", last_name="Doe", email="john.doe@example.com", password="hashed_password")
-        resume = Resume(id_user=user.id_user, about_me="Test resume")
-
+def setup_module(module):
+    role = Role(role_name="Student")
+    user = User(id_user=1, first_name="John", last_name="Doe", email="john.doe@example.com", password="hashed_password")
+    resume = Resume(id_user=user.id_user, about_me="Test resume")
+    with app.app_context():
+        db.create_all()
         db.session.add(role)
         db.session.add(user)
         db.session.add(resume)
         db.session.commit()
 
-    return _add_test_data
+def teardown_module(module):
+    with app.app_context():
+        db.session.remove()
+        db.drop_all()
 
-
-# Тест для получения всех записей из таблицы 'roles'
-def test_get_roles(test_client, add_test_data):
-    add_test_data()
-    response = test_client.get('/api/roles')
+# Тест для получения всех записей из таблицы 'role'
+def test_get_roles(test_client):
+    response = test_client.get('/api/role')
     assert response.status_code == 200
     json_data = response.get_json()
     assert len(json_data) > 0
     assert json_data[0]['role_name'] == 'Student'
 
-
-def test_get_users(test_client, add_test_data):
-    add_test_data()
-    response = test_client.get('/api/users')
+# Тест для получения всех записей из таблицы 'user'
+def test_get_users(test_client):
+    response = test_client.get('/api/user')
     assert response.status_code == 200
     json_data = response.get_json()
     assert len(json_data) > 0
@@ -70,7 +56,7 @@ def test_get_resumes(test_client):
     # Проверяем содержимое
     json_data = response.get_json()
     assert len(json_data) > 0
-    assert json_data[1]['about_me'] == 'Test resume'
+    assert json_data[0]['about_me'] == 'Test resume'
 
 
 # Тест для ошибки: Неверная таблица

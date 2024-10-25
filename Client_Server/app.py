@@ -16,33 +16,35 @@ from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
 from Client_Api.generate_resume_api import resume_api
 
-app = Flask(__name__)
-app.config.from_object(Config)
+def create_app(config):
+    app = Flask(__name__)
+    app.config.from_object(config)
 
-# Инициализация базы данных и JWT
-db.init_app(app)
-jwt.init_app(app)
+    # Инициализация базы данных и JWT
+    db.init_app(app)
+    jwt.init_app(app)
 
-# Swagger
-SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.yml'  # Убедитесь, что swagger.yml находится в правильном месте
+    # Swagger
+    SWAGGER_URL = '/swagger'
+    API_URL = '/static/swagger.yml'  # Убедитесь, что swagger.yml находится в правильном месте
 
-swaggerui_blueprint = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={'app_name': "КИП API"}
-)
-app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        SWAGGER_URL,
+        API_URL,
+        config={'app_name': "КИП API"}
+    )
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
+    app.register_blueprint(auth_api, url_prefix='/auth')  # Префикс для маршрутов авторизации
+    app.register_blueprint(resume_api, url_prefix='/api/resume')
+    app.register_blueprint(universal_api)
+    app.register_blueprint(get_api)
+    app.register_blueprint(github_api, url_prefix='/api/github')
+    app.register_blueprint(university_api)
+    app.register_blueprint(gitlab_api, url_prefix='/api/gitlab')
+    return app
 
-app.register_blueprint(auth_api, url_prefix='/auth')  # Префикс для маршрутов авторизации
-app.register_blueprint(resume_api, url_prefix='/api/resume')
-app.register_blueprint(universal_api)
-app.register_blueprint(get_api)
-app.register_blueprint(github_api, url_prefix='/api/github')
-app.register_blueprint(university_api)
-app.register_blueprint(gitlab_api, url_prefix='/api/gitlab')
-
+app = create_app(Config)
 
 @app.route('/')
 def index():
