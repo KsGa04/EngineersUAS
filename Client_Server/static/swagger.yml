@@ -105,74 +105,88 @@ paths:
           description: "изменено"
         400:
           description: "He изменено"
-
-  /api/auth/register:
+  /auth/register:
     post:
       tags:
         - "auth"
-      summary: "Регистрация пользователя"
-      description: "Создание новой учетной записи"
-      consumes:
-        - "multipart/form-data"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "formData"
-          name: "email"
-          type: "string"
-          required: true
-          description: "Email пользователя"
-        - in: "formData"
-          name: "password"
-          type: "string"
-          required: true
-          description: "Пароль пользователя"
-        - in: "formData"
-          name: "role"
-          type: "string"
-          required: true
-          description: "Роль пользователя (student, employer, admin)"
-          enum:
-            - "student"
-            - "employer"
-            - "admin"
-        - in: "formData"
-          name: "first_name"
-          type: "string"
-          required: true
-          description: "Имя пользователя"
-        - in: "formData"
-          name: "last_name"
-          type: "string"
-          required: true
-          description: "Фамилия пользователя"
-        - in: "formData"
-          name: "phone"
-          type: "string"
-          required: false
-          description: "Телефон пользователя"
-        - in: "formData"
-          name: "telegram_username"
-          type: "string"
-          required: false
-          description: "Имя пользователя в Telegram"
-        - in: "formData"
-          name: "city"
-          type: "string"
-          required: false
-          description: "Город проживания пользователя"
-        - in: "formData"
-          name: "image"
-          type: "file"
-          required: false
-          description: "Изображение профиля пользователя (опционально)"
+      summary: Регистрация пользователя
+      description: Регистрирует нового пользователя как работодателя или студента. Если пользователь - студент, добавляются записи в таблицы `resume` и `educations`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email пользователя
+                  example: user@example.com
+                password:
+                  type: string
+                  format: password
+                  description: Пароль пользователя
+                  example: P@ssw0rd
+                first_name:
+                  type: string
+                  description: Имя пользователя
+                  example: John
+                last_name:
+                  type: string
+                  description: Фамилия пользователя
+                  example: Doe
+                is_employer:
+                  type: boolean
+                  description: Чекбокс, указывающий, является ли пользователь работодателем
+                  example: false
+                university:
+                  type: string
+                  description: Название университета (только для студентов)
+                  example: MIT
+                group:
+                  type: string
+                  description: Номер группы (только для студентов)
+                  example: "CS101"
+              required:
+                - email
+                - password
+                - first_name
+                - last_name
+                - is_employer
       responses:
-        201:
-          description: "Пользователь успешно зарегистрирован"
-        400:
-          description: "Пользователь уже существует"
+        '201':
+          description: Успешная регистрация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: "Student registered successfully"
+        '400':
+          description: Некорректный запрос
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: "Bad request"
+        '404':
+          description: Университет или группа не найдены
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: "University not found"
 
-  /api/auth/login:
+  /auth/login:
     post:
       tags:
         - "auth"
@@ -378,6 +392,7 @@ paths:
           description: Неверный запрос
         '500':
           description: Ошибка сервера
+
   /api/github/add_repos:
     get:
       tags:
@@ -474,6 +489,60 @@ paths:
                   type: "integer"
         404:
           description: "Группы не найдены для этого университета"
+
+  /api/gitlab/repos:
+    get:
+      tags:
+        - "parser"
+      summary: Получить информацию о репозиториях с генерацией описания
+      parameters:
+        - name: gitlab_url
+          in: query
+          description: Ссылка на профиль GitLab
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          description: GitLab Token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Название репозитория
+                    description:
+                      type: string
+                      description: Описание репозитория
+                    languages:
+                      type: array
+                      description: Языки, использованные в репозитории
+                      items:
+                        type: string
+                    topics:
+                      type: array
+                      description: Темы, связанные с репозиторием
+                      items:
+                        type: string
+                    generated_description:
+                      type: string
+                      description: Сгенерированное описание репозитория
+        '400':
+          description: Неверный запрос
+        '500':
+          description: Ошибка сервера
+
+
 components:
   schemas:
     # Описание таблицы users

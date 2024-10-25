@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Изменение README.md" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректирована авторизация">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,12 +26,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="test_universal_api" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -64,14 +67,19 @@
     "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
     "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
     "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_roles.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_users.executor": "Debug",
+    "Python tests.Python tests for test_universal_api.test_invalid_table.executor": "Run",
     "Python tests.Python tests in test_auth_api.py.executor": "Run",
     "Python tests.Python tests in test_reg_api.py.executor": "Run",
+    "Python tests.Python tests in test_universal_api.py.executor": "Debug",
     "Python.app (1).executor": "Run",
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/PC/PycharmProjects/python_advanced",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "settings.sync"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -80,11 +88,11 @@
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\templates" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static\css" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app">
@@ -284,7 +292,39 @@
       <option name="project" value="LOCAL" />
       <updated>1729589519045</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Изменение swagger.yml">
+      <option name="closed" value="true" />
+      <created>1729690853195</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1729690853195</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Тесты для universal_api. Почищены некоторые api">
+      <option name="closed" value="true" />
+      <created>1729755051258</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1729755051258</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Packages">
+      <option name="closed" value="true" />
+      <created>1729760189485</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1729760189485</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Подкорректирована авторизация">
+      <option name="closed" value="true" />
+      <created>1729840308341</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1729840308341</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -306,7 +346,11 @@
     <MESSAGE value="Корректировки по API и генерации резюме" />
     <MESSAGE value="Шаблон резюме и наброски первой страницы" />
     <MESSAGE value="Изменение README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменение README.md" />
+    <MESSAGE value="Изменение swagger.yml" />
+    <MESSAGE value="Тесты для universal_api. Почищены некоторые api" />
+    <MESSAGE value="Packages" />
+    <MESSAGE value="Подкорректирована авторизация" />
+    <option name="LAST_COMMIT_MESSAGE" value="Подкорректирована авторизация" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -323,13 +367,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
-          <line>12</line>
+          <line>15</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
-          <line>83</line>
+          <line>86</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
+          <line>87</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
+          <line>99</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
