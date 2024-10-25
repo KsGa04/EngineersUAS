@@ -74,31 +74,17 @@ def login():
 
     # Явное преобразование результата в словарь
     user = {
-        "id": result.id,
         "email": result.email,
         "password": result.password,
-        "role": result.role,
+        "role_id": result.role_id,
         "first_name": result.first_name,
         "last_name": result.last_name,
         "phone": result.phone,
-        "telegram_username": result.telegram_username,
-        "city": result.city,
-        "image": result.image,
         "created_at": result.created_at,
-        "updated_at": result.updated_at
+        "last_login": result.last_login
     }
 
-    # Проверяем хеш пароля
-    if not check_password_hash(user['password'], password):
-        return jsonify({"msg": "Invalid credentials"}), 401
-
-    # Создаем токен доступа, срок жизни токена 60 минут
-    expires_in_minutes = 60
-    access_token = create_access_token(identity=user['id'], expires_delta=timedelta(minutes=expires_in_minutes))
-
-    db.session.commit()
-
-    return jsonify(access_token=access_token), 200
+    return jsonify({"msg": "Успешная авторизация"}), 200
 
 
 

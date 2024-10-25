@@ -106,7 +106,7 @@ paths:
         400:
           description: "He изменено"
 
-  /api/auth/register:
+  /auth/register:
     post:
       tags:
         - "auth"
@@ -152,11 +152,6 @@ paths:
           required: false
           description: "Телефон пользователя"
         - in: "formData"
-          name: "telegram_username"
-          type: "string"
-          required: false
-          description: "Имя пользователя в Telegram"
-        - in: "formData"
           name: "city"
           type: "string"
           required: false
@@ -172,7 +167,7 @@ paths:
         400:
           description: "Пользователь уже существует"
 
-  /api/auth/login:
+  /auth/login:
     post:
       tags:
         - "auth"
@@ -201,18 +196,6 @@ paths:
           description: "Успешная авторизация"
         401:
           description: "Неверные данные"
-
-  /api/auth/protected:
-    get:
-      tags:
-        - "protected"
-      summary: "Защищенный маршрут"
-      description: "Доступен только авторизованным пользователям"
-      produces:
-        - "application/json"
-      responses:
-        200:
-          description: "Успешный доступ"
   /pattern1/{user_id}:
     get:
       tags:
