@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Packages">
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректирована авторизация">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
@@ -31,7 +31,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -317,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729760189485</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Подкорректирована авторизация">
+      <option name="closed" value="true" />
+      <created>1729840308341</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1729840308341</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -342,7 +349,8 @@
     <MESSAGE value="Изменение swagger.yml" />
     <MESSAGE value="Тесты для universal_api. Почищены некоторые api" />
     <MESSAGE value="Packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="Packages" />
+    <MESSAGE value="Подкорректирована авторизация" />
+    <option name="LAST_COMMIT_MESSAGE" value="Подкорректирована авторизация" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -369,12 +377,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>59</line>
+          <line>87</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>71</line>
+          <line>99</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
