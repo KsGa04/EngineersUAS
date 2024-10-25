@@ -373,6 +373,7 @@ paths:
           description: Неверный запрос
         '500':
           description: Ошибка сервера
+
   /api/github/add_repos:
     get:
       tags:
@@ -500,6 +501,60 @@ paths:
                   type: "integer"
         404:
           description: "Группы не найдены для этого университета"
+
+  /api/gitlab/repos:
+    get:
+      tags:
+        - "parser"
+      summary: Получить информацию о репозиториях с генерацией описания
+      parameters:
+        - name: gitlab_url
+          in: query
+          description: Ссылка на профиль GitLab
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          description: GitLab Token
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Название репозитория
+                    description:
+                      type: string
+                      description: Описание репозитория
+                    languages:
+                      type: array
+                      description: Языки, использованные в репозитории
+                      items:
+                        type: string
+                    topics:
+                      type: array
+                      description: Темы, связанные с репозиторием
+                      items:
+                        type: string
+                    generated_description:
+                      type: string
+                      description: Сгенерированное описание репозитория
+        '400':
+          description: Неверный запрос
+        '500':
+          description: Ошибка сервера
+
+
 components:
   schemas:
     # Описание таблицы users
