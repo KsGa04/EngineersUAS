@@ -16,6 +16,7 @@ from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
 from Client_Api.generate_resume_api import resume_api
 
+
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
