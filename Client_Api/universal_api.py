@@ -44,8 +44,6 @@ def universal_get(table_name):
 
     query_params = request.args.to_dict()
 
-    print(query_params)
-
     try:
         if not query_params:
             results = ModelClass.query.all()
@@ -56,7 +54,6 @@ def universal_get(table_name):
 
         for result in results_dict:
             result.pop('_sa_instance_state', None)
-        print(results_dict)
         return jsonify(results_dict), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
@@ -70,12 +67,8 @@ def universal_put(table_name):
     except (ModuleNotFoundError, AttributeError):
         return jsonify({"msg": f"Table '{table_name}' does not exist."}), 400
 
-    print(request)
-
     query_params = request.args.to_dict()
-    print(query_params)
     data = request.get_json()
-    print(data)
     try:
         record = ModelClass.query.filter_by(**query_params).one()
 

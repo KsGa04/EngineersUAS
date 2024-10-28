@@ -3,10 +3,9 @@ from datetime import timezone, datetime, timedelta, date
 from flask import Blueprint, request, jsonify
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
-from Client_Api.extensions import db  # Импортируем db отсюда
-from Models import University, Group, Resume, Education
 from Models.user import User
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token
+from Client_Server.app import db
 
 auth_api = Blueprint('auth_api', __name__)
 
@@ -121,5 +120,4 @@ def login():
         "created_at": result.created_at,
         "last_login": result.last_login
     }
-
     return jsonify({"msg": "Успешная авторизация"}), 200
