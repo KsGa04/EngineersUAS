@@ -34,64 +34,54 @@
                     </div>
                     <div class="user__avatar__wrapper">
                         <div class="user__avatar">
-                            <img src="static/assets/images/user__avatar.png" alt="">
+                            <img id="profilePhoto" src="static/assets/images/user__avatar.png" alt="User Avatar">
                         </div>
                         <div class="edit__avatar__item">
                             <img src="static/assets/images/icon_edit_avatar.svg" alt="">
-                            <a href="">Изменить</a>
+                             <a href="javascript:void(0)">Изменить</a>
+                            <!-- Скрытое поле для выбора файла -->
+                            <input type="file" id="photoInput" accept="image/*" style="display:none">
                         </div>
                     </div>
                     
                 </div>
                 <div class="account__inner__content">
                     <div class="account__cv__form__block">
-                        <form action="" class="account__cv__form">
+                        <form action="#" class="account__cv__form">
                             <div class="cv_name_item cv__form__item">
                                 <div class="cv__form__title">
                                     <h4 class="">
                                         ФИО
                                     </h4>
                                 </div>
-                                
-                                <input type="text" class="cv__form__input" name="cv__name">
+                                <input type="text" class="cv__form__input" name="cv__name" readonly>
                             </div>
                             <div class="birthDate__item cv__form__item">
-
                                 <div class="cv__form__title">
                                     <h4 class="">
                                         Дата рождения
                                     </h4>
                                 </div>
-                                <input type="datetime" name="cv__birthdate" id="" class="cv__form__input">
+                                <input type="date" name="cv__birthdate" class="cv__form__input" readonly>
                             </div>
-                            <div class="univercity__item cv__form__item">
-
+                            <div class="university__item cv__form__item">
                                 <div class="cv__form__title">
                                     <h4 class="">
                                         Университет
                                     </h4>
                                 </div>
-                                <input type="text" name="cv__univercity"id="" class="cv__form__input">
+                                <input type="text" name="cv__univercity" class="cv__form__input" readonly>
                             </div>
                             <div class="groupnumber__item cv__form__item">
-
                                 <div class="cv__form__title">
                                     <h4 class="">
                                         Группа
                                     </h4>
                                 </div>
-                                <input type="text" name="cv__groupnumber"id="" class="cv__form__input">
-                            </div>
-                            <div class="cv__form__footer">
-                                <div class="cv__student__check">
-                                    <input type="checkbox" name="cv__student__checkbox" id="">
-                                    <h6>Студент сейчас</h6>
-                                </div>
-                                <div class="cv__save__btn">
-                                    <a href="">СОХРАНИТЬ</a>
-                                </div>
+                                <input type="text" name="cv__groupnumber" class="cv__form__input" readonly>
                             </div>
                         </form>
+
                     </div>
                     <div class="account__cv__preview">
                         <div class="cv__preview">
@@ -111,4 +101,83 @@
         
     </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", async function() {
+    const userId = localStorage.getItem("user_id");
+    const authToken = localStorage.getItem("authToken");
+
+    if (!userId || !authToken) {
+        alert("Авторизация не выполнена. Пожалуйста, войдите.");
+        window.location.href = "/login";  // Перенаправление на страницу авторизации
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/user/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        });
+
+        const userData = await response.json();
+
+        if (response.ok) {
+            console.log("Данные пользователя:", userData);  // Проверка данных в консоли
+
+            // Заполнение полей формы
+            document.querySelector("[name='cv__name']").value = `${userData.first_name || ''} ${userData.last_name || ''}`;
+            document.querySelector("[name='cv__birthdate']").value = userData.birth_date || "";
+            document.querySelector("[name='cv__univercity']").value = userData.resume.educations[0].university || "";
+            document.querySelector("[name='cv__groupnumber']").value = userData.resume.educations[0].group || "";
+
+        } else {
+            console.error("Ошибка при загрузке данных пользователя:", userData);
+            alert("Не удалось загрузить данные пользователя.");
+        }
+    } catch (error) {
+        console.error("Ошибка при подключении к серверу:", error);
+        alert("Не удалось подключиться к серверу.");
+    }
+});
+
+   document.querySelector(".edit__avatar__item a").addEventListener("click", () => {
+    document.querySelector("#photoInput").click();
+});
+
+document.querySelector("#photoInput").addEventListener("change", async function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async function () {
+        const base64Image = reader.result.split(",")[1]; // Убираем "data:image/..." часть
+        const userId = localStorage.getItem("user_id");
+        const authToken = localStorage.getItem("authToken");
+
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/api/user/${userId}/update_photo`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ profile_photo: base64Image })
+            });
+
+            if (response.ok) {
+                document.querySelector(".user__avatar img").src = reader.result;
+                alert("Фото профиля обновлено успешно.");
+            } else {
+                alert("Ошибка обновления фото профиля.");
+            }
+        } catch (error) {
+            console.error("Ошибка:", error);
+            alert("Ошибка подключения к серверу.");
+        }
+    };
+    reader.readAsDataURL(file);
+});
+
+</script>
 </html>

@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректирована регистрация">
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректированы api регистрации и авторизации">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/extensions.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/extensions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/images/image_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/images/logo_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/images/logo_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/userboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Test/test_auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Test/test_auth_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Test/test_reg_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Test/test_reg_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Test/test_universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Test/test_universal_api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,35 +65,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_invalid_credentials.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_required_fields.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_null_values.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_session_update_on_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_registration.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_token_expiry.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_reg_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_get_roles.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_get_users.executor&quot;: &quot;Debug&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_invalid_table.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_auth_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_reg_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_universal_api.py.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/python_advanced&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_roles.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_users.executor": "Debug",
+    "Python tests.Python tests for test_universal_api.test_invalid_table.executor": "Run",
+    "Python tests.Python tests in test_auth_api.py.executor": "Run",
+    "Python tests.Python tests in test_reg_api.py.executor": "Run",
+    "Python tests.Python tests in test_universal_api.py.executor": "Debug",
+    "Python.app (1).executor": "Run",
+    "Python.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
@@ -92,14 +101,14 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
-    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.app (1)">
+    <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -121,19 +130,26 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_auth_api.test_invalid_credentials" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EngineersUAS" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client_Test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client_Server" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_auth_api.test_invalid_credentials&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="SCRIPT_NAME" value="C:\Users\PC\PycharmProjects\EngineersUAS\app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="Python tests for test_auth_api.test_missing_email_or_password" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
@@ -183,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python tests.Python tests for test_auth_api.test_token_expiry" />
         <item itemvalue="Python tests.Python tests for test_auth_api.test_session_update_on_login" />
         <item itemvalue="Python tests.Python tests for test_auth_api.test_missing_email_or_password" />
-        <item itemvalue="Python tests.Python tests for test_auth_api.test_invalid_credentials" />
       </list>
     </recent_temporary>
   </component>
@@ -335,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729841492379</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Подкорректированы api регистрации и авторизации">
+      <option name="closed" value="true" />
+      <created>1729867874113</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1729867874113</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -362,7 +386,8 @@
     <MESSAGE value="Packages" />
     <MESSAGE value="Подкорректирована авторизация" />
     <MESSAGE value="Подкорректирована регистрация" />
-    <option name="LAST_COMMIT_MESSAGE" value="Подкорректирована регистрация" />
+    <MESSAGE value="Подкорректированы api регистрации и авторизации" />
+    <option name="LAST_COMMIT_MESSAGE" value="Подкорректированы api регистрации и авторизации" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -386,16 +411,6 @@
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>86</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>97</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>109</line>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

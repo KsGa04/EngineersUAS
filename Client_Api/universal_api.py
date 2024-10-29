@@ -59,6 +59,11 @@ def universal_get(table_name):
         return jsonify({"msg": str(e)}), 400
 
 
+import base64
+from flask import request, jsonify
+import importlib
+
+
 @universal_api.route('/api/<table_name>', methods=['PUT'])
 def universal_put(table_name):
     try:
@@ -69,11 +74,15 @@ def universal_put(table_name):
 
     query_params = request.args.to_dict()
     data = request.get_json()
+
     try:
         record = ModelClass.query.filter_by(**query_params).one()
 
         for key, value in data.items():
             if hasattr(record, key):
+                # Преобразование Base64 в BLOB, если поле profile_photo
+                if key == "profile_photo":
+                    value = base64.b64decode(value)
                 setattr(record, key, value)
 
         db.session.commit()

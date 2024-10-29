@@ -10,42 +10,66 @@
     gap: 20px;
 }
 
-/* Шапка с логотипом и телефоном */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px;
     background-color: #f6f6f6;
     border-bottom: 2px solid #ccc;
 }
 
-.logo-img {
-    width: 120px;
-    height: auto;
-}
-
-.contact-info {
+/* Левая часть шапки */
+.header-left {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    line-height: 0.5;
-}
-.contact-logo {
-    display: flex;
-    align-items: center;
-    line-height: 0.5;
-}
-.icon img {
-    width: 30px;
-    height: auto;
-    margin-right: 10px;
 }
 
-.contact-info strong {
-    font-size: 18px;
+.header-left h1 {
+    font-size: 24px;
     font-weight: bold;
-    width: 60%;
+    margin: 0;
+}
+
+/* Контактная информация */
+.contact-info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+/* Правая часть шапки (логотип) */
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 250px;
+    height: auto;
+}
+/* Стили для ссылок в контактной информации */
+.contact-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
 }
 
 /* Основная сетка */
@@ -125,7 +149,9 @@ ol {
 /* Контактная информация */
 .contact-info {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    display: block;
 }
 
 /* Навыки */
@@ -329,7 +355,7 @@ ol {
     color: #333;  /* Цвет текста */
     padding: 5px 10px;
     border-radius: 20px;  /* Скругленные углы для чипсов */
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
     white-space: nowrap;  /* Запрет на перенос текста внутри */
 }
@@ -346,12 +372,14 @@ ol {
     border-radius: 5px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
+    display: contents;
 }
 
 /* Название проекта */
-.project-item p strong {
+.project-item p a {
     font-size: 16px;
     color: #333;
+    font-weight: bold;
 }
 
 /* Описание проекта */

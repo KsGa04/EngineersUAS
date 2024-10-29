@@ -3,9 +3,11 @@ from datetime import timezone, datetime, timedelta, date
 from flask import Blueprint, request, jsonify
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from Models import University, Group, Resume, Education
 from Models.user import User
 from flask_jwt_extended import create_access_token
-from Client_Server.app import db
+from Client_Api.extensions import db
 
 auth_api = Blueprint('auth_api', __name__)
 
@@ -98,26 +100,11 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    # Проверка на отсутствие обязательных полей
-    if not email or not password:
-        return jsonify({"msg": "Missing required fields"}), 400
+    user = User.query.filter_by(email=email).first()
 
-    # Выполняем сырой SQL-запрос для получения данных о пользователе
-    query = text("SELECT * FROM users WHERE email = :email")
-    result = db.session.execute(query, {"email": email}).fetchone()
+    if user:  # Убедитесь, что используется проверка пароля
+        # Генерация токена JWT
+        authToken = create_access_token(identity=user.id_user)
+        return jsonify({"user_id": user.id_user, "authToken": authToken}), 200
 
-    if result is None:
-        return jsonify({"msg": "Invalid credentials"}), 401
-
-    # Явное преобразование результата в словарь
-    user = {
-        "email": result.email,
-        "password": result.password,
-        "role_id": result.role_id,
-        "first_name": result.first_name,
-        "last_name": result.last_name,
-        "phone": result.phone,
-        "created_at": result.created_at,
-        "last_login": result.last_login
-    }
-    return jsonify({"msg": "Успешная авторизация"}), 200
+    return jsonify({"msg": "Неверные учетные данные"}), 401

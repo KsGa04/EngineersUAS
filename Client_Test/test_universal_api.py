@@ -6,10 +6,12 @@ from Client_Server.app import create_app
 
 app = create_app(TestingConfig)
 
+
 @pytest.fixture(scope="module")
 def test_client():
     with app.test_client() as client:
         yield client
+
 
 def setup_module(module):
     role = Role(role_name="Student")
@@ -22,10 +24,12 @@ def setup_module(module):
         db.session.add(resume)
         db.session.commit()
 
+
 def teardown_module(module):
     with app.app_context():
         db.session.remove()
         db.drop_all()
+
 
 # Тест для получения всех записей из таблицы 'role'
 def test_get_roles(test_client):
@@ -34,6 +38,7 @@ def test_get_roles(test_client):
     json_data = response.get_json()
     assert len(json_data) > 0
     assert json_data[0]['role_name'] == 'Student'
+
 
 # Тест для получения всех записей из таблицы 'user'
 def test_get_users(test_client):

@@ -541,6 +541,88 @@ paths:
           description: Неверный запрос
         '500':
           description: Ошибка сервера
+  /user/{user_id}:
+    get:
+      summary: Получение информации о пользователе
+      description: Возвращает информацию о пользователе, включая данные профиля и резюме.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+          description: Уникальный идентификатор пользователя
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+          description: Токен авторизации JWT в формате "Bearer {token}"
+      responses:
+        '200':
+          description: Успешное получение информации о пользователе
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_name:
+                    type: string
+                    example: Иван
+                  last_name:
+                    type: string
+                    example: Иванов
+                  birth_date:
+                    type: string
+                    format: date
+                    example: 1990-01-01
+                  resume:
+                    type: object
+                    properties:
+                      about_me:
+                        type: string
+                        example: "Опытный инженер с более чем 5-летним стажем"
+                      educations:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            university:
+                              type: string
+                              example: "КНИТУ-КАИ"
+                            degree:
+                              type: string
+                              example: "Бакалавр"
+                            start_date:
+                              type: string
+                              format: date
+                              example: 2015-09-01
+                            end_date:
+                              type: string
+                              format: date
+                              example: 2019-06-01
+        '404':
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: "User not found"
+        '401':
+          description: Неавторизованный доступ
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: "Invalid or missing authorization token"
 
 
 components:

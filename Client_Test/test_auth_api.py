@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 import pytest
-from flask import jsonify
 from flask_jwt_extended import decode_token
 from werkzeug.security import generate_password_hash
 from Client_Api.extensions import db
