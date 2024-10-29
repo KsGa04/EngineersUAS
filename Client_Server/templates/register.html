@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">   
+</head>
+<body>
+    <div class="wrapper">
+        <div class="regiser__container _container">
+            <div class="regiser__wrapper">
+                <div class="register__title">
+                    <h1>РЕГИСТРАЦИЯ</h1>
+                </div>
+                <div class="register__form__block">
+                    <form action="" class="register__form">
+                        <label for="email_input">Почта</label>
+                        <input type="email" id="email_input" placeholder="kip@yandex.ru">
+                        <label for="password_input">Пароль</label>
+                        <input type="password" id="password_input" placeholder="***********">
+                        <label for="name_input">Имя</label>
+                        <input type="text" id="name_input" placeholder="Анастасия">
+                        
+                        <label for="select_university">ВУЗ/СУЗ</label>
+                        <select name="select_university" id="university" placeholder="Выбрать из списка"> 
+                            <option value="value1">КФУ</option>
+                            <option value="value2" selected>КНИТУ-КАИ</option>
+                            <option value="value3">КНИТУ-КХТИ</option>
+                        </select>
+
+                        <label for="select_groupNumber">Группа</label>
+                        <select name="select_groupNumber" id="groupNumber" placeholder="Выбрать из списка"> 
+                            <option value="value1">09-1231</option>
+                            <option value="value2" selected>09-1231</option>
+                            <option value="value3">09-1231</option>
+                        </select>
+                        <label id="groupNumber__underText" for="select_groupNumber"> (необязательно, но рекомендовано)</label>
+                        <div class="student_checkbox_block">
+                            <input type="checkbox" id="student_check" name="student" />
+                            <label for="student_check">Являюсь студентом на данный момент</label>
+                        </div>
+                        
+
+                        <input type="submit" value="Зарегистрироваться" id="auth_btn">
+                    </form>
+                </div>
+                <div class="login__subtext">
+                    Есть аккаунт?
+                    <a href="">Войти</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
