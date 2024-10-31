@@ -1,28 +1,43 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карьера Инженера</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/main.css">
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="top-section">
-                <div class="logo">
-                    <div class="circle"></div>
-                    <h1>Карьерный Инженерный Портал</h1>
-                </div>
-                <button class="login-btn">ВОЙТИ</button>
+    <div class="wrapper">
+    <main>
+        <div class="main__container _container">
+            <div class="main__page__humans__image">
+                <img src="static/images/humans__image.png'" alt="">
             </div>
-            <h2>Ваш старт в робототехнике</h2>
-            <p>Создай резюме за 3 минуты и найди работу в инженерии через платформу КИП</p>
-            <a href="#" class="button">Зарегистрируйся</a>
+            <div class="main__page__header">
+                <div class="main__page__header__left">
+                    <div class="main__page__header__logo"></div>
+                    <div class="main__page__header__logo__title"><h1>Карьерный<br>Инженерный<br>Портал</h1></div>
+                </div>
+                <div class="main__page__header__right">
+                    <a href="login.html" class="main__page__auth__btn">ВОЙТИ</a>
+                </div>
+            </div>
+            <div class="main__page__inner">
+                <div class="main__page__title">
+                    <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                </div>
+                <div class="main__page__subtitle">
+                    <h6>Ваш старт <br>в робототехнике</h6>
+                </div>
+                <div class="main__page__offer">
+                    <h6><span> Создай резюме за 3 минуты</span> <br> и найди работу в инженерии <br>через платформу КИП</h6>
+                </div>
+                <div class="main__page__regist__btn">
+                    <a href="register.html">ЗАРЕГИСТРИРУЙСЯ</a>
+                </div>
+            </div>
         </div>
-        <div class="image-section">
-            <img src="{{ url_for('static', filename='images/students-image.png') }}" alt="Students taking a selfie" class="students-image">
-        </div>
+    </main>
     </div>
 </body>
 </html>

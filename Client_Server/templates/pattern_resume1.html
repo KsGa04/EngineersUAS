@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="header-right">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo-img">
+                <img src="{{ url_for('static', filename='images/logo_1.png') }}" alt="Logo" class="logo-img">
             </div>
         </header>
 
@@ -121,7 +121,11 @@
             <div class="right-column">
                 <!-- Фото -->
                 <div class="profile-picture">
-                    <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Picture">
+                    {% if profile_image %}
+                        <img src="data:image/jpeg;base64,{{ profile_image }}" alt="Profile Picture">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile Picture">
+                    {% endif %}
                 </div>
 
                 <!-- Контактная информация -->

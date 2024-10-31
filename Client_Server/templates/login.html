@@ -31,7 +31,7 @@
     </div>
 </body>
 <script>
-    document.getElementById("auth_btn").addEventListener("click", async function() {
+document.getElementById("auth_btn").addEventListener("click", async function() {
     const email = document.getElementById("email_input").value;
     const password = document.getElementById("password_input").value;
 
@@ -41,16 +41,14 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, password }),
+            credentials: 'include' // Передаем cookie вместе с запросом
         });
 
         const result = await response.json();
 
         if (response.ok) {
-            // Сохраняем user_id и authToken в локальное хранилище
             localStorage.setItem("user_id", result.user_id);
-            localStorage.setItem("authToken", result.authToken);
-
             alert("Успешная авторизация!");
             window.location.href = "/userboard";  // Перенаправление на личный кабинет
         } else {
@@ -61,6 +59,5 @@
         alert("Не удалось подключиться к серверу.");
     }
 });
-
 </script>
 </html>

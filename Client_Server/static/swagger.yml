@@ -623,9 +623,91 @@ paths:
                   msg:
                     type: string
                     example: "Invalid or missing authorization token"
-
+  /api/user/{user_id}/update_photo:
+    post:
+      summary: Update user's profile photo
+      description: Updates the profile photo of the user. The photo should be provided as a base64 encoded string in the request body.
+      tags:
+        - User
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: ID of the user whose profile photo is being updated
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile_photo:
+                  type: string
+                  description: Base64 encoded string of the profile photo
+              required:
+                - profile_photo
+      responses:
+        '200':
+          description: Profile photo updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: Profile photo updated successfully
+        '400':
+          description: Bad request, e.g., missing photo data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: No photo data provided
+        '403':
+          description: Access denied, user is not authorized to update this profile photo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: Access denied
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: User not found
+        '500':
+          description: Internal server error, failed to update photo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    example: Failed to update photo
+      security:
+        - bearerAuth: [ ]
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     # Описание таблицы users
     User:

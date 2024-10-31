@@ -10,6 +10,7 @@ class User(db.Model):
     middle_name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True, nullable=False)
     phone = db.Column(db.String(20))
+    telegram = db.Column(db.String(255), nullable=True)
     password = db.Column(db.String(255), nullable=False)
     birth_date = db.Column(db.Date)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id_role'))

@@ -1,12 +1,12 @@
 from datetime import timezone, datetime, timedelta, date
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from Models import University, Group, Resume, Education
 from Models.user import User
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, set_access_cookies
 from Client_Api.extensions import db
 
 auth_api = Blueprint('auth_api', __name__)
@@ -102,9 +102,14 @@ def login():
 
     user = User.query.filter_by(email=email).first()
 
-    if user:  # Убедитесь, что используется проверка пароля
-        # Генерация токена JWT
+    if user:  # Здесь требуется реальная проверка пароля
+        # Генерация токена
         authToken = create_access_token(identity=user.id_user)
-        return jsonify({"user_id": user.id_user, "authToken": authToken}), 200
+
+        # Настройка ответа с cookies
+        response = make_response(jsonify({"user_id": user.id_user}))
+        set_access_cookies(response, authToken)
+
+        return response, 200
 
     return jsonify({"msg": "Неверные учетные данные"}), 401

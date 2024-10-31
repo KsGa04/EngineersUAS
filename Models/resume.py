@@ -7,6 +7,7 @@ class Resume(db.Model):
     id_resume = db.Column(db.Integer, primary_key=True)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id_user'), nullable=False)
     about_me = db.Column(db.Text)
+    id_pattern = db.Column(db.Integer, nullable=True)
 
     works = db.relationship('Work', backref='related_resume', lazy=True)
     educations = db.relationship('Education', backref='resume')
