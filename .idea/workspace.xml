@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="2 шаблона резюме готовы" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по api" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -304,7 +304,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730462250701</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Корректировки по api">
+      <option name="closed" value="true" />
+      <created>1730462576828</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1730462576828</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -336,7 +344,8 @@
     <MESSAGE value="Корректировки к предыдущему коммиту" />
     <MESSAGE value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
     <MESSAGE value="2 шаблона резюме готовы" />
-    <option name="LAST_COMMIT_MESSAGE" value="2 шаблона резюме готовы" />
+    <MESSAGE value="Корректировки по api" />
+    <option name="LAST_COMMIT_MESSAGE" value="Корректировки по api" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
