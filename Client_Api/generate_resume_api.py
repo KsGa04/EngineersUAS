@@ -4,13 +4,12 @@ import os
 from datetime import date
 from time import sleep
 
-from reportlab.lib.pagesizes import landscape, A4
-from selenium import webdriver
+from PIL import Image
+from flask import render_template, Blueprint, send_file
 from html2image import Html2Image
 from reportlab.pdfgen import canvas
-from flask import render_template, Blueprint, jsonify, make_response, send_file
-import imgkit
-from PIL import Image
+from selenium import webdriver
+
 from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
     Projects, ProjectSkills
@@ -31,8 +30,7 @@ def age_suffix(age):
 resume_api = Blueprint('resume_api', __name__)
 
 
-@resume_api.route('/pattern1/<int:user_id>', methods=['GET'])
-def generate_resume(user_id):
+def generate_resume_func(pattern_id, user_id):
     user = User.query.get_or_404(user_id)
 
     # Кодирование изображения профиля в Base64
@@ -70,7 +68,7 @@ def generate_resume(user_id):
     age_with_suffix = f"{age} {age_suffix(age)}"
 
     rendered_html = render_template(
-        'pattern_resume1.html', user=user, profile_image=profile_image_base64,
+        f'pattern_resume{pattern_id}.html', user=user, profile_image=profile_image_base64,
         education_list=education_list, experience_list=experience_list, skills=skills,
         resume=resume, tasks_by_education=tasks_by_education, skills_by_task=skills_by_task,
         responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
@@ -82,7 +80,7 @@ def generate_resume(user_id):
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Client_Server'))
 
     # Указание директории для CSS и изображений
-    css_path = os.path.join(base_path, 'static/css/pattern_resume1.css')
+    css_path = os.path.join(base_path, f'static/css/pattern_resume{pattern_id}.css')
     output_dir = os.path.join(base_path, 'templates')
     img_name = f'resume_{user_id}.png'
 
@@ -94,135 +92,19 @@ def generate_resume(user_id):
 
     # Отправка изображения пользователю
     return rendered_html
+
+@resume_api.route('/pattern1/<int:user_id>', methods=['GET'])
+def generate_resume(user_id):
+    return generate_resume_func(1, user_id)
 
 
 @resume_api.route('/pattern2/<int:user_id>', methods=['GET'])
 def generate_resume_2(user_id):
-    user = User.query.get_or_404(user_id)
-
-    # Кодирование изображения профиля в Base64
-    profile_image_base64 = None
-    if user.profile_photo:
-        profile_image_base64 = base64.b64encode(user.profile_photo).decode('utf-8')
-
-    # Загрузка данных резюме и связанных элементов
-    resume = Resume.query.filter_by(id_user=user_id).first_or_404()
-    education_list = Education.query.filter_by(id_resume=resume.id_resume).all()
-    experience_list = Work.query.filter_by(id_resume=resume.id_resume).all()
-    skills = db.session.query(Skills).join(ResumeSkills).filter(ResumeSkills.id_resume == resume.id_resume).all()
-    tasks_by_education, skills_by_task, responsibilities_by_experience, project_skills = {}, {}, {}, {}
-
-    for education in education_list:
-        group_number = education.group_number
-        tasks = Tasks.query.filter_by(id_group=group_number).all()
-        tasks_by_education[group_number] = tasks
-        for task in tasks:
-            task_skills = db.session.query(Skills).join(TaskSkills).filter(TaskSkills.id_task == task.id_task).all()
-            skills_by_task[task.id_task] = task_skills
-
-    for experience in experience_list:
-        responsibilities = Responsibility.query.filter_by(id_work=experience.id_work).all()
-        responsibilities_by_experience[experience.id_work] = responsibilities
-
-    projects = Projects.query.filter_by(id_resume=resume.id_resume).all()
-    for project in projects:
-        skills_for_project = db.session.query(Skills).join(ProjectSkills).filter(
-            ProjectSkills.id_project == project.id_project).all()
-        project_skills[project.id_project] = skills_for_project
-
-    today = date.today()
-    age = today.year - user.birth_date.year - ((today.month, today.day) < (user.birth_date.month, user.birth_date.day))
-    age_with_suffix = f"{age} {age_suffix(age)}"
-
-    rendered_html = render_template(
-        'pattern_resume2.html', user=user, profile_image=profile_image_base64,
-        education_list=education_list, experience_list=experience_list, skills=skills,
-        resume=resume, tasks_by_education=tasks_by_education, skills_by_task=skills_by_task,
-        responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
-        projects=projects, project_skills=project_skills
-    )
-
-    # Конфигурация Html2Image для сохранения изображения
-    hti = Html2Image()
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Client_Server'))
-
-    # Указание директории для CSS и изображений
-    css_path = os.path.join(base_path, 'static/css/pattern_resume1.css')
-    output_dir = os.path.join(base_path, 'templates')
-    img_name = f'resume_{user_id}.png'
-
-    # Установка output_path для сохранения в нужную директорию
-    hti.output_path = output_dir
-    hti.screenshot(html_str=rendered_html, css_file=css_path, save_as=img_name, size=(794, 1250))
-
-    img_path = os.path.join(output_dir, img_name)
-
-    # Отправка изображения пользователю
-    return rendered_html
+    return generate_resume_func(2, user_id)
 
 @resume_api.route('/pattern3/<int:user_id>', methods=['GET'])
 def generate_resume_3(user_id):
-    user = User.query.get_or_404(user_id)
-
-    # Кодирование изображения профиля в Base64
-    profile_image_base64 = None
-    if user.profile_photo:
-        profile_image_base64 = base64.b64encode(user.profile_photo).decode('utf-8')
-
-    # Загрузка данных резюме и связанных элементов
-    resume = Resume.query.filter_by(id_user=user_id).first_or_404()
-    education_list = Education.query.filter_by(id_resume=resume.id_resume).all()
-    experience_list = Work.query.filter_by(id_resume=resume.id_resume).all()
-    skills = db.session.query(Skills).join(ResumeSkills).filter(ResumeSkills.id_resume == resume.id_resume).all()
-    tasks_by_education, skills_by_task, responsibilities_by_experience, project_skills = {}, {}, {}, {}
-
-    for education in education_list:
-        group_number = education.group_number
-        tasks = Tasks.query.filter_by(id_group=group_number).all()
-        tasks_by_education[group_number] = tasks
-        for task in tasks:
-            task_skills = db.session.query(Skills).join(TaskSkills).filter(TaskSkills.id_task == task.id_task).all()
-            skills_by_task[task.id_task] = task_skills
-
-    for experience in experience_list:
-        responsibilities = Responsibility.query.filter_by(id_work=experience.id_work).all()
-        responsibilities_by_experience[experience.id_work] = responsibilities
-
-    projects = Projects.query.filter_by(id_resume=resume.id_resume).all()
-    for project in projects:
-        skills_for_project = db.session.query(Skills).join(ProjectSkills).filter(
-            ProjectSkills.id_project == project.id_project).all()
-        project_skills[project.id_project] = skills_for_project
-
-    today = date.today()
-    age = today.year - user.birth_date.year - ((today.month, today.day) < (user.birth_date.month, user.birth_date.day))
-    age_with_suffix = f"{age} {age_suffix(age)}"
-
-    rendered_html = render_template(
-        'pattern_resume3.html', user=user, profile_image=profile_image_base64,
-        education_list=education_list, experience_list=experience_list, skills=skills,
-        resume=resume, tasks_by_education=tasks_by_education, skills_by_task=skills_by_task,
-        responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
-        projects=projects, project_skills=project_skills
-    )
-
-    # Конфигурация Html2Image для сохранения изображения
-    hti = Html2Image()
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Client_Server'))
-
-    # Указание директории для CSS и изображений
-    css_path = os.path.join(base_path, 'static/css/pattern_resume1.css')
-    output_dir = os.path.join(base_path, 'templates')
-    img_name = f'resume_{user_id}.png'
-
-    # Установка output_path для сохранения в нужную директорию
-    hti.output_path = output_dir
-    hti.screenshot(html_str=rendered_html, css_file=css_path, save_as=img_name, size=(794, 1250))
-
-    img_path = os.path.join(output_dir, img_name)
-
-    # Отправка изображения пользователю
-    return rendered_html
+    return generate_resume_func(3, user_id)
 
 
 @resume_api.route('/pattern_image_pdf/<int:user_id>', methods=['GET'])

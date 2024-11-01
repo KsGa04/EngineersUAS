@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Связь frontend и backend, корректировки личного кабинета и главной страницы">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume2.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume2.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/pattern_resume2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/register.html" afterDir="false" />
-    </list>
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="2 шаблона резюме готовы" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -311,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730356503757</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="2 шаблона резюме готовы">
+      <option name="closed" value="true" />
+      <created>1730462250701</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1730462250701</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -342,7 +335,8 @@
     <MESSAGE value="Связана авторизация и личный кабинет (frontend и backend). Добавлены несколько api для этого" />
     <MESSAGE value="Корректировки к предыдущему коммиту" />
     <MESSAGE value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
-    <option name="LAST_COMMIT_MESSAGE" value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
+    <MESSAGE value="2 шаблона резюме готовы" />
+    <option name="LAST_COMMIT_MESSAGE" value="2 шаблона резюме готовы" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
