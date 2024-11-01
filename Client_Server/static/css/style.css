@@ -198,6 +198,9 @@ h1 {
     color: #FFFFFF;
     padding-right: 10px;
 }
+.register__form select option {
+    color: #438CD8;
+}
 .login__form input::placeholder,
 .register__form input::placeholder {
     color: #FFFFFF;

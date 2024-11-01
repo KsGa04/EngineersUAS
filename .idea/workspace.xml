@@ -4,21 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки к предыдущему коммиту">
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Связь frontend и backend, корректировки личного кабинета и главной страницы">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_user_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume1.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume2.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/pattern_resume2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/static/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/swagger.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/userboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/resume.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/resume.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/pattern_resume2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/pattern_resume2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +28,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Dockerfile" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -303,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730211144145</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Связь frontend и backend, корректировки личного кабинета и главной страницы">
+      <option name="closed" value="true" />
+      <created>1730356503757</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1730356503757</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -333,17 +341,18 @@
     <MESSAGE value="Подкорректированы api регистрации и авторизации" />
     <MESSAGE value="Связана авторизация и личный кабинет (frontend и backend). Добавлены несколько api для этого" />
     <MESSAGE value="Корректировки к предыдущему коммиту" />
-    <option name="LAST_COMMIT_MESSAGE" value="Корректировки к предыдущему коммиту" />
+    <MESSAGE value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
+    <option name="LAST_COMMIT_MESSAGE" value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>15</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+        <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>86</line>
           <option name="timeStamp" value="11" />

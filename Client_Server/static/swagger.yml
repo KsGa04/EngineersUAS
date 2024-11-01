@@ -240,6 +240,56 @@ paths:
           description: "Пользователь или резюме не найдены"
         '500':
           description: "Ошибка на стороне сервера"
+  /pattern2/{user_id}:
+    get:
+      tags:
+        - "resume"
+      summary: "Получить резюме пользователя"
+      description: "Возвращает резюме пользователя по его ID"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: "Идентификатор пользователя"
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "Успешное получение резюме"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumeResponse'
+        '404':
+          description: "Пользователь или резюме не найдены"
+        '500':
+          description: "Ошибка на стороне сервера"
+  /pattern3/{user_id}:
+    get:
+      tags:
+        - "resume"
+      summary: "Получить резюме пользователя"
+      description: "Возвращает резюме пользователя по его ID"
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: "Идентификатор пользователя"
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "Успешное получение резюме"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumeResponse'
+        '404':
+          description: "Пользователь или резюме не найдены"
+        '500':
+          description: "Ошибка на стороне сервера"
   /get/skills:
     get:
       tags:

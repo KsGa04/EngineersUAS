@@ -55,6 +55,7 @@
                         <p class="direction website">{{ organization.website }}</p>
                         {% endfor %}
 
+                        {% if responsibilities_by_experience[experience.id_work] %}
                         <div class="responsibilities-section">
                             <h5>Обязанности:</h5>
                             <ul>
@@ -63,6 +64,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </section>
@@ -79,6 +81,7 @@
                         <p class="direction">{{ education.university.full_name }}, {{ education.university.location }}</p>
                         <p class="direction dir">{{ education.direction.direction_code }} {{ education.direction.direction_name }}</p>
 
+                        {% if tasks_by_education[education.group_number] %}
                         <div class="tasks-section">
                             <h4>Задачи:</h4>
                             <ol>
@@ -102,13 +105,14 @@
                                 {% endfor %}
                             </ol>
                         </div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </section>
 
                 <!-- Навыки -->
                 <div class="skills-section">
-                    <h2>Навыки:</h2>
+                    <h2>Ключевые компетенции</h2>
                     <div class="skills-list">
                         {% for skill in skills %}
                         <div class="skill-chip">{{ skill.skill_name }}</div>
@@ -131,7 +135,6 @@
                 <!-- Контактная информация -->
                 <div class="contact-info">
                     <p>{{ age }}</p>
-                    <p>{{ user.email }}</p>
                 </div>
 
                 <!-- Описание -->

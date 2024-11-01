@@ -61,7 +61,7 @@ app = create_app(Config)
 
 @app.route('/')
 def index():
-    return render_template('main.html')
+    return render_template('index.html')
 
 @app.route('/login')
 def login():
@@ -90,4 +90,4 @@ def get_cookie():
 
 if __name__ == "__main__":
     CORS(app)
-    app.run()
+    app.run(debug=True)

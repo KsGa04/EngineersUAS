@@ -131,7 +131,7 @@ legend {
     font-style: normal;
 }
 .wrapper {
-    background-image: url(/assets/images/background1.png);
+    background-image: url(../assets/images/background1.png);
     background-repeat: repeat;
 }
 ._container{

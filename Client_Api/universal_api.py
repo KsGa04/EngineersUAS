@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from Client_Api.extensions import db
 import importlib
 
+from Models import University, Group
+
 universal_api = Blueprint('universal_api', __name__)
 
 
@@ -89,3 +91,22 @@ def universal_put(table_name):
         return jsonify({"msg": f"Record updated in {table_name}."}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
+
+
+@universal_api.route('/api/university', methods=['GET'])
+def get_universities():
+    return universal_get("university")
+
+
+@universal_api.route('/api/group', methods=['GET'])
+def get_groups():
+    university_name = request.args.get('university')
+    university = University.query.filter_by(full_name=university_name).first()
+
+    if not university:
+        return jsonify({"msg": "University not found"}), 404
+
+    groups = Group.query.filter_by(id_university=university.id_university).all()
+    results = [{"group_name": group.group_name} for group in groups]
+
+    return jsonify(results), 200

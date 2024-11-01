@@ -3,71 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Template 2</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pattern_resume2.css') }}">
+    <title>Resume Template</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pattern_resume3.css') }}">
 </head>
 <body>
     <div class="resume-container">
-        <!-- Left Column -->
-        <div class="left-column">
-            <header class="header">
-                <h1> {{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</h1>
-                <div class="profile-picture">
-                    <img src="data:image/jpeg;base64,{{ profile_image }}" alt="Profile Picture">
-                </div>
-
-            </header>
-
+        <!-- Top Section: Contact and Logo -->
+        <header class="top-section">
             <div class="contact-info">
-                    <div class="contact-item">
-                        <a href="tel:{{ user.phone }}" class="contact-link">
-                            <img src="{{ url_for('static', filename='images/telephone2.png') }}" alt="Phone Icon" class="icon">
-                            <span>{{ user.phone }}</span>
-                        </a>
-                    </div>
-                    <div class="contact-item">
-                        <a href="mailto:{{ user.email }}" class="contact-link">
-                            <img src="{{ url_for('static', filename='images/mail2.png') }}" alt="Email Icon" class="icon">
-                            <span>{{ user.email }}</span>
-                        </a>
-                    </div>
-                    <div class="contact-item">
-                        <a href="https://t.me/{{ user.telegram }}" class="contact-link" target="_blank">
-                            <img src="{{ url_for('static', filename='images/telegram2.png') }}" alt="Telegram Icon" class="icon">
-                            <span>{{ user.telegram }}</span>
-                        </a>
-                    </div>
-                </div>
+                <a href="tel:{{ user.phone }}" class="contact-item">
+                    <img src="{{ url_for('static', filename='images/telephone2.png') }}" alt="Phone Icon" class="icon">
+                    {{ user.phone }}
+                </a>
+                <a href="mailto:{{ user.email }}" class="contact-item">
+                    <img src="{{ url_for('static', filename='images/mail2.png') }}" alt="Email Icon" class="icon">
+                    {{ user.email }}
+                </a>
+                <a href="https://t.me/{{ user.telegram }}" class="contact-item">
+                    <img src="{{ url_for('static', filename='images/telegram2.png') }}" alt="Telegram Icon" class="icon">
+                    {{ user.telegram }}
+                </a>
+            </div>
+            <div class="company-logo">
+                <img src="{{ url_for('static', filename='images/logo_2.png') }}" alt="Logo" class="logo-img">
+            </div>
+        </header>
 
-            <div class="about-me">
-                    <h2>Обо мне</h2>
+        <!-- Profile Section: Photo and Name -->
+        <div class="profile-section">
+            <div class="profile-picture">
+                <img src="data:image/jpeg;base64,{{ profile_image }}" alt="Profile Picture">
+            </div>
+            <h1 class="user-name">{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</h1>
+        </div>
+
+        <!-- Main Content Section: Two Columns -->
+        <div class="main-content">
+            <!-- Left Column -->
+            <div class="left-column">
+                <section class="section about-me">
+                    <h2 class="section-title">Обо мне</h2>
                     <p>{{ resume.about_me }}</p>
-                </div>
+                </section>
 
-                <!-- Проекты -->
-                <section class="projects-section">
-                    <h2>Проекты</h2>
+                <section class="section skills">
+                    <h2 class="section-title">Навыки</h2>
+                    <div class="skills-list">
+                        {% for skill in skills %}
+                        <div class="skill-chip">{{ skill.skill_name }}</div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="section projects">
+                    <h2 class="section-title">Проекты</h2>
                     {% for project in projects %}
                     <div class="project-item">
                         <p><strong>{{ project.project_name }}</strong></p>
                         <p>{{ project.project_description }}</p>
-                        <a href="{{ project.project_link }}" style="color:black;">Ссылка</a>
-                        <div class="skills-section">
-                            <div class="skills-list">
-                                {% for skill in project_skills[project.id_project] %}
-                                <div class="skill-chip">{{ skill.skill_name }}</div>
-                                {% endfor %}
-                            </div>
-                        </div>
                     </div>
                     {% endfor %}
                 </section>
-        </div>
+            </div>
 
-        <!-- Right Column -->
-        <div class="right-column">
-            <section class="experience-section">
-                    <h2>Опыт работы</h2>
+            <!-- Right Column -->
+            <div class="right-column">
+                <section class="section experience">
+                    <h2 class="section-title">Опыт работы</h2>
                     {% for experience in experience_list %}
                     <div class="experience-item">
                         <div class="experience-header">
@@ -93,9 +95,8 @@
                     {% endfor %}
                 </section>
 
-                <!-- Образование -->
-                <section class="education-section">
-                    <h2>Образование</h2>
+                <section class="section education">
+                    <h2 class="section-title">Образование</h2>
                     {% for education in education_list %}
                     <div class="education-item">
                         <div class="education-header">
@@ -103,7 +104,7 @@
                             <p class="education-year">{{ education.start_date }} - {{ education.end_date }}</p>
                         </div>
                         <p class="direction">{{ education.university.full_name }}, {{ education.university.location }}</p>
-                        <p class="direction dir website">{{ education.direction.direction_code }} {{ education.direction.direction_name }}</p>
+                        <p class="direction dir">{{ education.direction.direction_code }} {{ education.direction.direction_name }}</p>
 
                         {% if tasks_by_education[education.group_number] %}
                         <div class="tasks-section">
@@ -133,16 +134,7 @@
                     </div>
                     {% endfor %}
                 </section>
-
-                <!-- Навыки -->
-                <div class="skills-section">
-                    <h2>Ключевые компетенции</h2>
-                    <div class="skills-list">
-                        {% for skill in skills %}
-                        <div class="skill-chip">{{ skill.skill_name }}</div>
-                        {% endfor %}
-                    </div>
-                </div>
+            </div>
         </div>
     </div>
 </body>
