@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from Client_Api.extensions import db
 import importlib
+import io
+from PIL import Image
 
 universal_api = Blueprint('universal_api', __name__)
 
@@ -53,6 +55,7 @@ def universal_get(table_name):
         results_dict = [result.__dict__ for result in results]
 
         for result in results_dict:
+            result.pop('profile_photo')
             result.pop('_sa_instance_state', None)
         return jsonify(results_dict), 200
     except Exception as e:
