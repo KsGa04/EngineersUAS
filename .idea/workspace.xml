@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по api" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Добавлены таблицы для характеристик/сильные стороны">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Server/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/userboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +25,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Dockerfile" />
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -84,11 +95,11 @@
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\assets\images" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Api\static\images" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
     </key>
   </component>
   <component name="RunManager">
@@ -312,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730462576828</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Добавлены таблицы для характеристик/сильные стороны">
+      <option name="closed" value="true" />
+      <created>1730463285260</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1730463285260</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -345,7 +364,8 @@
     <MESSAGE value="Связь frontend и backend, корректировки личного кабинета и главной страницы" />
     <MESSAGE value="2 шаблона резюме готовы" />
     <MESSAGE value="Корректировки по api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Корректировки по api" />
+    <MESSAGE value="Добавлены таблицы для характеристик/сильные стороны" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены таблицы для характеристик/сильные стороны" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -359,6 +379,11 @@
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>86</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Server/app.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

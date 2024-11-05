@@ -178,7 +178,7 @@ def add_project(repo_data, resume_id):
 
 
 # Маршрут для получения репозиториев и добавления их как проекты в базу данных
-@github_api.route('/add_repos', methods=['GET'])
+@github_api.route('/add_repos', methods=['POST'])
 def post_repos():
     github_url = request.args.get('github_url')
     resume_id = request.args.get('resume_id')

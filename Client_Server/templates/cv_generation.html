@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/cv_generator.css">
+</head>
+<body>
+    <div class="wrapper">
+    <header>
+        <div class="header__container _container">
+            <div class="header__left">
+                <div class="header__logo">
+                    <div class="logo__example"></div>
+                </div>
+                <div class="header__logo__title">
+                    <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                </div>
+            </div>
+            <div class="header__right">
+                <img src="static/assets/images/person_icon.svg" alt="">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="cv__generation__container _container">
+            <div class="cv__generation__left">
+                <div class="cv__generation__title">
+                    <h1 class="title1">РЕЗЮМЕ</h1>
+                </div>
+                    <div class="cv__generation__item">
+                            <form action="" class="account__cv__form">
+                                
+                                <div class="groupnumber__item cv__form__item">
+    
+                                    <div class="cv__form__title">
+                                        <h4 class="">
+                                            Опыт работы
+                                        </h4>
+                                    </div>
+                                    <textarea name="cv__groupnumber" id="" class="cv__form__input"></textarea>
+                                </div>
+                                <div class="graduate__item cv__form__item">
+                                    <input type="checkbox" name="cv__graduate" id="graduate__checkbox">
+                                    <h2>Выпускник</h2>
+                                </div>
+                                <div class="bio__item cv__form__item">
+                                    <div class="cv__form__title">
+                                        <h4>Описание*</h4>
+                                    </div>
+                                    <textarea type="text" name="cv__bio" class="cv__form__input"></textarea>
+                                </div>
+                                <div class="projects__item cv__form__item">
+                                    <div class="cv__form__title">
+                                        <h4>Проекты</h4>
+                                    </div>
+                                    <a href="" class="cv__form__input"></a>
+                                </div>
+                                <div class="skills__item cv__form__item">
+                                    <div class="cv__form__title">
+                                        <h4>Навыки</h4>
+                                    </div>
+                                    <select name="select_skills" id="skills" class="cv__form__input" placeholder="Выбрать из списка"> 
+                                        <option value="value1" >Python</option>
+                                        <option value="value2" >C++</option>
+                                        <option value="value3">Autocad</option>
+                                    </select>
+                                </div>
+                                <div class="links__item cv__form__item">
+                                    <div class="cv__form__title">
+                                        <h4>Ссылки на <br>портфолио/GitHub</h4>
+                                    </div>
+                                    <textarea type="text" name="cv__links" class="cv__form__input"></textarea>
+                                </div>
+                            </form>
+
+                    </div>
+                </div>
+
+            <div class="cv__generation__right">
+                <div class="cv__generation__preview__title">
+                    <h2 class="">ВНЕШНИЙ ВИД</h2>
+                </div>
+                <div class="cv__generation__preview__items">
+                    <div class="cv__generation__preview__item active">
+                        <h3 class="cv__generation__preview__item__title">ШАБЛОН 1</h3>
+                        <div class="cv__generation__preview__item__elem cv__preview">
+                            <img src="static/assets/images/cv_preview1.jpg" alt="">
+                        </div>
+                        <a href="" class="cv__generation__preview__item__open">ПРЕДПРОСМОТР</a>
+                    </div>
+                    <div class="cv__generation__preview__item">
+                        <div class="cv__generation__preview__item__title"><h3>ШАБЛОН 2</h3></div>
+                        <div class="cv__generation__preview__item__elem cv__preview">
+                            <img src="static/assets/images/cv_preview2.jpg" alt="">
+                        </div>
+                        <a href="" class="cv__generation__preview__item__open">ПРЕДПРОСМОТР</a>
+                    </div>
+                    <div class="cv__generation__preview__item">
+                        <div class="cv__generation__preview__item__title"><h3>ШАБЛОН 3</h3></div>
+                        <div class="cv__generation__preview__item__elem cv__preview">
+                            <img src="static/assets/images/cv_preview3.jpg" alt="">
+                        </div>
+                        <a href="" class="cv__generation__preview__item__open">ПРЕДПРОСМОТР</a>
+                    </div>
+                    
+                </div>
+                <a href="" class="cv__generation__create">СОЗДАТЬ</a>
+            </div>
+        </div>
+    </main>
+    <div class="contacts__wrapper">
+        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+    </div>
+        <!-- Модальное окно -->
+        <div id="modal-overlay" class="modal-overlay">
+            <div id="modal" class="modal">
+                <span id="modal-close" class="modal-close">&times;</span>
+                <h2 id="modal-title">Заполните данные</h2>
+                <div id="modal-content">
+                    <!-- Содержимое добавляется динамически -->
+                </div>
+                <button id="modal-submit">Сохранить</button>
+            </div>
+        </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modalOverlay = document.getElementById("modal-overlay");
+    const modalContent = document.getElementById("modal-content");
+    const modalClose = document.getElementById("modal-close");
+    const modalSubmit = document.getElementById("modal-submit");
+    const modalTitle = document.getElementById("modal-title");
+
+    function openModal(title, content, onSave) {
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content;
+        modalOverlay.style.display = "block";
+
+        modalSubmit.onclick = function () {
+        if (validateFields()) {  // Only proceed if all fields are filled
+            modalOverlay.style.display = "none";
+            onSave();
+        } else {
+            alert("Пожалуйста, заполните все поля.");
+        }
+        };
+    }
+    function validateFields() {
+        const requiredFields = modalContent.querySelectorAll("input, select, textarea");
+        for (const field of requiredFields) {
+            if ((field.type === "text" || field.tagName === "TEXTAREA" || field.type === "date") && field.value.trim() === "") {
+                return false;
+            }
+            if (field.tagName === "SELECT" && field.value === "") {
+                return false;
+            }
+        }
+        return true;
+    }
+    modalClose.addEventListener("click", () => {
+        modalOverlay.style.display = "none";
+    });
+
+    modalOverlay.addEventListener("click", e => {
+        if (e.target === modalOverlay) {
+            modalOverlay.style.display = "none";
+        }
+    });
+
+    // Modal for Work Experience
+    document.querySelector(".groupnumber__item textarea").addEventListener("click", () => {
+        openModal("Опыт работы", `
+            <label for="organization">Организация</label>
+            <select id="organization"><option>Загрузка...</option></select>
+            <label for="position">Должность</label>
+            <input id="position" type="text" placeholder="Введите должность">
+            <label for="start-date">Год начала</label>
+            <input id="start-date" type="date">
+            <label for="end-date">Год окончания</label>
+            <input id="end-date" type="date">
+            <label for="responsibilities">Обязанности</label>
+            <textarea id="responsibilities" placeholder="Описание обязанностей"></textarea>
+        `, () => {
+            const id_resume = localStorage.getItem("user_id");
+            fetch('/api/work', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_resume: id_resume,
+                    position: document.getElementById("position").value,
+                    start_date: document.getElementById("start-date").value,
+                    end_date: document.getElementById("end-date").value,
+                    responsibilities: document.getElementById("responsibilities").value,
+                    organization_id: document.getElementById("organization").value
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error("Ошибка добавления опыта работы:", error));
+        });
+
+        loadData('/api/organizations', "organization", "Выберите организацию");
+    });
+
+    // Modal for Projects
+    document.querySelector(".projects__item a").addEventListener("click", function (event) {
+        event.preventDefault();
+        openModal("Проекты", `
+            <label for="project-name">Название проекта</label>
+            <input id="project-name" type="text" placeholder="Введите название проекта">
+            <label for="project-desc">Описание проекта</label>
+            <textarea id="project-desc" placeholder="Описание проекта"></textarea>
+            <label for="project-link">Ссылка на проект</label>
+            <input id="project-link" type="url" placeholder="URL проекта">
+        `, () => {
+            const id_resume = localStorage.getItem("user_id");
+            fetch('/api/project', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_resume: id_resume,
+                    project_name: document.getElementById("project-name").value,
+                    project_description: document.getElementById("project-desc").value,
+                    project_link: document.getElementById("project-link").value
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error("Ошибка добавления проекта:", error));
+        });
+
+        document.getElementById("project-link").addEventListener("blur", function () {
+            if (this.value.includes("github.com")) {
+                const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
+                if (confirmLoad) {
+                    fetch('/api/github/add_repos', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url: this.value })
+                    })
+                    .then(response => response.json())
+                    .then(data => alert("Репозитории успешно загружены в проекты."))
+                    .catch(error => console.error("Ошибка загрузки репозиториев:", error));
+                }
+            }
+        });
+    });
+
+    // Modal for Education
+    document.querySelector(".bio__item textarea").addEventListener("click", () => {
+        openModal("Образование", `
+            <label for="degree">Уровень образования</label>
+            <select id="degree"><option>Загрузка...</option></select>
+            <label for="university">Университет</label>
+            <select id="university"><option>Загрузка...</option></select>
+            <label for="direction">Направление</label>
+            <select id="direction"><option>Выберите университет</option></select>
+            <label for="group">Группа</label>
+            <select id="group"><option>Выберите направление</option></select>
+            <label for="start-year">Год начала</label>
+            <input type="date" id="start-year">
+            <label for="end-year">Год окончания</label>
+            <input type="date" id="end-year">
+        `, () => {
+            const id_resume = localStorage.getItem("user_id");
+            if (!id_resume) {
+                alert("ID резюме не найден");
+                return;
+            }
+
+            fetch('/api/education', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_resume: id_resume,
+                    id_degree: document.getElementById("degree").value,
+                    id_university: document.getElementById("university").value,
+                    id_direction: document.getElementById("direction").value,
+                    group_number: document.getElementById("group").value,
+                    start_date: document.getElementById("start-year").value,
+                    end_date: document.getElementById("end-year").value
+                })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error("Ошибка добавления образования:", error));
+        });
+
+        loadData('/api/degrees', "degree", "Выберите уровень");
+        loadData('/api/universities', "university", "Выберите университет");
+
+        document.getElementById("university").addEventListener("change", () => {
+            loadData(`/api/directions/${document.getElementById("university").value}`, "direction", "Выберите направление");
+        });
+
+        document.getElementById("direction").addEventListener("change", () => {
+            const universityId = document.getElementById("university").value;
+            const directionId = document.getElementById("direction").value;
+            loadData(`/api/groups?university_id=${universityId}&direction_id=${directionId}`, "group", "Выберите группу");
+        });
+    });
+
+    function loadData(url, selectId, defaultText) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById(selectId);
+                selectElement.innerHTML = `<option value="">${defaultText}</option>`;
+                data.forEach(item => {
+                    const option = document.createElement("option");
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(error => console.error(`Ошибка при загрузке ${selectId}: ${error}`));
+    }
+
+    function getIdResumeFromToken() {
+    const authToken = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('authToken='))
+        ?.split('=')[1];
+
+    if (authToken) {
+        try {
+            const decodedToken = jwt_decode(authToken);
+            return decodedToken.id_resume;
+        } catch (error) {
+            console.error("Ошибка при декодировании токена:", error);
+        }
+    } else {
+        console.warn("authToken не найден в cookies");
+    }
+    return null;
+    }
+});
+</script>
+</body>
+</html>

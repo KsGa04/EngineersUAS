@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    padding: 30px;
+}
+
+/* Main container with gradient background */
+.filter-container {
+    background: linear-gradient(#5198DC, #7C95E7);
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form layout */
+#filter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Each filter row */
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+.filter-row label {
+    color: #005b99;
+    font-weight: bold;
+    margin-right: 10px;
+    flex-basis: 40%;
+    text-align: center;
+    border-radius: 20px;
+    background-color: white;
+    padding: 5px;
+}
+
+/* Select and input styling */
+.filter-row select,
+.filter-row input[type="range"] {
+    flex-basis: 55%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(#5198DC, #7C95E7);
+    color: white;
+}
+
+/* Button styling */
+button {
+    background-color: #4facfe;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    background: white;
+    color: #7C95E7;
+}
+
+button:hover {
+    background-color: #5198DC;
+    color:white;
+}
+
+.charts-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    margin-bottom: 10px;
+}
+
+.download-section {
+    grid-column: span 2;
+    text-align: center;
+}
+
+.download-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #5198DC;
+    color:white;
+    width:40%;
+    border: none;
+    cursor: pointer;
+}
+
+.download-section button:hover {
+    background-color: white;
+    color:#5198DC;
+}
+
+
+.wrapper {
+    background-image: url(/assets/images/background1.png);
+    background-repeat: repeat;
+    width: 100%;
+}
+canvas {
+    height:200px;
+}
+/* Overlay Container Styling */
+        .charts-overlay-container {
+            position: relative;
+        }
+
+        /* Style for the overlay */
+        .overlay {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* Style for the overlay message */
+        .overlay-message {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .overlay-message p {
+            margin-bottom: 15px;
+        }

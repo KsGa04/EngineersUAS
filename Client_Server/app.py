@@ -1,10 +1,11 @@
 import json
 from datetime import date
+from functools import wraps
 
 import requests
 from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request, get_jwt
 
 from Client_Api.approach_to_universities import university_api
 from Client_Api.extensions import db  # Импортируем расширения
@@ -13,11 +14,24 @@ from Client_Api.get_data import get_api
 from Client_Api.get_github_repositories import github_api
 from Client_Api.get_gitlab_repositories import gitlab_api
 from Client_Api.get_user_data import get_user_api
+from Client_Api.project_api import modal_api
 from Client_Server.config import Config  # Указываем полный путь до config
 from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
 from Client_Api.generate_resume_api import resume_api
 
+def role_required(required_role_id):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            verify_jwt_in_request()
+            jwt_data = get_jwt()
+            user_role_id = jwt_data.get("role_id")
+            if user_role_id != required_role_id:
+                return jsonify({"msg": "Access forbidden: You do not have the required role"}), 403
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def create_app(config):
     app = Flask(__name__)
@@ -51,6 +65,7 @@ def create_app(config):
     app.register_blueprint(university_api)
     app.register_blueprint(gitlab_api, url_prefix='/api/gitlab')
     app.register_blueprint(get_user_api)
+    app.register_blueprint(modal_api)
 
     app.secret_key = 'your_secret_key'
 
@@ -72,8 +87,22 @@ def register():
     return render_template('register.html')
 
 @app.route('/userboard')
+@jwt_required()
+@role_required(1)
 def userboard():
     return render_template('userboard.html')
+
+@app.route('/cvgenerator')
+@jwt_required()
+@role_required(1)
+def cv_generator():
+    return render_template('cv_generation.html')
+
+@app.route('/analytics')
+@jwt_required()
+@role_required(2)
+def analytics():
+    return render_template('analytics.html')
 
 @app.route('/set_cookie')
 def set_cookie():
@@ -90,4 +119,4 @@ def get_cookie():
 
 if __name__ == "__main__":
     CORS(app)
-    app.run(debug=True)
+    app.run()

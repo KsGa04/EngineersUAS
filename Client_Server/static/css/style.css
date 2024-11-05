@@ -89,7 +89,7 @@ legend {
 }
 @font-face {
     font-family: 'DmSans-Bold';
-    src: url('static/assets/fonts/DM_Sans_Bold.otf');
+    src: url('assets/fonts/DM_Sans_Bold.otf');
     font-weight: normal;
     font-style: normal;
 }
@@ -101,7 +101,7 @@ legend {
     }
 @font-face {
     font-family: 'DmSans-ExtraLight';
-    src: url('static/assets/fonts/DM_Sans/static/DMSans-ExtraLight.ttf');
+    src: url('/assets/fonts/DM_Sans/static/DMSans-ExtraLight.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -109,24 +109,24 @@ legend {
     font-family: 'DM Sans Regular';
     font-style: normal;
     font-weight: normal;
-    src: local('DM Sans Regular'), url('static/assets/fonts/DMSans-Regular.woff') format('woff');
+    src: local('DM Sans Regular'), url('/assets/fonts/DMSans-Regular.woff') format('woff');
     }
 
 @font-face {
     font-family: 'Montserrat-Bold';
-    src: url('static/assets/fonts/Montserrat-Bold.ttf');
+    src: url('/assets/fonts/Montserrat-Bold.ttf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Montserrat-Regular';
-    src: url('static/assets/fonts/Montserrat-Regular.ttf');
+    src: url('/assets/fonts/Montserrat-Regular.ttf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Inter-Bold';
-    src: url('static/assets/fonts/Inter-Bold.ttf');
+    src: url('/assets/fonts/Inter-Bold.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -139,13 +139,13 @@ legend {
     margin: 0px auto;
     box-sizing: content-box;
     padding: 0px 30px;
-    max-width: 1300px;
+    max-width: 1400px;
 }
 h1 {
-    font-family: 'DM Sans Bold';
+    font-family: 'Inter-Bold';
 }
 .title1{
-    font-family: 'DM Sans Bold';
+    font-family: 'Inter-Bold';
     font-size: 55px;
     color: #5190DC;
 }
@@ -158,8 +158,8 @@ h1 {
 }
 .login__wrapper{
 
-    width: 615px;
-    height: 615px;
+    width: 630px;
+    height: 630px;
     background: linear-gradient(350deg, #438CD8, #808FE8);   
     border-radius: 100%;
     display: flex;
@@ -168,9 +168,35 @@ h1 {
     align-items: center;
     box-shadow: 0px 0px 35px 15px #426E9C
 }
-
+.auth__switch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #FFFFFF;
+    height: 44px;
+    width: 320px;
+    border-radius: 46px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.student__switch,
+.emploer__switch {
+    display: flex;
+    padding-right: 15px;
+    padding-left: 15px;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Montserrat-Regular';
+}
+.auth__switch .active{
+    border-radius: 46px;
+    background: #FFFFFF;
+    color: #4D8DDB;
+}
 .login__title h1,
 .register__title h1{
+    font-family: 'Inter-Bold';
     color: #FFFFFF;
     font-size: 46px;
 }
@@ -189,7 +215,8 @@ h1 {
 .login__form input,
 .register__form input,
 .register__form select{
-    font-family: 'DM Sans Regular';
+    font-family: 'Inter-Bold';
+    font-weight: 500;
     height: 60px;
     width: 390px;
     border-radius: 10px;
@@ -198,18 +225,17 @@ h1 {
     color: #FFFFFF;
     padding-right: 10px;
 }
-.register__form select option {
-    color: #438CD8;
-}
 .login__form input::placeholder,
 .register__form input::placeholder {
     color: #FFFFFF;
-    font-family: 'DM Sans Regular';
+    font-family: 'Inter-Bold';
+    font-weight: 500;
     opacity: 1; 
 }
 .login__form label,
 .register__form label {
-    font-family: 'DM Sans Regular';
+    font-family: 'Inter-Bold';
+    font-weight: 300;
     color: #FFFFFF;
     margin-bottom: 4px;
     font-size: 25px;
@@ -513,4 +539,261 @@ header {
     justify-content: center;
     align-items: center;
     
+}
+.cv__generation__preview__item__open {
+
+}
+/*------------------------------------------------------------------------*/
+
+.cv__generation__container {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cv__generation__left {
+    margin-top: 70px;
+    width: 60%;
+    padding-right: 20px;
+}
+.cv__generation__title {
+
+}
+.cv__generation__item {
+    margin-top: 30px;
+    background: linear-gradient(90deg, #5198DC, #7C95E7);
+    padding: 35px 35px 10px 35px;
+    border-radius: 20px;
+}
+.graduate__item input {
+    height: 30px;
+    width: 30px;
+}
+.graduate__item h2{
+    font-family: 'Inter-Bold';
+    color: #fff;
+    font-size: 25px;
+    margin-left: 20px;
+}
+.skills__item .cv__form__input{
+    padding: 8px 20px 8px 20px;
+}
+.links__item .cv__form__title,
+.links__item .cv__form__input{
+    height: 72px;
+}
+.cv__generation__right {
+    margin: 70px 30px 0px 30px;
+    width: 55%;
+}
+
+
+.cv__generation__preview__title h2 {
+    font-family: 'Inter-Bold';
+    font-size: 35px;
+    color: #5190DC;
+    text-align: center;
+}
+.cv__generation__preview__items {
+    width: 100%;
+    margin-top: 54px;
+    padding: 25px 40px 10px 40px;
+    border: 6px solid transparent;
+    background: 
+    linear-gradient(#5499DE, #5499DE) padding-box, 
+    linear-gradient(45deg, #9CC7F1, #9CA6F9) border-box;
+    border-radius: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 16px;
+}
+.cv__generation__preview__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cv__generation__preview__item>* {
+    margin-bottom: 15px;
+}
+.cv__generation__preview__item.active .cv__generation__preview__item__title{
+    font-family: 'Inter-Bold';
+    font-size: 25px;
+    color: #fff;
+}
+.cv__generation__preview__item__title{
+    font-family: 'Inter-Bold';
+    font-weight: 500;
+    font-size: 25px;
+    color: #fff;
+}
+.cv__generation__preview__item__elem {
+    height: 270px;
+    width: 195px;
+    border: 6px solid transparent;
+    background: 
+    linear-gradient(#fff, #fff) padding-box, 
+    linear-gradient(175deg, #fff, #A2C8FA) border-box;
+}
+.cv__generation__preview__item__elem img{
+    height: 258px;
+    border-radius: 10%;
+}
+.cv__preview {
+margin:5px;
+}
+.cv__generation__preview__item__open{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 190px;
+    height: 40px;
+    color: #5190DC;
+    border: 1px solid #5190DC;
+    background: #FFFFFF;
+    border-radius: 100px;
+    font-family: 'Inter-Bold';
+    font-size: 18px; 
+}
+.cv__generation__create {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 44px;
+    background-color: #5499DE;
+    border: 1px solid #5598DE;
+    color:#FFFFFF;
+    font-family: 'Inter-Bold';
+    font-size: 20px; 
+    border-radius: 46px;
+}
+/*------------------------------------------------------------------------*/
+.main__container {
+    height: 100vh;
+}
+.main__page__header {
+    position: absolute;
+    width: 80%;
+    height: 170px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.main__page__header__left {
+    display: flex;
+    flex-direction: row;
+    margin-right: 30px;
+    align-items: center;
+}
+.main__page__header__logo {
+    width: 86px;
+    height: 86px;
+    border-radius: 100%;
+    background: #6DB5FF;
+    margin-right: 20px;
+}
+.main__page__header__logo__title {
+}
+.main__page__header__logo__title h1 {
+    font-family: 'Inter-Bold';
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 120%;
+    background-image: linear-gradient(110deg,#438DD9,#96A8F9);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.main__page__header__right {
+    display: flex;
+    align-items: center;
+    
+}
+.main__page__auth__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #438CD8, #808FE8);
+    color: #FFFFFF;
+    font-family: 'Montserrat-Bold';
+
+    font-size: 20px;
+    width: 155px;
+    height: 50px;
+    border-radius: 46px;
+}
+.main__page__humans__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+
+}
+.main__page__humans__image img{
+    height: 100vh;
+}
+
+.main__page__inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main__page__title {
+    padding-top:20px ;
+
+}
+.main__page__title h1{
+    font-family: 'Inter-Bold';
+    font-size: 65px;
+    font-weight: 700;
+    background-image: linear-gradient(140deg,#428CD8,#7F8FE8);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 110%;
+    margin-bottom: 20px;
+
+}
+.main__page__subtitle h6{
+    font-family: 'Inter-Bold';
+    font-size: 40px;
+    font-weight: 700;
+    color:#668EE2;
+    margin-bottom: 46px;
+    line-height: 100%;
+
+}
+.main__page__offer h6{
+    font-family: 'Montserrat-Regular';
+    color: #418BD7;
+    font-size: 25px;
+    line-height: 100%;
+    margin-bottom: 30px;
+}
+.main__page__offer h6 span{
+    font-family: 'Montserrat-Bold';
+}
+.main__page__regist__btn a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 370px;
+    height: 60px;
+    border-radius: 46px;
+    background: linear-gradient(90deg, #408BD7, #808EE8);
+    color:#FFFFFF;
+    font-family: 'Montserrat-Bold';
+    font-size: 20px;
+}
+/*------------------------------------------------*/
+.contacts__wrapper{
+    position: fixed;
+    right: 30px ;
+    bottom: 30px;
+}
+.contacts__wrapper img {
+    width: 40px;
+    height: 40px;
 }

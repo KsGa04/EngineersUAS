@@ -1,0 +1,173 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карьерный Инженерный Портал</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/analytics.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header__container _container">
+                <div class="header__left">
+                    <div class="header__logo">
+                        <div class="logo__example"></div>
+                    </div>
+                    <div class="header__logo__title">
+                        <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                    </div>
+                </div>
+                <div class="header__right">
+                    <img src="static/assets/images/person_icon.svg" alt="">
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="filter-container">
+                <form id="filter-form">
+                    <div class="filter-row">
+                        <label for="region">Регион</label>
+                        <select id="region">
+                            <option>Выбрать из списка</option>
+                            <option>Татарстан</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-row">
+                        <label for="direction">Направление</label>
+                        <select id="direction">
+                            <option>Выбрать из списка</option>
+                            <option>Робототехника</option>
+                            <option>БАС</option>
+                            <option>Авиастроение</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-row">
+                        <label for="institute">ВУЗ/СУЗ</label>
+                        <select id="institute">
+                            <option>Выбрать из списка</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-row">
+                        <label for="skills">Навыки</label>
+                        <select id="skills">
+                            <option>Выбрать из списка</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-row">
+                        <label for="age">Возраст</label>
+                        <input type="range" id="age" min="14" max="25" value="18">
+                    </div>
+
+                    <div class="filter-row">
+                        <label for="projects">Проекты</label>
+                        <select id="projects">
+                            <option>Выбрать из списка</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="showFeatureUnavailable()">Показать</button>
+                </form>
+            </div>
+
+            <!-- Charts Section with Overlay -->
+            <div class="charts-overlay-container">
+                <div id="feature-unavailable-overlay" class="overlay">
+                    <div class="overlay-message">
+                        <p>Эта функция будет доступна позже.</p>
+                    </div>
+                </div>
+
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h3>Статистика по Татарстан</h3>
+                        <canvas id="chart1" height="200"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Статистика по Робототехника</h3>
+                        <canvas id="chart2"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Статистика по БПЛА</h3>
+                        <canvas id="chart3"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Статистика по Авиастроение</h3>
+                        <canvas id="chart4"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div class="download-section">
+                <button onclick="downloadPDF()">Скачать в pdf</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to show the overlay
+        function showFeatureUnavailable() {
+            document.getElementById("feature-unavailable-overlay").style.display = "flex";
+        }
+
+        // Function to close the overlay
+        function closeOverlay() {
+            document.getElementById("feature-unavailable-overlay").style.display = "none";
+        }
+
+        // Function to initialize or update charts
+        function updateCharts() {
+            const data1 = [30, 125, 230, 310, 500];
+            const data2 = [1, 0, 2, 4, 3];
+            const data3 = [2, 3, 4, 5, 6];
+            const data4 = [3, 4, 6, 8, 7];
+
+            createChart('chart1', 'bar', data1);
+            createChart('chart2', 'bar', data2);
+            createChart('chart3', 'line', data3);
+            createChart('chart4', 'line', data4);
+        }
+
+        // Function to create individual chart
+        function createChart(elementId, type, data) {
+            const ctx = document.getElementById(elementId).getContext('2d');
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: ['август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'],
+                    datasets: [{
+                        label: 'Data',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: type === 'line'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Placeholder function for PDF download
+        function downloadPDF() {
+            alert("Функция пока недоступна");
+        }
+
+        // Initialize charts on page load
+        updateCharts();
+    </script>
+</body>
+</html>

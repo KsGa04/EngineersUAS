@@ -4,7 +4,7 @@ import importlib
 import io
 from PIL import Image
 
-from Models import University, Group
+from Models import University, Group, Direction, UniversityDirection
 
 universal_api = Blueprint('universal_api', __name__)
 
@@ -113,3 +113,21 @@ def get_groups():
     results = [{"group_name": group.group_name} for group in groups]
 
     return jsonify(results), 200
+
+
+@universal_api.route('/api/directions/<int:university_id>', methods=['GET'])
+def get_directions_by_university(university_id):
+    try:
+        # Получение направлений, связанных с университетом
+        directions = (
+            db.session.query(Direction)
+            .join(UniversityDirection, UniversityDirection.id_direction == Direction.id_direction)
+            .filter(UniversityDirection.id_university == university_id)
+            .all()
+        )
+
+        # Преобразование данных в JSON
+        directions_list = [{"id": direction.id_direction, "name": direction.direction_name} for direction in directions]
+        return jsonify(directions_list), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 400

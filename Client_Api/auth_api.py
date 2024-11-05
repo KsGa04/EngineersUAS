@@ -91,7 +91,7 @@ def login():
 
     if user:  # Здесь требуется реальная проверка пароля
         # Генерация токена
-        authToken = create_access_token(identity=user.id_user)
+        authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user})
 
         # Настройка ответа с cookies
         response = make_response(jsonify({"user_id": user.id_user}))
