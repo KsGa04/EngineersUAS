@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Добавлены таблицы для характеристик/сильные стороны">
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Обновление окон">
+      <change beforePath="$PROJECT_DIR$/.idea/EngineersUAS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EngineersUAS.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Server/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Server/templates/userboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +79,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -331,7 +324,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730463285260</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Обновление окон">
+      <option name="closed" value="true" />
+      <created>1730838027887</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1730838027887</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -365,7 +366,8 @@
     <MESSAGE value="2 шаблона резюме готовы" />
     <MESSAGE value="Корректировки по api" />
     <MESSAGE value="Добавлены таблицы для характеристик/сильные стороны" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены таблицы для характеристик/сильные стороны" />
+    <MESSAGE value="Обновление окон" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновление окон" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
