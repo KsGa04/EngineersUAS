@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, render_template, make_response, jsonify, request
+from flask import Flask, render_template, make_response, jsonify, request, redirect, url_for
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request, get_jwt
 from werkzeug.security import generate_password_hash
@@ -17,6 +17,7 @@ from config import Config  # Указываем полный путь до confi
 from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
 from Client_Api.generate_resume_api import resume_api
+from Admin.admin import admin_login, is_admin
 
 def role_required(required_role_id):
     def decorator(fn):
@@ -32,7 +33,10 @@ def role_required(required_role_id):
     return decorator
 
 def create_app(config):
+    global SWAGGER_URL
+
     app = Flask(__name__)
+    app.secret_key = 'kip_secret_key_123'
     app.config.from_object(config)
 
     app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
@@ -64,6 +68,7 @@ def create_app(config):
     app.register_blueprint(gitlab_api, url_prefix='/api/gitlab')
     app.register_blueprint(get_user_api)
     app.register_blueprint(modal_api)
+    app.register_blueprint(admin_login)
 
     app.secret_key = 'your_secret_key'
 
@@ -114,6 +119,11 @@ def get_cookie():
     if cookie_value:
         return jsonify({"msg": f"Cookie value: {cookie_value}"})
     return jsonify({"msg": "No cookie found"})
+
+@app.before_request
+def restrict_swagger_access():
+    if request.path.startswith(SWAGGER_URL) and not is_admin():
+        return redirect(url_for('admin_login.admin_login_func'))
 
 if __name__ == "__main__":
     print(generate_password_hash("12345678"))
