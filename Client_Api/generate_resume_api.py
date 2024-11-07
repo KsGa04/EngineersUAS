@@ -4,11 +4,13 @@ import os
 from datetime import date
 from time import sleep
 
+import requests
 from PIL import Image
 from flask import render_template, Blueprint, send_file
 from html2image import Html2Image
 from reportlab.pdfgen import canvas
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 
 from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
@@ -107,9 +109,19 @@ def generate_resume_3(user_id):
     return generate_resume_func(3, user_id)
 
 
-@resume_api.route('/pattern_image_pdf/<int:user_id>', methods=['GET'])
-def generate_resume_image_pdf(user_id):
-    # Настраиваем Selenium для работы с Chrome
+def generate_image_from_url(url):
+    api_key = 'your_apiflash_api_key'
+    response = requests.get(
+        f"https://api.apiflash.com/v1/urltoimage?access_key={api_key}&url={url}"
+    )
+    if response.status_code == 200:
+        with open("screenshot.png", "wb") as file:
+            file.write(response.content)
+    else:
+        print("Ошибка генерации изображения:", response.text)
+
+@resume_api.route('/pattern_image_pdf/<int:user_id>/<int:id_pattern>', methods=['GET'])
+def generate_resume_image_pdf(user_id, id_pattern):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
@@ -117,7 +129,7 @@ def generate_resume_image_pdf(user_id):
     driver = webdriver.Chrome(options=options)
 
     # Открываем локальный сервер для рендеринга HTML
-    url = f'http://127.0.0.1:5000/pattern1/{user_id}'
+    url = f'http://127.0.0.1:5000/pattern{id_pattern}/{user_id}'
     driver.get(url)
     sleep(2)  # Ждем загрузки страницы и стилей
 

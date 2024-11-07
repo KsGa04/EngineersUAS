@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        .auth__switch .active {
+            border-radius: 46px;
+            background: #FFFFFF;
+            color: #4D8DDB;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="login__container _container">
+            <div class="login__wrapper">
+                <div class="auth__switch">
+                    <!-- Добавлены id для элементов -->
+                    <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
+                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТАДАТЕЛЬ</a>
+                </div>
+                <div class="login__title">
+                    <h1>АВТОРИЗАЦИЯ</h1>
+                </div>
+                <div class="login__form__wrapper">
+                    <form action="#" class="login__form" id="loginForm">
+                        <label for="email_input">Почта</label>
+                        <input type="email" id="email_input" placeholder="kip@yandex.ru" required>
+                        <label for="password_input">Пароль</label>
+                        <input type="password" id="password_input" placeholder="***********" required>
+                        <input type="button" value="ВОЙТИ" id="auth_btn">
+                    </form>
+                </div>
+                <div class="login__subtext">
+                    Нет аккаунта?<br/>
+                    <a href="#">Зарегистрируйся</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let roleId = 1; // 1 - студент, 2 - работодатель
+
+    // Получаем элементы переключателей
+    const studentSwitch = document.getElementById("studentSwitch");
+    const employerSwitch = document.getElementById("employerSwitch");
+
+    // Обработчик для переключения на "СТУДЕНТ"
+    studentSwitch.addEventListener("click", function(event) {
+        event.preventDefault();
+        roleId = 1;
+        studentSwitch.classList.add("active");
+        employerSwitch.classList.remove("active");
+    });
+
+    // Обработчик для переключения на "РАБОТАДАТЕЛЬ"
+    employerSwitch.addEventListener("click", function(event) {
+        event.preventDefault();
+        roleId = 2;
+        employerSwitch.classList.add("active");
+        studentSwitch.classList.remove("active");
+    });
+
+    // Обработчик для кнопки авторизации
+    document.getElementById("auth_btn").addEventListener("click", async function() {
+        const email = document.getElementById("email_input").value;
+        const password = document.getElementById("password_input").value;
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password, role_id: roleId }),
+                credentials: 'include' // Передаем cookie вместе с запросом
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem("user_id", result.user_id);
+                localStorage.setItem("role_id", result.role_id);
+                localStorage.setItem("id_pattern", result.id_pattern);
+                alert("Успешная авторизация!");
+
+                if (result.role_id == "1") {
+                    window.location.href = "/userboard";
+                } else {
+                    window.location.href = "/analytics";
+                }
+            } else {
+                alert(result.msg || "Ошибка авторизации.");
+            }
+        } catch (error) {
+            console.error("Ошибка:", error);
+            alert("Не удалось подключиться к серверу.");
+        }
+    });
+});
+</script>
+</body>
+</html>

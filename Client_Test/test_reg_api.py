@@ -1,7 +1,7 @@
 import pytest
 
 from Client_Api.extensions import db
-from Client_Server.app import app
+from app import app
 from Models import University, Group
 
 

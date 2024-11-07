@@ -13,7 +13,7 @@ def upper_first(text):
     return text[0].upper() + text[1:]
 
 
-@universal_api.route('/api/<table_name>', methods=['POST'])
+@universal_api.route('/universal/<table_name>', methods=['POST'])
 def universal_post(table_name):
     try:
         model_module = importlib.import_module(f"Models.{table_name}")
@@ -37,7 +37,7 @@ def universal_post(table_name):
         return jsonify({"msg": str(e)}), 400
 
 
-@universal_api.route('/api/<table_name>', methods=['GET'])
+@universal_api.route('/universal/<table_name>', methods=['GET'])
 def universal_get(table_name):
     try:
         model_module = importlib.import_module(f"Models.{table_name}")
@@ -69,7 +69,7 @@ from flask import request, jsonify
 import importlib
 
 
-@universal_api.route('/api/<table_name>', methods=['PUT'])
+@universal_api.route('/universal/<table_name>', methods=['PUT'])
 def universal_put(table_name):
     try:
         model_module = importlib.import_module(f"Models.{table_name.lower()}")
@@ -94,11 +94,6 @@ def universal_put(table_name):
         return jsonify({"msg": f"Record updated in {table_name}."}), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
-
-
-@universal_api.route('/api/university', methods=['GET'])
-def get_universities():
-    return universal_get("university")
 
 
 @universal_api.route('/api/group', methods=['GET'])

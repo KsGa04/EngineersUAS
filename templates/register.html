@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">   
+</head>
+<body>
+    <div class="wrapper">
+        <div class="regiser__container _container">
+            <div class="regiser__wrapper">
+                <div class="auth__switch">
+                    <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
+                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТАДАТЕЛЬ</a>
+                </div>
+                <div class="register__title">
+                    <h1>РЕГИСТРАЦИЯ</h1>
+                </div>
+                <div class="register__form__block">
+                    <form action="" class="register__form" id="registerForm">
+                        <label for="email_input">Почта</label>
+                        <input type="email" id="email_input" placeholder="kip@yandex.ru">
+
+                        <label for="password_input">Пароль</label>
+                        <input type="password" id="password_input" placeholder="***********">
+
+                        <label for="name_input">Имя</label>
+                        <input type="text" id="name_input" placeholder="Имя">
+
+                        <label for="surname_input">Фамилия</label>
+                        <input type="text" id="surname_input" placeholder="Фамилия">
+
+                        <label for="middle_name_input">Отчество</label>
+                        <input type="text" id="middle_name_input" placeholder="Отчество">
+                        <input type="submit" value="Зарегистрироваться" id="auth_btn">
+                    </form>
+                </div>
+                <div class="login__subtext">
+                    Есть аккаунт?
+                    <a href="login">Войти</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("registerForm").addEventListener("submit", handleFormSubmit);
+    });
+    let roleId = 1; // 1 - студент, 2 - работодатель
+    // Обработчик для переключения на "СТУДЕНТ"
+    studentSwitch.addEventListener("click", function(event) {
+        event.preventDefault();
+        roleId = 1;
+        studentSwitch.classList.add("active");
+        employerSwitch.classList.remove("active");
+    });
+
+    // Обработчик для переключения на "РАБОТАДАТЕЛЬ"
+    employerSwitch.addEventListener("click", function(event) {
+        event.preventDefault();
+        roleId = 2;
+        employerSwitch.classList.add("active");
+        studentSwitch.classList.remove("active");
+    });
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const formData = {
+            email: document.getElementById("email_input").value,
+            password: document.getElementById("password_input").value,
+            first_name: document.getElementById("name_input").value,
+            last_name: document.getElementById("surname_input").value, // исправлено
+            middle_name: document.getElementById("middle_name_input").value, // добавлено отчество
+            role_id: roleId
+        };
+
+        try {
+            const response = await fetch("/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.msg);
+                window.location.href = "/login";
+            } else {
+                alert(result.msg);
+            }
+        } catch (error) {
+            console.error("Ошибка регистрации:", error);
+            alert("Не удалось зарегистрироваться.");
+        }
+    }
+    </script>
+</body>
+</html>

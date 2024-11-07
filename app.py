@@ -1,11 +1,9 @@
-import json
-from datetime import date
 from functools import wraps
 
-import requests
 from flask import Flask, render_template, make_response, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request, get_jwt
+from werkzeug.security import generate_password_hash
 
 from Client_Api.approach_to_universities import university_api
 from Client_Api.extensions import db  # Импортируем расширения
@@ -15,7 +13,7 @@ from Client_Api.get_github_repositories import github_api
 from Client_Api.get_gitlab_repositories import gitlab_api
 from Client_Api.get_user_data import get_user_api
 from Client_Api.project_api import modal_api
-from Client_Server.config import Config  # Указываем полный путь до config
+from config import Config  # Указываем полный путь до config
 from Client_Api.universal_api import universal_api
 from flask_swagger_ui import get_swaggerui_blueprint
 from Client_Api.generate_resume_api import resume_api
@@ -118,5 +116,6 @@ def get_cookie():
     return jsonify({"msg": "No cookie found"})
 
 if __name__ == "__main__":
+    print(generate_password_hash("12345678"))
     CORS(app)
     app.run()

@@ -1,8 +1,8 @@
 import pytest
 from Client_Api.extensions import db
-from Client_Server.config import TestingConfig
+from config import TestingConfig
 from Models import Role, User, Resume
-from Client_Server.app import create_app
+from app import create_app
 
 app = create_app(TestingConfig)
 

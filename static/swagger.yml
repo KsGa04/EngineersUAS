@@ -23,7 +23,7 @@ tags:
 schemes:
   - "http"
 paths:
-  /api/{table_name}:
+  /universal/{table_name}:
     post:
       tags:
         - "all"

@@ -17,7 +17,7 @@ auth_api = Blueprint('auth_api', __name__)
 def register():
     data = request.json
 
-    required_fields = ['email', 'password', 'first_name', 'last_name', 'is_employer']
+    required_fields = ['email', 'password', 'first_name', 'last_name', 'middle_name', 'role_id']
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"{field} is required"}), 400
@@ -26,9 +26,8 @@ def register():
     password = data['password']
     first_name = data['first_name']
     last_name = data['last_name']
-    is_employer = data['is_employer']
-    university_name = data.get('university')
-    group_name = data.get('group')
+    middle_name = data['middle_name']
+    role_id = data['role_id']
 
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "User with this email already exists"}), 409
@@ -36,67 +35,47 @@ def register():
     if len(password) < 8:
         return jsonify({"msg": "Password must be at least 8 characters long"}), 400
 
+    # Хэшируем пароль перед сохранением
     hashed_password = generate_password_hash(password)
+
     user = User(
         first_name=first_name,
         last_name=last_name,
         email=email,
-        password=hashed_password
+        password=hashed_password,
+        middle_name=middle_name,
+        role_id=role_id# Сохраняем хэшированный пароль
     )
     db.session.add(user)
     db.session.flush()  # Генерирует id для пользователя
 
-    if is_employer:
-        db.session.commit()
-        return jsonify({"msg": "Employer registered successfully"}), 201
-
-    if not university_name or not group_name:
-        return jsonify({"msg": "University and group are required for student registration"}), 400
-
-    university = University.query.filter_by(full_name=university_name).first()
-    if not university:
-        return jsonify({"msg": "University not found"}), 404
-
-    group = Group.query.filter_by(group_name=group_name).first()
-    if not group:
-        return jsonify({"msg": "Group not found"}), 404
-
-    resume = Resume(id_user=user.id_user, about_me="")
+    resume = Resume(id_user=user.id_user, about_me="", id_pattern=1)
     db.session.add(resume)
     db.session.flush()
 
-    education = Education(
-        id_resume=resume.id_resume,
-        id_university=university.id_university,
-        id_degree=1,  # Предположим, что id_degree передан корректно
-        id_direction=group.id_direction,
-        group_number=group.id_group,
-        start_date=date.today(),
-        status="active"
-    )
-    db.session.add(education)
     db.session.commit()
 
     return jsonify({"msg": "Student registered successfully"}), 201
 
 
-# Авторизация пользователя
 @auth_api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    role_id = data.get('role_id')
 
     user = User.query.filter_by(email=email).first()
+    bools = check_password_hash(user.password, password)
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"msg": "Неверные учетные данные"}), 401
 
-    if user:  # Здесь требуется реальная проверка пароля
-        # Генерация токена
-        authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user})
+    # Генерация токена
+    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user})
+    resume = Resume.query.filter_by(id_user=user.id_user).first()
 
-        # Настройка ответа с cookies
-        response = make_response(jsonify({"user_id": user.id_user}))
-        set_access_cookies(response, authToken)
+    # Настройка ответа с cookies
+    response = make_response(jsonify({"user_id": user.id_user, "role_id": user.role_id, "id_pattern": resume.id_pattern if resume else None}))
+    set_access_cookies(response, authToken)
 
-        return response, 200
-
-    return jsonify({"msg": "Неверные учетные данные"}), 401
+    return response, 200

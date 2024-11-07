@@ -9,8 +9,8 @@ from Models.user import User
 
 @pytest.fixture(scope='module')
 def test_client():
-    from Client_Server.app import app
-    from Client_Server.config import Config
+    from app import app
+    from config import Config
     from Client_Api.extensions import db  # Проверьте, что это правильный импорт
 
     # Используем тестовую конфигурацию

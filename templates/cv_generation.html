@@ -43,13 +43,9 @@
                                     </div>
                                     <textarea name="cv__groupnumber" id="" class="cv__form__input"></textarea>
                                 </div>
-                                <div class="graduate__item cv__form__item">
-                                    <input type="checkbox" name="cv__graduate" id="graduate__checkbox">
-                                    <h2>Выпускник</h2>
-                                </div>
                                 <div class="bio__item cv__form__item">
                                     <div class="cv__form__title">
-                                        <h4>Описание*</h4>
+                                        <h4>Образование</h4>
                                     </div>
                                     <textarea type="text" name="cv__bio" class="cv__form__input"></textarea>
                                 </div>
@@ -204,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Ошибка добавления опыта работы:", error));
         });
 
-        loadData('/api/organizations', "organization", "Выберите организацию");
+        loadData('/universal/organization', "organization", "Выберите организацию");
     });
 
     // Modal for Projects

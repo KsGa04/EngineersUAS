@@ -268,7 +268,7 @@ h1 {
 
 }
 .regiser__wrapper {
-    height: 850px;
+    height: 800px;
     width: 650px;
     background: linear-gradient( #438CD8, #808FE8); 
     border-radius: 35px; 
@@ -276,6 +276,7 @@ h1 {
     flex-direction: column;
     justify-content:center;
     align-items: center;
+    margin-top: 10px;
 }
 #groupNumber__underText {
     font-size: 15px;
@@ -439,7 +440,7 @@ header {
     text-wrap: nowrap;
 }
 .cv__form__input {
-    height: 44px;
+    height: auto;
     border: 1px solid #FFFFFF;
     border-radius: 10px;
     width:100%;
@@ -447,6 +448,9 @@ header {
     font-size: 20px;
     font-family: 'Inter-Bold';
     padding: 12px 20px 12px 20px;
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* Поддержка для старых браузеров */
+    white-space: pre-wrap; /* Сохраняет переносы строк */
 
 }
 .birthDate__item {
@@ -542,6 +546,14 @@ header {
 }
 .cv__generation__preview__item__open {
 
+}
+
+.cv__form__input.small-textarea {
+    height: 44px;
+}
+.cv__form__input.large-textarea {
+    height: 150px; /* Задаем большую высоту */
+    resize: vertical; /* Разрешаем изменение размера */
 }
 /*------------------------------------------------------------------------*/
 
