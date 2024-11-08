@@ -229,6 +229,18 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: login
+          in: query
+          required: true
+          description: "Логин пользователя"
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: "Пароль пользователя"
+          schema:
+            type: string
       responses:
         '200':
           description: "Успешное получение резюме"
@@ -254,6 +266,18 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: login
+          in: query
+          required: true
+          description: "Логин пользователя"
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: "Пароль пользователя"
+          schema:
+            type: string
       responses:
         '200':
           description: "Успешное получение резюме"
@@ -279,6 +303,18 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: login
+          in: query
+          required: true
+          description: "Логин пользователя"
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: "Пароль пользователя"
+          schema:
+            type: string
       responses:
         '200':
           description: "Успешное получение резюме"

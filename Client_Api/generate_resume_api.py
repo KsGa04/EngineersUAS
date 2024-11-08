@@ -6,11 +6,12 @@ from time import sleep
 
 import requests
 from PIL import Image
-from flask import render_template, Blueprint, send_file
+from flask import render_template, Blueprint, send_file, request, jsonify
 from html2image import Html2Image
 from reportlab.pdfgen import canvas
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from werkzeug.security import check_password_hash
 
 from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
@@ -32,8 +33,17 @@ def age_suffix(age):
 resume_api = Blueprint('resume_api', __name__)
 
 
-def generate_resume_func(pattern_id, user_id):
-    user = User.query.get_or_404(user_id)
+def generate_resume_func(pattern_id, user_id, login, password):
+    user = User.query.filter_by(email=login).first()
+
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    if not check_password_hash(user.password, password):
+        return jsonify({'msg': 'Invalid login or password'}), 401
+
+    if user.id_user != user_id:
+        return jsonify({'msg': 'User ID does not match'}), 404
 
     # Кодирование изображения профиля в Base64
     profile_image_base64 = None
@@ -97,16 +107,16 @@ def generate_resume_func(pattern_id, user_id):
 
 @resume_api.route('/pattern1/<int:user_id>', methods=['GET'])
 def generate_resume(user_id):
-    return generate_resume_func(1, user_id)
+    return generate_resume_func(1, user_id, request.args.get('login'), request.args.get('password'))
 
 
 @resume_api.route('/pattern2/<int:user_id>', methods=['GET'])
 def generate_resume_2(user_id):
-    return generate_resume_func(2, user_id)
+    return generate_resume_func(2, user_id, request.args.get('login'), request.args.get('password'))
 
 @resume_api.route('/pattern3/<int:user_id>', methods=['GET'])
 def generate_resume_3(user_id):
-    return generate_resume_func(3, user_id)
+    return generate_resume_func(3, user_id, request.args.get('login'), request.args.get('password'))
 
 
 def generate_image_from_url(url):
