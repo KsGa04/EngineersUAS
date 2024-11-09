@@ -107,6 +107,12 @@ def cv_generator():
 def analytics():
     return render_template('analytics.html')
 
+@app.route('/candidats')
+@jwt_required()
+@role_required(2)
+def candidats():
+    return render_template('hr_page.html')
+
 @app.route('/set_cookie')
 def set_cookie():
     response = make_response(jsonify({"msg": "Cookie set successfully"}))

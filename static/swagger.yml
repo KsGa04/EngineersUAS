@@ -185,7 +185,35 @@ paths:
                   msg:
                     type: string
                     example: "University not found"
-
+  /pattern_image_pdf/{user_id}/{id_pattern}:
+    get:
+      tags:
+        - "resume"
+      summary: "Generate resume PDF from rendered HTML pattern"
+      description: "Generates a PDF document from an HTML page rendered for a specific user and pattern."
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: "The ID of the user for whom the resume is generated."
+          schema:
+            type: integer
+        - name: id_pattern
+          in: path
+          required: true
+          description: "The ID of the pattern used for generating the resume."
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "PDF file generated successfully"
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: "Internal server error"
   /login:
     post:
       tags:

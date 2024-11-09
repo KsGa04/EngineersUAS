@@ -1,84 +1,159 @@
-/* Основной стиль для модального окна */
-        .modal-overlay {
-            display: none; /* Изначально скрыто */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Затемнение */
-            z-index: 1000;
-        }
+/* Updated CSS for Modal Window with Blue Theme */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
 
-        /* Модальное окно */
-        .modal {
-            background: #fff;
-            width: 90%;
-            max-width: 500px;
-            margin: 5% auto;
-            padding: 20px 30px;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            font-family: Arial, sans-serif;
-        }
+.modal {
+    position: relative;
+    margin: 5% auto;
+    padding: 30px;
+    background: linear-gradient( #5198DC, #7C95E7); ;
+    width: 40%;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out;
+    border: 1px solid #b3d9ff;
+}
 
-        /* Кнопка закрытия */
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5em;
-            color: #333;
-            cursor: pointer;
-            font-weight: bold;
-        }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        /* Стиль заголовка модального окна */
-        .modal h2 {
-            font-size: 1.8em;
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    color: #005c99;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
 
-        /* Оформление содержимого */
-        .modal label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-            font-size: 0.9em;
-            color: #555;
-        }
+.modal-close:hover {
+    color: #ff4d4d;
+}
 
-        .modal input, .modal textarea, .modal select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 1em;
-            color: #333;
-        }
+.tab-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
 
-        .modal textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+.tab-button {
+    padding: 12px 25px;
+    cursor: pointer;
+    border: 1px solid #b3d9ff;
+    background-color: #5499DE;
+    color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    font-weight: bold;
+    border-radius: 43px;
+}
 
-        .modal button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            display: block;
-            margin: 0 auto;
-        }
+.tab-button:hover {
+    background-color: #99cfff;
+    color: #004080;
+}
 
-        .modal button:hover {
-            background-color: #0056b3;
-        }
+.tab-content {
+    display: none;
+    padding: 20px;
+    border-top: 2px solid #99cfff;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+}
+
+#tab-view.active, #tab-add-edit.active {
+    display: block;
+}
+
+#education-list {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #b3d9ff;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#education-list label {
+    display: block;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: #e6f7ff;
+    border: 1px solid #99cfff;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.1s;
+    cursor: pointer;
+}
+
+#education-list label:hover {
+    background-color: #d1f0ff;
+    transform: scale(1.02);
+}
+
+#education-list input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    border: none;
+    background-color: #005c99;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border-radius: 43px;
+}
+
+.tab-content button {
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #004080;
+}
+
+/* Additional styling for better readability */
+.modal h2 {
+    color: white;
+    border-bottom: 2px solid #99cfff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-content p, label {
+    color: #003d66;
+}
+
+input[type="date"], select {
+    border: 1px solid #b3d9ff;
+    border-radius: 5px;
+    padding: 8px;
+    width: calc(100% - 20px);
+    margin-bottom: 15px;
+    background-color: #ffffff;
+}
+
+input[type="date"]:focus, select:focus {
+    border-color: #99cfff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 153, 255, 0.5);
+}

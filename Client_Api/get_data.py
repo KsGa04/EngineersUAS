@@ -1,8 +1,8 @@
-from flask import jsonify, Blueprint
+from flask import jsonify, Blueprint, request
 
 from Client_Api.extensions import db
 from Client_Api.generate_resume_api import resume_api
-from Models import Skills, Resume, ResumeSkills, TaskSkills, ProjectSkills
+from Models import Skills, Resume, ResumeSkills, TaskSkills, ProjectSkills, Education, Degree, University, Direction
 
 get_api = Blueprint('get_api', __name__)
 
@@ -55,5 +55,44 @@ def get_task_skills(id_task):
         skills = db.session.query(Skills).join(TaskSkills).filter(TaskSkills.id_task == id_task).all()
         skill_list = [{"id_skill": skill.id_skill, "skill_name": skill.skill_name} for skill in skills]
         return jsonify(skill_list), 200
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 400
+
+
+@get_api.route('/education', methods=['GET'])
+def get_education():
+    id_user = request.args.get('user_id')
+    if not id_user:
+        return jsonify({"msg": "User ID is required"}), 400
+
+    try:
+        results = db.session.query(
+            Education.id_education,
+            Education.id_resume,
+            Education.start_date,
+            Education.end_date,
+            Education.status,
+            University.short_name.label('university'),
+            Degree.degree_name.label('degree'),
+            Direction.direction_name.label('direction'),
+            Education.group_number
+        ).join(University).join(Degree).join(Direction).filter(Education.id_resume == id_user).all()
+
+        education_list = [
+            {
+                'id_education': result.id_education,
+                'id_resume': result.id_resume,
+                'university': result.university,
+                'degree': result.degree,
+                'direction': result.direction,
+                'group_number': result.group_number,
+                'start_date': result.start_date,
+                'end_date': result.end_date,
+                'status': result.status
+            }
+            for result in results
+        ]
+
+        return jsonify(education_list), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
