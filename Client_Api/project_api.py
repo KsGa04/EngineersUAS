@@ -1,9 +1,13 @@
 # ================= API для Проекты =================
+import base64
+
 from flask import jsonify, request, Blueprint
 from langfuse.api import Project
+from sqlalchemy.orm import joinedload
 
 from Client_Api.extensions import db
-from Models import UserSocialNetwork, Education, Skills, University, Direction, Group, Degree
+from Models import UserSocialNetwork, Education, Skills, University, Direction, Group, Degree, Organization, User, \
+    Resume, ResumeSkills, Projects
 from Models.work import Work
 
 modal_api = Blueprint('modal_api', __name__)
@@ -112,6 +116,7 @@ def delete_project(id):
 
 
 # ================= API для Навыки =================
+
 @modal_api.route('/api/skills', methods=['POST'])
 def add_skill():
     data = request.json
@@ -185,6 +190,12 @@ def get_universities():
     university_list = [{"id": u.id_university, "name": u.full_name} for u in universities]
     return jsonify(university_list)
 
+@modal_api.route('/api/organizations', methods=['GET'])
+def get_organization():
+    organizations = Organization.query.all()
+    organizations_list = [{"id": u.id_organization, "name": u.organization_name} for u in organizations]
+    return jsonify(organizations_list)
+
 # Эндпоинт для получения групп по ID направления
 @modal_api.route('/api/groups', methods=['GET'])
 def get_groups():
@@ -209,3 +220,100 @@ def get_degrees():
     degrees = Degree.query.all()
     degree_list = [{"id": d.id_degree, "name": d.degree_name} for d in degrees]
     return jsonify(degree_list)
+
+@modal_api.route('/api/directions', methods=['GET'])
+def get_directions():
+    directions = Direction.query.all()
+    directions_list = [{"id": d.id_direction, "name": d.direction_name} for d in directions]
+    return jsonify(directions_list)
+
+@modal_api.route('/api/projects', methods=['GET'])
+def get_projects():
+    projects = Projects.query.all()
+    projects_list = [{"id": d.id_project, "name": d.project_name} for d in projects]
+    return jsonify(projects_list)
+
+@modal_api.route('/api/candidates', methods=['GET'])
+def get_candidates():
+    candidates = []
+
+    users = User.query.all()
+
+    for user in users:
+        # Проверка, что поле profile_photo содержит данные
+        if user.profile_photo:
+            # Кодирование бинарных данных в base64
+            profile_photo_encoded = base64.b64encode(user.profile_photo).decode('utf-8')
+            profile_photo_data = f"data:image/jpeg;base64,{profile_photo_encoded}"
+        else:
+            profile_photo_data = None
+
+        candidate_data = {
+            'id_user': user.id_user,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'middle_name': user.middle_name,
+            'email': user.email,
+            'phone': user.phone,
+            'birth_date': user.birth_date.strftime('%Y-%m-%d') if user.birth_date else None,
+            'address': user.address,
+            'profile_photo': profile_photo_data,
+            'resumes': []
+        }
+
+        resumes = Resume.query.filter_by(id_user=user.id_user).all()
+
+        for resume in resumes:
+            resume_data = {
+                'id_resume': resume.id_resume,
+                'about_me': resume.about_me,
+                'id_pattern': resume.id_pattern,
+                'educations': [],
+                'skills': []
+            }
+
+            educations = Education.query.filter_by(id_resume=resume.id_resume).all()
+            for edu in educations:
+                education_data = {
+                    'id_education': edu.id_education,
+                    'university_name': edu.university.full_name if edu.university else None,
+                    'direction_name': edu.direction.direction_name if edu.direction else None,
+                    'city': edu.university.location if edu.university else None,
+                }
+                resume_data['educations'].append(education_data)
+
+            resume_skills = ResumeSkills.query.filter_by(id_resume=resume.id_resume).all()
+            for rs in resume_skills:
+                skill = Skills.query.get(rs.id_skill)
+                if skill:
+                    resume_data['skills'].append({
+                        'id_skill': skill.id_skill,
+                        'skill_name': skill.skill_name
+                    })
+
+            candidate_data['resumes'].append(resume_data)
+
+        candidates.append(candidate_data)
+
+    return jsonify(candidates)
+
+
+@modal_api.route('/api/regions', methods=['GET'])
+def get_regions():
+    try:
+        # Получаем все адреса пользователей
+        user_addresses = db.session.query(User.address).filter(User.address.isnot(None)).all()
+        # Получаем все локации университетов
+        university_locations = db.session.query(University.location).filter(University.location.isnot(None)).all()
+        # Получаем все локации организаций
+        organization_locations = db.session.query(Organization.location).filter(Organization.location.isnot(None)).all()
+
+        # Преобразуем полученные кортежи в плоский список
+        all_locations = {addr[0] for addr in user_addresses + university_locations + organization_locations}
+
+        # Убираем пустые значения, если они есть
+        all_locations = list(filter(None, all_locations))
+
+        return jsonify(sorted(all_locations))  # Сортируем для удобства просмотра
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

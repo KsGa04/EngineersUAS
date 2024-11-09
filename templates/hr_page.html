@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header__container _container">
+                <div class="header__left">
+                    <div class="header__logo">
+                        <div class="logo__example"></div>
+                    </div>
+                    <div class="header__logo__title">
+                        <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                    </div>
+                </div>
+                <div class="header__right">
+                    <img src="/assets/images/person_icon.svg" alt="">
+                </div>
+            </div>
+        </header>
+        <main class="hr__page">
+            <div class="hr__page__container _container">
+                <div class="hr__page__filter__block">
+                    <div class="hr__page__filter">
+                        <div class="region__item filter__item">
+                            <div class="regin__item__title filter__item__title"><h4>Регион</h4></div>
+                            <select name="region" id="regionSelect">
+                                <option value="">Выбрать из списка</option>
+                            </select>
+                        </div>
+                        <div class="direction__item filter__item">
+                            <div class="direction__item__title filter__item__title">
+                                <h4>Направление</h4>
+                            </div>
+                            <select name="direction" id="directionSelect">
+                                <option value="">Выбрать из списка</option>
+                            </select>
+                        </div>
+                        <div class="university__item filter__item">
+                            <div class="university__item__title filter__item__title">
+                                <h4>ВУЗ/СУЗ</h4>
+                            </div>
+                            <select name="university" id="universitySelect">
+                                <option value="">Выбрать из списка</option>
+                            </select>
+                        </div>
+                        <div class="skills__item filter__item">
+                            <div class="skills__item__title filter__item__title">
+                                <h4>Навыки</h4>
+                            </div>
+                            <select name="skills" id="skillsSelect">
+                                <option value="">Выбрать из списка</option>
+                            </select>
+                        </div>
+
+                        <div class="filter__button__item"><button type="button" class="filter__button">Показать</button></div>
+                    </div>
+                </div>
+                <div class="hr__page__main__inner">
+                    <div class="candidates__items__search">
+                        <input type="search" placeholder="Поиск" id="searchInput">
+                        <a href="" class="candidates__search__btn"><img src="/assets/images/search__icon.svg" alt=""></a>
+                    </div>
+                    <div class="candidates__items">
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+<script src="/static/find.js"></script>
+</body>
+</html>

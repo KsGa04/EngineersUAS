@@ -57,8 +57,11 @@ def universal_get(table_name):
         results_dict = [result.__dict__ for result in results]
 
         for result in results_dict:
-            result.pop('profile_photo')
-            result.pop('_sa_instance_state', None)
+            try:
+                result.pop('profile_photo')
+                result.pop('_sa_instance_state', None)
+            except Exception as e:
+                result.pop('_sa_instance_state', None)
         return jsonify(results_dict), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 400

@@ -6,7 +6,7 @@ from time import sleep
 
 import requests
 from PIL import Image
-from flask import render_template, Blueprint, send_file
+from flask import render_template, Blueprint, send_file, jsonify
 from html2image import Html2Image
 from reportlab.pdfgen import canvas
 from selenium import webdriver
@@ -76,22 +76,6 @@ def generate_resume_func(pattern_id, user_id):
         responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
         projects=projects, project_skills=project_skills
     )
-
-    # Конфигурация Html2Image для сохранения изображения
-    hti = Html2Image()
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Client_Server'))
-
-    # Указание директории для CSS и изображений
-    css_path = os.path.join(base_path, f'static/css/pattern_resume{pattern_id}.css')
-    output_dir = os.path.join(base_path, 'templates')
-    img_name = f'resume_{user_id}.png'
-
-    # Установка output_path для сохранения в нужную директорию
-    hti.output_path = output_dir
-    hti.screenshot(html_str=rendered_html, css_file=css_path, save_as=img_name, size=(794, 1250))
-
-    img_path = os.path.join(output_dir, img_name)
-
     # Отправка изображения пользователю
     return rendered_html
 
@@ -120,48 +104,20 @@ def generate_image_from_url(url):
     else:
         print("Ошибка генерации изображения:", response.text)
 
+
 @resume_api.route('/pattern_image_pdf/<int:user_id>/<int:id_pattern>', methods=['GET'])
 def generate_resume_image_pdf(user_id, id_pattern):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-gpu')
-    driver = webdriver.Chrome(options=options)
+    url = f'http://46.229.215.18:5000/pattern_image_pdf/{user_id}/{id_pattern}'
+    response = requests.get(url)
 
-    # Открываем локальный сервер для рендеринга HTML
-    url = f'http://127.0.0.1:5000/pattern{id_pattern}/{user_id}'
-    driver.get(url)
-    sleep(2)  # Ждем загрузки страницы и стилей
+    if response.status_code == 200:
+        # Сохранение PDF-файла временно
+        pdf_path = f'tmp_resume_{user_id}.pdf'
+        with open(pdf_path, 'wb') as f:
+            f.write(response.content)
 
-    # Устанавливаем альбомный размер для A4
-    a4_width, a4_height = 860, 1350
-    page_height = driver.execute_script("return document.body.scrollHeight")
-    driver.set_window_size(a4_width, a4_height)  # Устанавливаем высоту окна по контенту
-
-    # Сохраняем скриншот страницы как PNG
-    tmp_dir = os.path.join(os.path.dirname(__file__), '../Client_Server/tmp')
-    os.makedirs(tmp_dir, exist_ok=True)
-    png_path = os.path.join(tmp_dir, f'resume_{user_id}.png')
-    driver.save_screenshot(png_path)
-    driver.quit()
-
-    # Преобразование изображения в альбомный PDF с помощью ReportLab
-    pdf_path = os.path.join(tmp_dir, f'resume_{user_id}.pdf')
-    image = Image.open(png_path)
-
-    # Подгонка изображения под размеры A4 (альбомный формат) без полей
-    image = image.resize((a4_width, page_height), Image.LANCZOS)
-
-    # Сохраняем изображение в PDF
-    pdf_bytes = io.BytesIO()
-    c = canvas.Canvas(pdf_bytes, pagesize=(a4_width, page_height))
-    c.drawImage(png_path, 0, 0, width=a4_width, height=page_height)
-    c.showPage()
-    c.save()
-
-    # Записываем PDF на диск
-    with open(pdf_path, 'wb') as pdf_file:
-        pdf_file.write(pdf_bytes.getvalue())
-
-    # Отправка PDF пользователю
-    return send_file(pdf_path, mimetype='application/pdf', as_attachment=True, download_name=f'resume_{user_id}.pdf')
+        # Отправка PDF-файла клиенту
+        return send_file(pdf_path, mimetype='application/pdf', as_attachment=True,
+                         download_name=f'resume_{user_id}.pdf')
+    else:
+        return jsonify({'error': f'Failed to fetch PDF: {response.status_code}, {response.text}'}), response.status_code
