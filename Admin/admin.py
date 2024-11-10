@@ -2,7 +2,7 @@ from flask import Blueprint, session, redirect, url_for, flash, request, render_
 
 admin_login = Blueprint('admin_login', __name__)
 
-ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = 'admin@administrator.ru'
 ADMIN_PASSWORD = 'password'
 
 def is_admin():

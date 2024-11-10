@@ -19,7 +19,13 @@
                     </div>
                 </div>
                 <div class="header__right">
-                    <img src="static/assets/images/person_icon.svg" alt="">
+                    <img src="static/assets/images/person_icon.svg" alt="" id="personIcon">
+                    <div class="person-menu" id="personMenu">
+                        <ul>
+                            <li><a href="/userboard">Личный кабинет</a></li>
+                            <li><a href="/cvgenerator">Генерация резюме</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
@@ -108,9 +114,13 @@
                 <button onclick="downloadPDF()">Скачать в pdf</button>
             </div>
         </div>
+        <div class="contacts__wrapper">
+        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/icon.js"></script>
     <script>
         // Function to show the overlay
         function showFeatureUnavailable() {

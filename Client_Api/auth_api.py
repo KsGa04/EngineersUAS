@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from Models import University, Group, Resume, Education
+from Models import University, Group, Resume, Education, UserSocialNetwork
 from Models.user import User
 from flask_jwt_extended import create_access_token, set_access_cookies
 from Client_Api.extensions import db
@@ -27,6 +27,7 @@ def register():
     first_name = data['first_name']
     last_name = data['last_name']
     middle_name = data['middle_name']
+    tg = data.get('tg')  # Optional field
     role_id = data['role_id']
 
     if User.query.filter_by(email=email).first():
@@ -44,7 +45,7 @@ def register():
         email=email,
         password=hashed_password,
         middle_name=middle_name,
-        role_id=role_id# Сохраняем хэшированный пароль
+        role_id=role_id
     )
     db.session.add(user)
     db.session.flush()  # Генерирует id для пользователя
@@ -53,9 +54,25 @@ def register():
     db.session.add(resume)
     db.session.flush()
 
+    # Обработка и добавление Telegram ссылки
+    if tg:
+        # Нормализация TG-ссылки
+        if tg.startswith('@'):
+            tg = tg[1:]  # Убираем символ @
+        if not tg.startswith('https://t.me/'):
+            tg = f'https://t.me/{tg}'
+
+        user_social_network = UserSocialNetwork(
+            id_resume=resume.id_resume,
+            id_social_network_type=None,  # Предположим, что 1 — это ID типа для Telegram
+            network_link=tg
+        )
+        db.session.add(user_social_network)
+
     db.session.commit()
 
     return jsonify({"msg": "Student registered successfully"}), 201
+
 
 
 @auth_api.route('/login', methods=['POST'])
@@ -75,7 +92,7 @@ def login():
     resume = Resume.query.filter_by(id_user=user.id_user).first()
 
     # Настройка ответа с cookies
-    response = make_response(jsonify({"user_id": user.id_user, "role_id": user.role_id, "id_pattern": resume.id_pattern if resume else None}))
+    response = make_response(jsonify({"user_id": user.id_user, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None}))
     set_access_cookies(response, authToken)
 
     return response, 200

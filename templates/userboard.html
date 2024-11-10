@@ -19,7 +19,13 @@
                     </div>
                 </div>
                 <div class="header__right">
-                    <img src="static/assets/images/person_icon.svg" alt="">
+                    <img src="static/assets/images/person_icon.svg" alt="" id="personIcon">
+                    <div class="person-menu" id="personMenu">
+                        <ul>
+                            <li><a href="/userboard">Личный кабинет</a></li>
+                            <li><a href="/cvgenerator">Генерация резюме</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
@@ -72,6 +78,14 @@
                                 </div>
                                 <textarea name="cv__univercity" class="cv__form__input large-textarea"></textarea>
                             </div>
+                            <div class="cv_name_item cv__form__item">
+                                <div class="cv__form__title">
+                                    <h4 class="">
+                                        Телеграмм
+                                    </h4>
+                                </div>
+                                <input type="text" class="cv__form__input small-textarea" name="cv__tg" />
+                            </div>
                         </form>
 
                     </div>
@@ -89,9 +103,12 @@
             </div>
 
         </main>
-
+        <div class="contacts__wrapper">
+        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+        </div>
     </div>
 </body>
+<script src="/static/icon.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", async function() {
     const userId = localStorage.getItem("user_id");
@@ -116,6 +133,7 @@
             document.querySelector("[name='cv__name']").value = `${userData.first_name || ''} ${userData.last_name || ''}`;
             document.querySelector("[name='cv__birthdate']").value = userData.birth_date || "";
             document.querySelector("[name='cv__univercity']").value = userData.resume.about_me || "";
+            document.querySelector("[name='cv__tg']").value = userData.resume.telegram || "";
 
             // Устанавливаем значение шаблона из данных пользователя
             resumePatternId = userData.resume.id_pattern;

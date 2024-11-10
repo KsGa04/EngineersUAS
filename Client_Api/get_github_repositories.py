@@ -181,8 +181,8 @@ def add_project(repo_data, resume_id):
 @github_api.route('/add_repos', methods=['POST'])
 def post_repos():
     github_url = request.args.get('github_url')
-    resume_id = request.args.get('resume_id')
-    token = request.args.get('token', "your_default_token")
+    resume_id = request.args.get('id_resume')
+    token = request.args.get('token', "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")
 
     if not github_url or not resume_id:
         return jsonify({"error": "GitHub URL и resume_id обязательны"}), 400
@@ -196,6 +196,10 @@ def post_repos():
     repo_info_list = []
     for repo in repos:
         repo_name = repo['name']
+        # Check if the repository already exists in the database for this resume
+        if check_repo_exists(repo_name, resume_id):
+            continue  # Skip adding the repo if it already exists
+
         repo_description = repo['description'] or "Описание отсутствует"
         repo_languages = get_languages(repo['full_name'], token)
         repo_topics = get_topics(repo['full_name'], token)
@@ -207,17 +211,15 @@ def post_repos():
             "languages": repo_languages,
             "topics": repo_topics,
             "readme_content": repo_readme_content,
-            "project_link": repo['html_url']  # URL проекта на GitHub
+            "project_link": repo['html_url']
         }
 
-        # Генерация описания проекта с помощью нейросети
         generated_description = generate_description(repo_data)
         repo_data['generated_description'] = generated_description
 
-        # Добавляем проект в базу данных
+        # Add project to the database
         project = add_project(repo_data, resume_id)
 
-        # Добавляем информацию о проекте в список
         repo_info_list.append({
             "name": project.project_name,
             "description": project.project_description,
@@ -230,3 +232,8 @@ def post_repos():
 
     return jsonify(repo_info_list), 200
 
+
+def check_repo_exists(repo_name, resume_id):
+    # Function to check if a repository with the given name already exists for the resume_id
+    existing_repo = Projects.query.filter_by(project_name=repo_name, resume_id=resume_id).first()
+    return existing_repo is not None

@@ -33,6 +33,11 @@
 
                         <label for="middle_name_input">Отчество</label>
                         <input type="text" id="middle_name_input" placeholder="Отчество">
+
+                        <label for="middle_name_input">Телеграм</label>
+                        <input type="text" id="tg_input" placeholder="KIP_support">
+
+
                         <input type="submit" value="Зарегистрироваться" id="auth_btn">
                     </form>
                 </div>
@@ -42,7 +47,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="contacts__wrapper">
+        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+        </div>
     </div>
 <script>
  document.addEventListener("DOMContentLoaded", () => {
@@ -71,7 +78,8 @@
             password: document.getElementById("password_input").value,
             first_name: document.getElementById("name_input").value,
             last_name: document.getElementById("surname_input").value, // исправлено
-            middle_name: document.getElementById("middle_name_input").value, // добавлено отчество
+            middle_name: document.getElementById("middle_name_input").value,
+            th: document.getElementById("tg_input").value,// добавлено отчество
             role_id: roleId
         };
 

@@ -40,6 +40,9 @@
                 </div>
             </div>
         </div>
+        <div class="contacts__wrapper">
+        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+    </div>
     </div>
 
 <script>
@@ -87,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.setItem("user_id", result.user_id);
                 localStorage.setItem("role_id", result.role_id);
                 localStorage.setItem("id_pattern", result.id_pattern);
+                localStorage.setItem("id_resume", result.id_resume);
                 alert("Успешная авторизация!");
 
                 if (result.role_id == "1") {

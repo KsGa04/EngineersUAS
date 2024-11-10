@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <h2>Admin Login</h2>
-
-    <form method="post" action="{{ url_for('admin_login.admin_login_func') }}">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" required>
-        <br>
-        <button type="submit">Login</button>
-    </form>
+    <div class="wrapper">
+        <div class="login__container _container">
+            <div class="login__wrapper">
+                <div class="login__title">
+                    <h1>АВТОРИЗАЦИЯ</h1>
+                </div>
+                <div class="login__form__wrapper">
+                    <form method="post" class="login__form" action="{{ url_for('admin_login.admin_login_func') }}">
+                        <label for="username">Почта</label>
+                        <input type="email" name="username" placeholder="kip@yandex.ru" required>
+                        <label for="password">Пароль</label>
+                        <input type="password" name="password" placeholder="********" required>
+                        <button type="submit" id="auth_btn">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

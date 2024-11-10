@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from Client_Api.extensions import db
-from Models import Education, Resume, User, Group
+from Models import Education, Resume, User, Group, UserSocialNetwork
 
 get_user_api = Blueprint('get_user_api', __name__)
 
@@ -36,9 +36,16 @@ def get_user_info(user_id):
         "resume": {
             "about_me": resume.about_me if resume else None,
             "id_pattern": resume.id_pattern if resume else None,
-            "educations": []
+            "educations": [],
+            "telegram": None
         }
     }
+
+    # Получение Telegram ссылки
+    if resume:
+        tg_entry = UserSocialNetwork.query.filter_by(id_resume=resume.id_resume).first()
+        if tg_entry:
+            user_data["resume"]["telegram"] = tg_entry.network_link
 
     # Получение образований
     if resume:
@@ -58,6 +65,7 @@ def get_user_info(user_id):
             user_data["resume"]["educations"].append(education_data)
 
     return jsonify(user_data), 200
+
 
 @get_user_api.route('/api/user/<int:user_id>/update_photo', methods=['POST'])
 def update_user_photo(user_id):

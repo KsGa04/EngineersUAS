@@ -132,6 +132,5 @@ def restrict_swagger_access():
         return redirect(url_for('admin_login.admin_login_func'))
 
 if __name__ == "__main__":
-    print(generate_password_hash("12345678"))
     CORS(app)
     app.run()

@@ -20,7 +20,13 @@
                 </div>
             </div>
             <div class="header__right">
-                <img src="static/assets/images/person_icon.svg" alt="">
+                <img src="static/assets/images/person_icon.svg" alt="" id="personIcon">
+                    <div class="person-menu" id="personMenu">
+                        <ul>
+                            <li><a href="/userboard">Личный кабинет</a></li>
+                            <li><a href="/cvgenerator">Генерация резюме</a></li>
+                        </ul>
+                    </div>
             </div>
         </div>
     </header>
@@ -69,7 +75,7 @@
                                     <div class="cv__form__title">
                                         <h4>Ссылки на <br>портфолио/GitHub</h4>
                                     </div>
-                                    <textarea type="text" name="cv__links" class="cv__form__input"></textarea>
+                                    <textarea type="text" name="cv__links" id="cv__links" class="cv__form__input"></textarea>
                                 </div>
                             </form>
 
@@ -125,8 +131,35 @@
 
 </div>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="/static/icon.js"></script>
 <script src="/static/education.js"></script>
 <script src="/static/work.js"></script>
 <script src="/static/projects.js"></script>
+<script>
+    document.getElementById("cv__links").addEventListener("blur", function() {
+        if (this.value.includes("github.com")) {
+            const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
+            if (confirmLoad) {
+                const id_user = localStorage.getItem("id_resume");
+                fetch(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Ошибка HTTP: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Репозитории успешно загружены в проекты.");
+                    console.log("Загруженные проекты:", data);
+                    loadExistingProjects(); // Обновить список проектов
+                })
+                .catch(error => console.error("Ошибка загрузки репозиториев:", error));
+            }
+        }
+    });
+</script>
 </body>
 </html>

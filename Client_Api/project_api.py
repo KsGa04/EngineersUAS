@@ -237,7 +237,7 @@ def get_projects():
 def get_candidates():
     candidates = []
 
-    users = User.query.all()
+    users = User.query.filter_by(role_id=1).all()
 
     for user in users:
         # Проверка, что поле profile_photo содержит данные
