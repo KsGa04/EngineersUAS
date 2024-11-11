@@ -131,7 +131,7 @@ legend {
     font-style: normal;
 }
 .wrapper {
-    background-image: url(/assets/images/background1.png);
+    background-image: url(/static/assets/images/background1.png);
     background-repeat: repeat;
 }
 ._container{
@@ -465,8 +465,9 @@ header {
 }
 
 .cv__form__input option {
+    background-color: #438CD8; /* Light blue background */
     color: #FFFFFF;
-    background: linear-gradient(#5198DC, #7C95E7);
+    font-family: 'Inter-Bold';
 }
 .birthDate__item {
 }

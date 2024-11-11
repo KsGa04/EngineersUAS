@@ -143,7 +143,7 @@ button:hover {
     color: #003d66;
 }
 
-input[type="date"], select {
+input, select {
     border: 1px solid #b3d9ff;
     border-radius: 5px;
     padding: 8px;
@@ -152,8 +152,50 @@ input[type="date"], select {
     background-color: #ffffff;
 }
 
-input[type="date"]:focus, select:focus {
+input:focus, select:focus {
     border-color: #99cfff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 153, 255, 0.5);
 }
+/* Pointer interaction for project and work items */
+.project-item, .education-item, .work-item {
+    padding: 12px 18px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: #7C95E7; /* Light background for better contrast */
+    color: white;/* Light blue tint */
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Hover effect */
+.project-item:hover, .education-item:hover, .work-item:hover {
+    background-color: #5198DC;
+    transform: scale(1.02);
+}
+
+/* Active/Selected state */
+.project-item.active, .education-item.active, .work-item.active {
+    background-color: #5198DC; /* Highlighted color */
+    color: white;
+    border: 1px solid #99cfff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.cv__generation__preview__item {
+    cursor: pointer; /* Changes cursor to pointer when hovering */
+    transition: transform 0.2s, box-shadow 0.2s; /* Adds a hover effect */
+    border-radius: 20px;
+}
+
+.cv__generation__preview__item:hover {
+    transform: scale(1.03); /* Slightly enlarges the block on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Adds a shadow for a 3D effect */
+}
+
+.cv__generation__preview__item.active {
+    border: 2px solid #5198DC; /* Highlights the selected template */
+    background-color: #5172e0; /* Light background for the selected item */
+}
+

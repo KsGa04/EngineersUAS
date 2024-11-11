@@ -76,7 +76,8 @@ def create_app(config):
     return app
 
 app = create_app(Config)
-
+CORS(app)
+CORS(app, resources={r"/pattern_image_pdf/*": {"origins": "*"}})
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -132,5 +133,4 @@ def restrict_swagger_access():
         return redirect(url_for('admin_login.admin_login_func'))
 
 if __name__ == "__main__":
-    CORS(app)
     app.run()

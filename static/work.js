@@ -1,12 +1,69 @@
-document.addEventListener("DOMContentLoaded", function() {
+function fillEditWorkModal() {
+    const selectedItem = document.querySelector('.work-item.selected');
+    const id_user = localStorage.getItem("user_id");
+    if (!selectedItem) {
+        alert("Please select a work experience to edit.");
+        return;
+    }
+
+    const workId = selectedItem.dataset.workId;
+
+    // Fetch details for the selected work experience
+    fetch(`/api/works/${id_user}/${workId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(work => {
+        // Fetch necessary dropdown data from the API
+        Promise.all([
+            fetch('/api/organizations').then(res => res.json())
+        ])
+        .then(([organizations]) => {
+            // Create organization options
+            const organizationOptions = organizations.map(org =>
+                `<option value="${org.id}" ${org.id === work.organization_id ? 'selected' : ''}>${org.name}</option>`
+            ).join('');
+
+            // Populate the modal with data
+            openModal("Edit Work Experience", `
+                <label for="organization">Organization</label>
+                <select id="organization">${organizationOptions}</select>
+                <label for="position">Position</label>
+                <input id="position" type="text" value="${work.position}">
+                <label for="start-date">Start Date</label>
+                <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
+                <label for="end-date">End Date</label>
+                <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
+                <label for="responsibilities">Responsibilities</label>
+                <input id="responsibilities" value="${work.responsibilities || ''}">
+                <button onclick="saveEditedWork(${workId})">Save</button>
+            `);
+        })
+        .catch(error => {
+            console.error("Error loading dropdown data:", error);
+            alert("Failed to load related data for editing.");
+        });
+    })
+    .catch(error => {
+        console.error("Error loading work for editing:", error);
+        alert(`Error loading work: ${error.message}`);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
     function openModal(title, content, onSave) {
         const modalOverlay = document.getElementById("modal-overlay");
         const modalContent = document.getElementById("modal-content");
         const modalTitle = document.getElementById("modal-title");
-        const modalSubmit = document.getElementById("modal-submit");
 
-        if (!modalOverlay || !modalContent || !modalTitle || !modalSubmit) {
-            console.error("Элементы модального окна не найдены в DOM.");
+        if (!modalOverlay || !modalContent || !modalTitle) {
+            console.error("Modal elements not found in the DOM.");
             return;
         }
 
@@ -14,137 +71,280 @@ document.addEventListener("DOMContentLoaded", function() {
         modalContent.innerHTML = content;
         modalOverlay.style.display = "block";
 
-        modalSubmit.onclick = function () {
-            if (validateFields()) {
-                modalOverlay.style.display = "none";
-                if (onSave && typeof onSave === "function") {
-                    onSave();
-                }
-            } else {
-                alert("Пожалуйста, заполните все поля.");
-            }
-        };
-
-        document.getElementById("modal-close").onclick = function() {
+        document.getElementById("modal-close").onclick = function () {
             modalOverlay.style.display = "none";
         };
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target === modalOverlay) {
                 modalOverlay.style.display = "none";
             }
         };
     }
 
-    function validateFields() {
-        const modalContent = document.getElementById("modal-content");
-        const requiredFields = modalContent.querySelectorAll("input, select, textarea");
-        for (const field of requiredFields) {
-            if ((field.type === "text" || field.tagName === "TEXTAREA" || field.type === "date") && field.value.trim() === "") {
-                return false;
-            }
-            if (field.tagName === "SELECT" && field.value === "") {
-                return false;
-            }
-        }
-        return true;
-    }
-
     function loadExistingWorkExperience() {
-        const id_user = localStorage.getItem("user_id");
-        if (!id_user) {
-            console.error("ID пользователя не найден в localStorage.");
-            alert("ID пользователя не найден.");
+        const id_resume = localStorage.getItem("id_resume");
+        if (!id_resume) {
+            console.error("Resume ID not found in localStorage.");
+            alert("Resume ID not found.");
             return;
         }
 
-        fetch(`/universal_api/universal/work_experience?user_id=${id_user}`, {
+        fetch(`/api/works/${id_resume}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
-            }
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                return response.json();
-            } else {
-                return response.text().then(text => {
-                    console.error("Получен не-JSON ответ:", text);
-                    throw new Error("Ответ сервера не в формате JSON. Проверьте ответ сервера.");
-                });
-            }
-        })
+        .then(response => response.json())
         .then(data => {
-            console.log("Полученные данные опыта работы:", data);
+            console.log("Work experience data received:", data);
             const workList = document.getElementById('work-list');
             if (!workList) {
-                console.error("Элемент #work-list не найден.");
+                console.error("Element #work-list not found.");
                 return;
             }
 
             workList.innerHTML = '';
-
             if (data.length === 0) {
-                workList.innerHTML = '<p>Нет добавленного опыта работы.</p>';
+                workList.innerHTML = '<p>No work experiences added.</p>';
             } else {
                 data.forEach((work, index) => {
                     const listItem = document.createElement('div');
                     listItem.className = 'work-item';
+                    listItem.tabIndex = 0;
+                    listItem.dataset.workId = work.id_work;
+                    listItem.style.cursor = "pointer";
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = `work-${index}`;
-                    checkbox.value = work.id_work;
+                    listItem.addEventListener('click', () => {
+                        document.querySelectorAll('.work-item').forEach(item => {
+                            item.style.backgroundColor = '';
+                            item.classList.remove('selected');
+                        });
+                        listItem.style.backgroundColor = '#5198DC';
+                        listItem.classList.add('selected');
+                    });
 
-                    const label = document.createElement('label');
-                    label.htmlFor = `work-${index}`;
-                    label.textContent = `${work.position} - ${work.organization} (${new Date(work.start_date).toLocaleDateString()} - ${new Date(work.end_date).toLocaleDateString()})`;
+                    const label = document.createElement('div');
+                    label.className = 'work-label';
+                    label.textContent = `${work.position} - ${work.organizations.map(org => org.organization_name).join(", ")} (${new Date(work.start_date).toLocaleDateString()} - ${new Date(work.end_date).toLocaleDateString()})`;
 
-                    listItem.appendChild(checkbox);
                     listItem.appendChild(label);
-
                     workList.appendChild(listItem);
                 });
             }
         })
         .catch(error => {
-            console.error("Ошибка загрузки списка опыта работы:", error);
-            alert(`Ошибка загрузки списка опыта работы: ${error.message}. Проверьте правильность работы API.`);
+            console.error("Error loading work experiences:", error);
+            alert(`Error loading work experiences: ${error.message}`);
+        });
+    }
+
+    function saveNewWorkExperience() {
+    const id_user = localStorage.getItem("user_id");
+    if (!id_user) {
+        alert("User ID not found.");
+        return;
+    }
+
+    const newWorkData = {
+        organization: document.getElementById("organization").value,
+        position: document.getElementById("position").value,
+        start_date: document.getElementById("start-date").value,
+        end_date: document.getElementById("end-date").value,
+        responsibilities: document.getElementById("responsibilities").value
+    };
+
+    fetch(`/api/works/${id_user}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newWorkData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Work experience added:", data);
+        loadExistingWorkExperience(); // Refresh the work list after addition
+        alert("Work experience added successfully.");
+    })
+    .catch(error => {
+        console.error("Error adding work experience:", error);
+        alert(`Error adding work experience: ${error.message}.`);
+    });
+}
+
+    function deleteSelectedWorks() {
+        const selectedItems = document.querySelectorAll('.work-item.selected');
+        if (selectedItems.length === 0) {
+            alert("Please select at least one work experience to delete.");
+            return;
+        }
+
+        selectedItems.forEach(item => {
+            const workId = item.dataset.workId;
+            fetch(`/api/works/${workId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Work experience deleted:", data);
+                loadExistingWorkExperience();
+            })
+            .catch(error => {
+                console.error("Error deleting work experience:", error);
+                alert(`Error deleting work experience: ${error.message}`);
+            });
+        });
+    }
+
+    function fillEditWorkModal() {
+    const selectedItem = document.querySelector('.work-item.selected');
+    const id_user = localStorage.getItem("user_id");
+    if (!selectedItem) {
+        alert("Please select a work experience to edit.");
+        return;
+    }
+
+    const workId = selectedItem.dataset.workId;
+
+    // Fetch details for the selected work experience
+    fetch(`/api/works/${id_user}/${workId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(work => {
+        // Fetch necessary dropdown data from the API
+        Promise.all([
+            fetch('/api/organizations').then(res => res.json())
+        ])
+        .then(([organizations]) => {
+            // Create organization options
+            const organizationOptions = organizations.map(org =>
+                `<option value="${org.id}" ${org.id === work.organization_id ? 'selected' : ''}>${org.name}</option>`
+            ).join('');
+
+            // Populate the modal with data
+            openModal("Edit Work Experience", `
+                <label for="organization">Organization</label>
+                <select id="organization">${organizationOptions}</select>
+                <label for="position">Position</label>
+                <input id="position" type="text" value="${work.position}">
+                <label for="start-date">Start Date</label>
+                <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
+                <label for="end-date">End Date</label>
+                <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
+                <label for="responsibilities">Responsibilities</label>
+                <input id="responsibilities" value="${work.responsibilities || ''}">
+                <button onclick="saveEditedWork(${workId})">Save</button>
+            `);
+        })
+        .catch(error => {
+            console.error("Error loading dropdown data:", error);
+            alert("Failed to load related data for editing.");
+        });
+    })
+    .catch(error => {
+        console.error("Error loading work for editing:", error);
+        alert(`Error loading work: ${error.message}`);
+    });
+}
+
+
+    function saveEditedWork(workId) {
+        const id_user = localStorage.getItem("user_id");
+        if (!workId) {
+            alert("Work ID is missing.");
+            return;
+        }
+
+        const updatedData = {
+            organization: document.getElementById("organization").value,
+            position: document.getElementById("position").value,
+            start_date: document.getElementById("start-date").value,
+            end_date: document.getElementById("end-date").value,
+            responsibilities: document.getElementById("responsibilities").value
+        };
+
+        fetch(`/api/works/${id_user}/${workId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Work experience updated:", data);
+            loadExistingWorkExperience();
+            alert("Work experience updated successfully.");
+        })
+        .catch(error => {
+            console.error("Error updating work experience:", error);
+            alert(`Error updating work experience: ${error.message}`);
         });
     }
 
     document.querySelector(".groupnumber__item textarea").addEventListener("click", () => {
         openModal("Опыт работы", `
             <div class="tab-container">
-                <button class="tab-button" onclick="showTabContent('view-work')">Просмотр</button>
-                <button class="tab-button" onclick="showTabContent('add-edit-work')">Добавить/Изменить</button>
+                <button class="tab-button" onclick="showTabContent('view-work')">View</button>
+                <button class="tab-button" onclick="showTabContent('add-edit-work')">Add/Edit</button>
             </div>
             <div id="tab-view-work" class="tab-content">
-                <h4>Список добавленного опыта работы</h4>
+                <h4>Список добавленных карьер</h4>
                 <div id="work-list">
-                    <!-- Список чекбоксов будет загружен динамически -->
+                    <!-- Work list will be dynamically loaded -->
                 </div>
-                <button onclick="deleteSelectedWorks()">Удалить выбранное</button>
-                <button onclick="editSelectedWork()">Изменить выбранное</button>
+                <button onclick="deleteSelectedWorks()">Удалить</button>
+                <button onclick="fillEditWorkModal()">Изменить</button>
             </div>
             <div id="tab-add-edit-work" class="tab-content" style="display: none;">
                 <label for="organization">Организация</label>
-                <select id="organization"><option>Загрузка...</option></select>
+                <select id="organization">Загрузка...</select>
                 <label for="position">Должность</label>
-                <input id="position" type="text" placeholder="Введите должность">
-                <label for="start-date">Год начала</label>
+                <input id="position" type="text" placeholder="Enter position">
+                <label for="start-date">Начало работы</label>
                 <input id="start-date" type="date">
-                <label for="end-date">Год окончания</label>
+                <label for="end-date">Окончание работы</label>
                 <input id="end-date" type="date">
                 <label for="responsibilities">Обязанности</label>
-                <textarea id="responsibilities" placeholder="Описание обязанностей"></textarea>
-                <button id="modal-submit">Сохранить</button>
+                <input id="responsibilities">
+                <button onclick="saveNewWorkExperience()">Save</button>
             </div>
-        `, loadExistingWorkExperience);
+        `, loadExistingWorkExperience());
+        loadOrganizationDropdown();
     });
-
+    function loadOrganizationDropdown() {
+    fetch('/api/organizations')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(organizations => {
+            const organizationSelect = document.getElementById('organization');
+            organizationSelect.innerHTML = organizations.map(org =>
+                `<option value="${org.id}">${org.name}</option>`
+            ).join('');
+        })
+        .catch(error => {
+            console.error("Error loading organizations:", error);
+            alert("Failed to load organizations.");
+        });
+}
     function showTabContent(tabName) {
         document.querySelectorAll('.tab-content').forEach(tab => {
             tab.style.display = 'none';

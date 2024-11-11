@@ -25,6 +25,7 @@
                         <ul>
                             <li><a href="/userboard">Личный кабинет</a></li>
                             <li><a href="/cvgenerator">Генерация резюме</a></li>
+                            <li><a href="login">Выход</a></li>
                         </ul>
                     </div>
             </div>
@@ -125,7 +126,6 @@
                 <div id="modal-content">
                     <!-- Dynamic content will be injected here -->
                 </div>
-                <button id="modal-submit">Сохранить</button> <!-- Add this line -->
             </div>
         </div>
 
@@ -135,6 +135,7 @@
 <script src="/static/education.js"></script>
 <script src="/static/work.js"></script>
 <script src="/static/projects.js"></script>
+    <script src="/static/pattern.js"></script>
 <script>
     document.getElementById("cv__links").addEventListener("blur", function() {
         if (this.value.includes("github.com")) {

@@ -66,6 +66,35 @@ def universal_get(table_name):
     except Exception as e:
         return jsonify({"msg": str(e)}), 400
 
+@universal_api.route('/universal/<table_name>', methods=['DELETE'])
+def universal_delete(table_name):
+    try:
+        # Dynamically import the model module
+        model_module = importlib.import_module(f"Models.{table_name}")
+        ModelClass = getattr(model_module, upper_first(table_name))
+    except (ModuleNotFoundError, AttributeError):
+        return jsonify({"msg": f"Table '{table_name}' does not exist."}), 400
+
+    query_params = request.args.to_dict()
+
+    if not query_params:
+        return jsonify({"msg": "Query parameters are required to specify which record to delete."}), 400
+
+    try:
+        # Find the record to delete
+        record = ModelClass.query.filter_by(**query_params).first()
+        if not record:
+            return jsonify({"msg": "Record not found."}), 404
+
+        # Delete the record
+        db.session.delete(record)
+        db.session.commit()
+
+        return jsonify({"msg": f"Record deleted from {table_name}."}), 200
+    except Exception as e:
+        db.session.rollback()  # Rollback in case of error
+        return jsonify({"msg": f"Failed to delete record: {str(e)}"}), 500
+
 
 import base64
 from flask import request, jsonify
@@ -75,7 +104,7 @@ import importlib
 @universal_api.route('/universal/<table_name>', methods=['PUT'])
 def universal_put(table_name):
     try:
-        model_module = importlib.import_module(f"Models.{table_name.lower()}")
+        model_module = importlib.import_module(f"Models.{table_name}")
         ModelClass = getattr(model_module, upper_first(table_name))
     except (ModuleNotFoundError, AttributeError):
         return jsonify({"msg": f"Table '{table_name}' does not exist."}), 400

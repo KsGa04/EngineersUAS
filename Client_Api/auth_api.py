@@ -88,11 +88,11 @@ def login():
         return jsonify({"msg": "Неверные учетные данные"}), 401
 
     # Генерация токена
-    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user})
+    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user, "login":email, "password": password,})
     resume = Resume.query.filter_by(id_user=user.id_user).first()
 
     # Настройка ответа с cookies
-    response = make_response(jsonify({"user_id": user.id_user, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None}))
+    response = make_response(jsonify({"user_id": user.id_user,"login":email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None}))
     set_access_cookies(response, authToken)
 
     return response, 200

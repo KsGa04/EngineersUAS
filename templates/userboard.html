@@ -24,6 +24,7 @@
                         <ul>
                             <li><a href="/userboard">Личный кабинет</a></li>
                             <li><a href="/cvgenerator">Генерация резюме</a></li>
+                            <li><a href="login">Выход</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,7 +69,7 @@
                                         Дата рождения
                                     </h4>
                                 </div>
-                                <input type="date" name="cv__birthdate" class="cv__form__input small-textarea" />
+                                <input type="date" name="birth_date" class="cv__form__input small-textarea" />
                             </div>
                             <div class="university__item cv__form__item">
                                 <div class="cv__form__title">
@@ -76,7 +77,7 @@
                                         Описание *
                                     </h4>
                                 </div>
-                                <textarea name="cv__univercity" class="cv__form__input large-textarea"></textarea>
+                                <textarea name="about_me" class="cv__form__input large-textarea"></textarea>
                             </div>
                             <div class="cv_name_item cv__form__item">
                                 <div class="cv__form__title">
@@ -84,7 +85,7 @@
                                         Телеграмм
                                     </h4>
                                 </div>
-                                <input type="text" class="cv__form__input small-textarea" name="cv__tg" />
+                                <input type="text" class="cv__form__input small-textarea" name="network_link" />
                             </div>
                         </form>
 
@@ -131,9 +132,9 @@
         if (response.ok) {
             // Заполнение полей формы
             document.querySelector("[name='cv__name']").value = `${userData.first_name || ''} ${userData.last_name || ''}`;
-            document.querySelector("[name='cv__birthdate']").value = userData.birth_date || "";
-            document.querySelector("[name='cv__univercity']").value = userData.resume.about_me || "";
-            document.querySelector("[name='cv__tg']").value = userData.resume.telegram || "";
+            document.querySelector("[name='birth_date']").value = userData.birth_date || "";
+            document.querySelector("[name='about_me']").value = userData.resume.about_me || "";
+            document.querySelector("[name='network_link']").value = userData.resume.telegram || "";
 
             // Устанавливаем значение шаблона из данных пользователя
             resumePatternId = userData.resume.id_pattern;
@@ -230,6 +231,8 @@
 });
     // Обновление данных в базе данных через API
 async function updateDataInDB(table, fieldName, fieldValue) {
+    const userId = localStorage.getItem("user_id");
+    const id_resume = localStorage.getItem("id_resume");
     if (!userId) {
         console.error("User ID не найден.");
         alert("Пожалуйста, войдите в систему.");
@@ -237,17 +240,17 @@ async function updateDataInDB(table, fieldName, fieldValue) {
     }
 
     try {
-        const response = await fetch(`/universal/${table}?id_user=${userId}`, {
-            method: 'PUT',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ [fieldName]: fieldValue }),
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
+        if (table == "userSocialNetwork") {
+            const response = await fetch(`/universal/${table}?id_resume=${id_resume}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ [fieldName]: fieldValue }),
+                credentials: 'include'
+            });
+            if (!response.ok) {
             // Проверка для отлова ошибок сервера
             const result = await response.json();
             console.error("Ошибка ответа сервера:", result);
@@ -255,6 +258,27 @@ async function updateDataInDB(table, fieldName, fieldValue) {
         } else {
             console.log("Данные успешно обновлены.");
         }
+            }
+        else {
+            const response = await fetch(`/universal/${table}?id_user=${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ [fieldName]: fieldValue }),
+                credentials: 'include'
+            });
+            if (!response.ok) {
+            // Проверка для отлова ошибок сервера
+            const result = await response.json();
+            console.error("Ошибка ответа сервера:", result);
+            alert(result.msg || "Ошибка при обновлении данных.");
+        } else {
+            console.log("Данные успешно обновлены.");
+            alert("Данные успешно обновлены.");
+        }
+            }
     } catch (error) {
         console.error("Ошибка при подключении к серверу:", error);
         alert("Не удалось обновить данные.");
@@ -269,8 +293,11 @@ document.querySelectorAll(".cv__form__input").forEach(input => {
         let table = "user"; // По умолчанию таблица user
 
         // Определяем, к какой таблице относится поле
-        if (["cv__univercity"].includes(fieldName)) {
+        if (["about_me"].includes(fieldName)) {
             table = "resume"; // Поля относятся к таблице resume
+        }
+        if (["network_link"].includes(fieldName)) {
+            table = "userSocialNetwork"; // Поля относятся к таблице resume
         }
 
         // Отправка данных в базу
