@@ -91,7 +91,7 @@ def login():
     resume = Resume.query.filter_by(id_user=user.id_user).first()
 
     # Настройка ответа с cookies
-    response = make_response(jsonify({"user_id": user.id_user,"login":email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None}))
+    response = make_response(jsonify({"user_id": user.id_user,"login":email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None, "token": authToken}))
     set_access_cookies(response, authToken)
 
     return response, 200

@@ -12,6 +12,7 @@ from reportlab.pdfgen import canvas
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from werkzeug.security import check_password_hash
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
@@ -32,18 +33,24 @@ def age_suffix(age):
 
 resume_api = Blueprint('resume_api', __name__)
 
-
+@jwt_required()
 def generate_resume_func(pattern_id, user_id, login, password):
-    user = User.query.filter_by(email=login).first()
+    # user = User.query.filter_by(email=login).first()
 
-    if not user:
-        return jsonify({'msg': 'User not found'}), 404
+    # if not user:
+    #     return jsonify({'msg': 'User not found'}), 404
 
-    if not check_password_hash(user.password, password):
-        return jsonify({'msg': 'Invalid login or password'}), 401
+    # if not check_password_hash(user.password, password):
+    #     return jsonify({'msg': 'Invalid login or password'}), 401
 
-    if user.id_user != user_id:
-        return jsonify({'msg': 'User ID does not match'}), 404
+    # if user.id_user != user_id:
+    #     return jsonify({'msg': 'User ID does not match'}), 404
+
+    user = User.query.get_or_404(user_id)
+    current_user = get_jwt_identity()
+
+    if user_id != current_user:
+        return jsonify({'msg': 'User not found'}), 401
 
     # Кодирование изображения профиля в Base64
     profile_image_base64 = None
