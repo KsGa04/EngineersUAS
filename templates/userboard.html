@@ -82,7 +82,7 @@
                             <div class="cv_name_item cv__form__item">
                                 <div class="cv__form__title">
                                     <h4 class="">
-                                        Телеграмм
+                                        Телеграм
                                     </h4>
                                 </div>
                                 <input type="text" class="cv__form__input small-textarea" name="network_link" />
@@ -131,11 +131,18 @@
 
         if (response.ok) {
             // Заполнение полей формы
-            document.querySelector("[name='cv__name']").value = `${userData.first_name || ''} ${userData.last_name || ''}`;
+            document.querySelector("[name='cv__name']").value = `${userData.last_name || ''} ${userData.first_name || ''} ${userData.middle_name || ''}`;
             document.querySelector("[name='birth_date']").value = userData.birth_date || "";
             document.querySelector("[name='about_me']").value = userData.resume.about_me || "";
             document.querySelector("[name='network_link']").value = userData.resume.telegram || "";
-
+            const aboutMeField = document.querySelector("[name='about_me']");
+            if (userData.resume.about_me) {
+                aboutMeField.value = userData.resume.about_me;
+                aboutMeField.disabled = false;
+            } else {
+                aboutMeField.value = "Описание появится автоматически после генерации резюме.";
+                aboutMeField.disabled = true;
+            }
             // Устанавливаем значение шаблона из данных пользователя
             resumePatternId = userData.resume.id_pattern;
 
@@ -197,10 +204,16 @@
     document.querySelector("#photoInput").addEventListener("change", async function () {
     const file = this.files[0];
     if (!file) return;
-
+    // Check file type
+    const validExtensions = ['jpg', 'jpeg', 'png'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (!validExtensions.includes(fileExtension)) {
+        alert("Please upload an image file with a .jpg, .jpeg, or .png extension.");
+        return;
+    }
     const reader = new FileReader();
     reader.onload = async function () {
-        const base64Image = reader.result; // Передаем полные данные с префиксом
+        const base64Image = reader.result.split(',')[1];// Передаем полные данные с префиксом
         const userId = localStorage.getItem("user_id");
         const authToken = localStorage.getItem("authToken");
 
@@ -229,6 +242,7 @@
     };
     reader.readAsDataURL(file); // Генерируем данные с полным base64 префиксом
 });
+
     // Обновление данных в базе данных через API
 async function updateDataInDB(table, fieldName, fieldValue) {
     const userId = localStorage.getItem("user_id");
@@ -276,7 +290,6 @@ async function updateDataInDB(table, fieldName, fieldValue) {
             alert(result.msg || "Ошибка при обновлении данных.");
         } else {
             console.log("Данные успешно обновлены.");
-            alert("Данные успешно обновлены.");
         }
             }
     } catch (error) {
@@ -284,7 +297,22 @@ async function updateDataInDB(table, fieldName, fieldValue) {
         alert("Не удалось обновить данные.");
     }
 }
+document.querySelector("[name='cv__name']").addEventListener("change", function() {
+    const fullName = this.value.trim();
 
+    // Split the full name into parts
+    const nameParts = fullName.split(' ');
+    const firstName = nameParts[0] || '';
+    const middleName = nameParts.length === 3 ? nameParts[1] : '';
+    const lastName = nameParts.length >= 2 ? nameParts[nameParts.length - 1] : '';
+
+    // Update each name part in the database
+    updateDataInDB('user', 'last_name', firstName);
+    updateDataInDB('user', 'first_name', middleName);
+    updateDataInDB('user', 'middle_name', lastName);
+
+    alert("Данные успешно обновлены.");
+});
 // Добавляем обработчик для всех input и textarea
 document.querySelectorAll(".cv__form__input").forEach(input => {
     input.addEventListener("change", function() {
@@ -302,6 +330,7 @@ document.querySelectorAll(".cv__form__input").forEach(input => {
 
         // Отправка данных в базу
         updateDataInDB(table, fieldName, fieldValue);
+        alert("Данные успешно обновлены.");
     });
 });
 

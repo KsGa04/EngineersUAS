@@ -436,12 +436,12 @@ def get_work_detail(id_user, id_work):
         'position': work.position,
         'start_date': work.start_date.strftime('%Y-%m-%d') if work.start_date else None,
         'end_date': work.end_date.strftime('%Y-%m-%d') if work.end_date else None,
+        "responsibilities": work.responsibilities
     }
 
     return jsonify(work_data), 200
 
 @modal_api.route('/api/works/<int:id_user>', methods=['POST'])
-@jwt_required()  # Requires JWT for authentication
 def add_work(id_user):
     resume = Resume.query.filter_by(id_user=id_user).first()
     if not resume:
@@ -450,7 +450,7 @@ def add_work(id_user):
     data = request.get_json()
 
     # Check that all required fields are provided
-    required_fields = ['organization', 'position', 'start_date', 'end_date']
+    required_fields = ['organization', 'position', 'start_date', 'end_date', 'responsibilities']
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"'{field}' is required in the request data"}), 400
@@ -460,7 +460,8 @@ def add_work(id_user):
             id_resume=resume.id_resume,
             position=data['position'],
             start_date=datetime.strptime(data['start_date'], '%Y-%m-%d'),
-            end_date=datetime.strptime(data['end_date'], '%Y-%m-%d')
+            end_date=datetime.strptime(data['end_date'], '%Y-%m-%d'),
+            responsibilities=data['responsibilities']
         )
 
         db.session.add(new_work)
@@ -481,6 +482,47 @@ def add_work(id_user):
         db.session.rollback()
         return jsonify({"msg": f"Failed to add work: {str(e)}"}), 500
 
+@modal_api.route('/api/works/<int:id_user>/<int:id_work>', methods=['PUT'])
+def update_work(id_user, id_work):
+    # Verify that the resume exists for the given user
+    resume = Resume.query.filter_by(id_user=id_user).first()
+    if not resume:
+        return jsonify({"msg": "Resume for user not found"}), 404
+
+    data = request.get_json()
+
+    # Check that all required fields are provided
+    required_fields = ['organization', 'position', 'start_date', 'end_date']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"msg": f"'{field}' is required in the request data"}), 400
+
+    # Find the work record to update
+    work = Work.query.filter_by(id_work=id_work).filter(Work.id_resume == resume.id_resume).first()
+    if not work:
+        return jsonify({"msg": "Work experience not found"}), 404
+
+    # Update fields based on provided data
+    try:
+        work.position = data['position']
+        work.start_date = datetime.strptime(data['start_date'], '%Y-%m-%d')
+        work.end_date = datetime.strptime(data['end_date'], '%Y-%m-%d')
+
+        # Update the organizations (many-to-many relationship)
+        if 'organization' in data:
+            organization_ids = [int(org_id) for org_id in data['organization']]
+            organizations = Organization.query.filter(Organization.id_organization.in_(organization_ids)).all()
+            if not organizations:
+                return jsonify({"msg": "One or more organizations not found"}), 404
+            work.organizations = organizations
+
+        db.session.commit()
+        return jsonify({"msg": "Work experience updated successfully"}), 200
+    except ValueError:
+        return jsonify({"msg": "Invalid date format. Use YYYY-MM-DD."}), 400
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Failed to update work experience: {str(e)}"}), 500
 
 @modal_api.route('/api/projects/<int:id_resume>', methods=['GET'])
 def get_projects_by_resume(id_resume):
@@ -539,34 +581,36 @@ def add_project(id_resume):
         db.session.rollback()
         return jsonify({"msg": f"Failed to add project: {str(e)}"}), 500
 
-@modal_api.route('/api/project/<int:id_project>', methods=['PUT'])
-def update_project(id_project):
-    project = Projects.query.filter_by(id_project=id_project).first()
+@modal_api.route('/api/projects/<int:id_user>/<int:id_project>', methods=['PUT'])
+def update_project(id_user, id_project):
+    # Verify that the resume exists for the given user
+    resume = Resume.query.filter_by(id_user=id_user).first()
+    if not resume:
+        return jsonify({"msg": "Resume for user not found"}), 404
+
+    data = request.get_json()
+
+    # Check that all required fields are provided
+    required_fields = ['project_name', 'project_description', 'project_link']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({"msg": f"'{field}' is required in the request data"}), 400
+
+    # Find the project record to update
+    project = Projects.query.filter_by(id_project=id_project, id_resume=resume.id_resume).first()
     if not project:
         return jsonify({"msg": "Project not found"}), 404
 
-    data = request.get_json()
-    project.project_name = data.get('project_name', project.project_name)
-    project.project_description = data.get('project_description', project.project_description)
-    project.project_link = data.get('project_link', project.project_link)
-
+    # Update fields based on provided data
     try:
+        project.project_name = data['project_name']
+        project.project_description = data['project_description']
+        project.project_link = data['project_link']
+
         db.session.commit()
         return jsonify({"msg": "Project updated successfully"}), 200
+    except ValueError:
+        return jsonify({"msg": "Invalid date format. Use YYYY-MM-DD."}), 400
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": f"Failed to update project: {str(e)}"}), 500
-
-@modal_api.route('/api/project/<int:id_project>', methods=['DELETE'])
-def delete_project(id_project):
-    project = Projects.query.filter_by(id_project=id_project).first()
-    if not project:
-        return jsonify({"msg": "Project not found"}), 404
-
-    try:
-        db.session.delete(project)
-        db.session.commit()
-        return jsonify({"msg": "Project deleted successfully"}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"msg": f"Failed to delete project: {str(e)}"}), 500

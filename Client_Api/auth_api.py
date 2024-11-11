@@ -64,14 +64,13 @@ def register():
 
         user_social_network = UserSocialNetwork(
             id_resume=resume.id_resume,
-            id_social_network_type=None,  # Предположим, что 1 — это ID типа для Telegram
             network_link=tg
         )
         db.session.add(user_social_network)
 
     db.session.commit()
 
-    return jsonify({"msg": "Student registered successfully"}), 201
+    return jsonify({"msg": "Студент успешно зарегистрирован"}), 201
 
 
 

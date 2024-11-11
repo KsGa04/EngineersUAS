@@ -2,7 +2,7 @@ function fillEditWorkModal() {
     const selectedItem = document.querySelector('.work-item.selected');
     const id_user = localStorage.getItem("user_id");
     if (!selectedItem) {
-        alert("Please select a work experience to edit.");
+        alert("Пожалуйста выберите пункт для изменения данных");
         return;
     }
 
@@ -31,18 +31,18 @@ function fillEditWorkModal() {
             ).join('');
 
             // Populate the modal with data
-            openModal("Edit Work Experience", `
-                <label for="organization">Organization</label>
+            openModal("Изменение опыта работы", `
+                <label for="organization">Организация</label>
                 <select id="organization">${organizationOptions}</select>
-                <label for="position">Position</label>
+                <label for="position">Должность</label>
                 <input id="position" type="text" value="${work.position}">
-                <label for="start-date">Start Date</label>
+                <label for="start-date">Начало работы</label>
                 <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
-                <label for="end-date">End Date</label>
+                <label for="end-date">Окончание работы</label>
                 <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
-                <label for="responsibilities">Responsibilities</label>
+                <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities" value="${work.responsibilities || ''}">
-                <button onclick="saveEditedWork(${workId})">Save</button>
+                <button onclick="saveEditedWork(${workId})">Сохранить</button>
             `);
         })
         .catch(error => {
@@ -55,38 +55,132 @@ function fillEditWorkModal() {
         alert(`Error loading work: ${error.message}`);
     });
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    function openModal(title, content, onSave) {
-        const modalOverlay = document.getElementById("modal-overlay");
-        const modalContent = document.getElementById("modal-content");
-        const modalTitle = document.getElementById("modal-title");
-
-        if (!modalOverlay || !modalContent || !modalTitle) {
-            console.error("Modal elements not found in the DOM.");
+function saveNewWorkExperience() {
+        const id_user = localStorage.getItem("user_id");
+        if (!id_user) {
+            alert("User ID not found.");
             return;
         }
 
-        modalTitle.textContent = title;
-        modalContent.innerHTML = content;
-        modalOverlay.style.display = "block";
-
-        document.getElementById("modal-close").onclick = function () {
-            modalOverlay.style.display = "none";
+        const newWorkData = {
+            organization: document.getElementById("organization").value,
+            position: document.getElementById("position").value,
+            start_date: document.getElementById("start-date").value,
+            end_date: document.getElementById("end-date").value,
+            responsibilities: document.getElementById("responsibilities").value
         };
 
-        window.onclick = function (event) {
-            if (event.target === modalOverlay) {
-                modalOverlay.style.display = "none";
+        // Validate required fields
+        for (const [key, value] of Object.entries(newWorkData)) {
+            if (value.trim() === "") {
+                alert(`Please fill out the ${key.replace('_', ' ')} field.`);
+                return;
             }
-        };
-    }
+        }
 
-    function loadExistingWorkExperience() {
+        // Validate date consistency (start_date should not be after end_date)
+        if (new Date(newWorkData.start_date) > new Date(newWorkData.end_date)) {
+            alert("Начальная дата не может быть после окончания");
+            return;
+        }
+
+        fetch(`/api/works/${id_user}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newWorkData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Опыт работы был добавлен:", data);
+            loadExistingWorkExperience(); // Refresh the work list after addition
+            alert("Опыт работы был добавлен");
+        })
+        .catch(error => {
+            console.error("Ошибка при добавлении опыта работы:", error);
+            alert(`Error adding work experience: ${error.message}.`);
+        });
+    }
+function saveEditedWork(workId) {
+        const id_user = localStorage.getItem("user_id");
+        if (!workId) {
+            alert("Работа ID не найден.");
+            return;
+        }
+
+        const updatedData = {
+            organization: document.getElementById("organization").value,
+            position: document.getElementById("position").value,
+            start_date: document.getElementById("start-date").value,
+            end_date: document.getElementById("end-date").value,
+            responsibilities: document.getElementById("responsibilities").value
+        };
+        // Validate required fields
+        for (const [key, value] of Object.entries(updatedData)) {
+            if (value.trim() === "") {
+                alert(`Пожалуйста заполните поле ${key.replace('_', ' ')}.`);
+                return;
+            }
+        }
+
+        // Validate date consistency (start_date should not be after end_date)
+        if (new Date(updatedData.start_date) > new Date(updatedData.end_date)) {
+            alert("Начальная дата не может быть после окончания");
+            return;
+        }
+        fetch(`/api/works/${id_user}/${workId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Опыт работы был изменен:", data);
+            alert("Опыт работы был изменен.");
+        })
+        .catch(error => {
+            console.error("Error updating work experience:", error);
+            alert(`Error updating work experience: ${error.message}`);
+        });
+    }
+function deleteSelectedWorks() {
+        const selectedItems = document.querySelectorAll('.work-item.selected');
+        if (selectedItems.length === 0) {
+            alert("Выберите пункт для удаления");
+            return;
+        }
+
+        selectedItems.forEach(item => {
+            const workId = item.dataset.workId;
+            fetch(`/universal/work?id_work=${workId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Опыт работы удален:", data);
+                loadExistingWorkExperience();
+            })
+            .catch(error => {
+                console.error("Ошибка при удалении опыта работы:", error);
+                alert(`Error deleting work experience: ${error.message}`);
+            });
+        });
+    }
+function loadExistingWorkExperience() {
         const id_resume = localStorage.getItem("id_resume");
         if (!id_resume) {
             console.error("Resume ID not found in localStorage.");
-            alert("Resume ID not found.");
+            alert("Резюме ID не найден.");
             return;
         }
 
@@ -105,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             workList.innerHTML = '';
             if (data.length === 0) {
-                workList.innerHTML = '<p>No work experiences added.</p>';
+                workList.innerHTML = '<p>Опыт работы отсутствует</p>';
             } else {
                 data.forEach((work, index) => {
                     const listItem = document.createElement('div');
@@ -133,83 +227,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => {
-            console.error("Error loading work experiences:", error);
+            console.error("Ошибка при загрузке опыта работы:", error);
             alert(`Error loading work experiences: ${error.message}`);
         });
     }
+document.addEventListener("DOMContentLoaded", function () {
+    function openModal(title, content, onSave) {
+        const modalOverlay = document.getElementById("modal-overlay");
+        const modalContent = document.getElementById("modal-content");
+        const modalTitle = document.getElementById("modal-title");
 
-    function saveNewWorkExperience() {
-    const id_user = localStorage.getItem("user_id");
-    if (!id_user) {
-        alert("User ID not found.");
-        return;
-    }
-
-    const newWorkData = {
-        organization: document.getElementById("organization").value,
-        position: document.getElementById("position").value,
-        start_date: document.getElementById("start-date").value,
-        end_date: document.getElementById("end-date").value,
-        responsibilities: document.getElementById("responsibilities").value
-    };
-
-    fetch(`/api/works/${id_user}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newWorkData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Work experience added:", data);
-        loadExistingWorkExperience(); // Refresh the work list after addition
-        alert("Work experience added successfully.");
-    })
-    .catch(error => {
-        console.error("Error adding work experience:", error);
-        alert(`Error adding work experience: ${error.message}.`);
-    });
-}
-
-    function deleteSelectedWorks() {
-        const selectedItems = document.querySelectorAll('.work-item.selected');
-        if (selectedItems.length === 0) {
-            alert("Please select at least one work experience to delete.");
+        if (!modalOverlay || !modalContent || !modalTitle) {
+            console.error("Modal elements not found in the DOM.");
             return;
         }
 
-        selectedItems.forEach(item => {
-            const workId = item.dataset.workId;
-            fetch(`/api/works/${workId}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Work experience deleted:", data);
-                loadExistingWorkExperience();
-            })
-            .catch(error => {
-                console.error("Error deleting work experience:", error);
-                alert(`Error deleting work experience: ${error.message}`);
-            });
-        });
+        modalTitle.textContent = title;
+        modalContent.innerHTML = content;
+        modalOverlay.style.display = "block";
+
+        document.getElementById("modal-close").onclick = function () {
+            modalOverlay.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            if (event.target === modalOverlay) {
+                modalOverlay.style.display = "none";
+            }
+        };
     }
 
     function fillEditWorkModal() {
     const selectedItem = document.querySelector('.work-item.selected');
     const id_user = localStorage.getItem("user_id");
     if (!selectedItem) {
-        alert("Please select a work experience to edit.");
+        alert("Пожалуйста выберите пункт для изменения");
         return;
     }
 
@@ -238,23 +290,23 @@ document.addEventListener("DOMContentLoaded", function () {
             ).join('');
 
             // Populate the modal with data
-            openModal("Edit Work Experience", `
-                <label for="organization">Organization</label>
+            openModal("Изменение опыта работы", `
+                <label for="organization">Организация</label>
                 <select id="organization">${organizationOptions}</select>
-                <label for="position">Position</label>
+                <label for="position">Должность</label>
                 <input id="position" type="text" value="${work.position}">
-                <label for="start-date">Start Date</label>
+                <label for="start-date">Начало работы</label>
                 <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
-                <label for="end-date">End Date</label>
+                <label for="end-date">Окончание работы</label>
                 <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
-                <label for="responsibilities">Responsibilities</label>
+                <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities" value="${work.responsibilities || ''}">
                 <button onclick="saveEditedWork(${workId})">Save</button>
             `);
         })
         .catch(error => {
             console.error("Error loading dropdown data:", error);
-            alert("Failed to load related data for editing.");
+            alert("Загрузка данных для изменения опыта работы не удалась.");
         });
     })
     .catch(error => {
@@ -262,45 +314,11 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(`Error loading work: ${error.message}`);
     });
 }
-
-
-    function saveEditedWork(workId) {
-        const id_user = localStorage.getItem("user_id");
-        if (!workId) {
-            alert("Work ID is missing.");
-            return;
-        }
-
-        const updatedData = {
-            organization: document.getElementById("organization").value,
-            position: document.getElementById("position").value,
-            start_date: document.getElementById("start-date").value,
-            end_date: document.getElementById("end-date").value,
-            responsibilities: document.getElementById("responsibilities").value
-        };
-
-        fetch(`/api/works/${id_user}/${workId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Work experience updated:", data);
-            loadExistingWorkExperience();
-            alert("Work experience updated successfully.");
-        })
-        .catch(error => {
-            console.error("Error updating work experience:", error);
-            alert(`Error updating work experience: ${error.message}`);
-        });
-    }
-
     document.querySelector(".groupnumber__item textarea").addEventListener("click", () => {
         openModal("Опыт работы", `
             <div class="tab-container">
-                <button class="tab-button" onclick="showTabContent('view-work')">View</button>
-                <button class="tab-button" onclick="showTabContent('add-edit-work')">Add/Edit</button>
+                <button class="tab-button" onclick="showTabContent('view-work')">Просмотреть</button>
+                <button class="tab-button" onclick="showTabContent('add-edit-work')">Добавить</button>
             </div>
             <div id="tab-view-work" class="tab-content">
                 <h4>Список добавленных карьер</h4>
@@ -314,14 +332,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 <label for="organization">Организация</label>
                 <select id="organization">Загрузка...</select>
                 <label for="position">Должность</label>
-                <input id="position" type="text" placeholder="Enter position">
+                <input id="position" type="text" placeholder="Напишите должность">
                 <label for="start-date">Начало работы</label>
                 <input id="start-date" type="date">
                 <label for="end-date">Окончание работы</label>
                 <input id="end-date" type="date">
                 <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities">
-                <button onclick="saveNewWorkExperience()">Save</button>
+                <button onclick="saveNewWorkExperience()">Сохранить</button>
             </div>
         `, loadExistingWorkExperience());
         loadOrganizationDropdown();

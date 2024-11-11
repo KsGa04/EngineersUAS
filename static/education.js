@@ -97,11 +97,15 @@ function loadExistingEducations() {
     // Validate required fields
     for (const [key, value] of Object.entries(newEducationData)) {
         if (value.trim() === "") {
-            alert(`Please fill out the ${key.replace('_', ' ')} field.`);
+            alert(`Пожалуйста заполните поле ${key.replace('_', ' ')}.`);
             return;
         }
     }
-
+    // Validate date consistency (start_date should not be after end_date)
+    if (new Date(newEducationData.start_date) > new Date(newEducationData.end_date)) {
+        alert("Начальная дата обучения должна быть раньше чем окончание");
+        return;
+    }
     fetch(`/api/education/${id_user}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -329,7 +333,18 @@ function saveEditedEducation(educationId) {
         start_date: document.getElementById("start-year").value,
         end_date: document.getElementById("end-year").value
     };
-
+    // Validate required fields
+    for (const [key, value] of Object.entries(updatedData)) {
+        if (value.trim() === "") {
+            alert(`Пожалуйста заполните поле ${key.replace('_', ' ')}.`);
+            return;
+        }
+    }
+    // Validate date consistency (start_date should not be after end_date)
+    if (new Date(updatedData.start_date) > new Date(updatedData.end_date)) {
+        alert("Начальная дата обучения должна быть раньше чем окончание");
+        return;
+    }
     fetch(`/api/education/${id_user}/${educationId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

@@ -12,7 +12,7 @@
             <div class="regiser__wrapper">
                 <div class="auth__switch">
                     <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
-                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТАДАТЕЛЬ</a>
+                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТОДАТЕЛЬ</a>
                 </div>
                 <div class="register__title">
                     <h1>РЕГИСТРАЦИЯ</h1>
@@ -53,9 +53,10 @@
     </div>
 <script>
  document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("registerForm").addEventListener("submit", handleFormSubmit);
-    });
+    document.getElementById("registerForm").addEventListener("submit", handleFormSubmit);
+
     let roleId = 1; // 1 - студент, 2 - работодатель
+
     // Обработчик для переключения на "СТУДЕНТ"
     studentSwitch.addEventListener("click", function(event) {
         event.preventDefault();
@@ -64,22 +65,49 @@
         employerSwitch.classList.remove("active");
     });
 
-    // Обработчик для переключения на "РАБОТАДАТЕЛЬ"
+    // Обработчик для переключения на "РАБОТОДАТЕЛЬ"
     employerSwitch.addEventListener("click", function(event) {
         event.preventDefault();
         roleId = 2;
         employerSwitch.classList.add("active");
         studentSwitch.classList.remove("active");
     });
+
     async function handleFormSubmit(event) {
         event.preventDefault();
+
+        const email = document.getElementById("email_input").value.trim();
+        const password = document.getElementById("password_input").value.trim();
+        const firstName = document.getElementById("name_input").value.trim();
+        const lastName = document.getElementById("surname_input").value.trim();
+        const middleName = document.getElementById("middle_name_input").value.trim();
+        const tg = document.getElementById("tg_input").value.trim();
+
+        // Валидация полей на пустоту
+        if (!email || !password || !firstName || !lastName || !middleName || !tg) {
+            alert("Все поля обязательны для заполнения.");
+            return;
+        }
+
+        // Валидация email
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert("Пожалуйста, введите корректный адрес электронной почты.");
+            return;
+        }
+
+        // Валидация пароля
+        if (password.length < 8) {
+            alert("Пароль должен содержать не менее 8 символов.");
+            return;
+        }
+
         const formData = {
-            email: document.getElementById("email_input").value,
-            password: document.getElementById("password_input").value,
-            first_name: document.getElementById("name_input").value,
-            last_name: document.getElementById("surname_input").value, // исправлено
-            middle_name: document.getElementById("middle_name_input").value,
-            th: document.getElementById("tg_input").value,// добавлено отчество
+            email: email,
+            password: password,
+            first_name: firstName,
+            last_name: lastName,
+            middle_name: middleName,
+            tg: tg,
             role_id: roleId
         };
 
@@ -102,6 +130,7 @@
             alert("Не удалось зарегистрироваться.");
         }
     }
+});
     </script>
 </body>
 </html>

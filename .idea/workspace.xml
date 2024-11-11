@@ -4,21 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Добавлен тг в регистрацию и в личный кабинет, вниуз на каждой странице имеется тг ссылка на поддержку, правая иконка работает на переходы">
-      <change afterPath="$PROJECT_DIR$/static/pattern.js" afterDir="false" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Окно генерации резюме готово">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/get_user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_user_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/universal_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/universal_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/cv_generator.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/cv_generator.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/work.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/work.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/projects.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/work.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/work.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/analytics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/analytics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/hr_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hr_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userboard.html" afterDir="false" />
@@ -409,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731245550118</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Окно генерации резюме готово">
+      <option name="closed" value="true" />
+      <created>1731305647442</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1731305647442</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -424,7 +427,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавление основных моделек, автоизации и тестов" />
     <MESSAGE value="Изменение бд, тестов" />
     <MESSAGE value="Изменение бд, создан README.md" />
     <MESSAGE value="Изменение бд" />
@@ -449,7 +451,8 @@
     <MESSAGE value="Изображения" />
     <MESSAGE value="Окно просмотра студентов и корректировки по api" />
     <MESSAGE value="Добавлен тг в регистрацию и в личный кабинет, вниуз на каждой странице имеется тг ссылка на поддержку, правая иконка работает на переходы" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлен тг в регистрацию и в личный кабинет, вниуз на каждой странице имеется тг ссылка на поддержку, правая иконка работает на переходы" />
+    <MESSAGE value="Окно генерации резюме готово" />
+    <option name="LAST_COMMIT_MESSAGE" value="Окно генерации резюме готово" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -463,11 +466,6 @@
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>86</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/universal_api.py</url>
@@ -490,24 +488,24 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
-          <line>91</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/get_user_data.py</url>
-          <line>66</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/universal_api.py</url>
           <line>107</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
-          <line>481</line>
-          <option name="timeStamp" value="23" />
+          <line>491</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
+          <line>590</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

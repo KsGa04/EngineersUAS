@@ -9,7 +9,7 @@ class Work(db.Model):
     position = db.Column(db.String(255))
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
-
+    responsibilities = db.Column(db.String(255))
     # Связь с резюме
     resume = db.relationship('Resume', back_populates='works', overlaps="related_resume")
 

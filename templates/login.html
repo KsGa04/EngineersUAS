@@ -20,7 +20,7 @@
                 <div class="auth__switch">
                     <!-- Добавлены id для элементов -->
                     <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
-                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТАДАТЕЛЬ</a>
+                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТОДАТЕЛЬ</a>
                 </div>
                 <div class="login__title">
                     <h1>АВТОРИЗАЦИЯ</h1>
@@ -71,8 +71,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Обработчик для кнопки авторизации
     document.getElementById("auth_btn").addEventListener("click", async function() {
-        const email = document.getElementById("email_input").value;
-        const password = document.getElementById("password_input").value;
+        const email = document.getElementById("email_input").value.trim();
+        const password = document.getElementById("password_input").value.trim();
+
+        // Валидация email
+        if (!email) {
+            alert("Поле электронной почты не должно быть пустым.");
+            return;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            alert("Пожалуйста, введите корректный адрес электронной почты.");
+            return;
+        }
+
+        // Валидация пароля
+        if (!password) {
+            alert("Поле пароля не должно быть пустым.");
+            return;
+        } else if (password.length < 8) {
+            alert("Пароль должен быть не менее 8 символов.");
+            return;
+        }
 
         try {
             const response = await fetch('/login', {
@@ -91,6 +109,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.setItem("role_id", result.role_id);
                 localStorage.setItem("id_pattern", result.id_pattern);
                 localStorage.setItem("id_resume", result.id_resume);
+                localStorage.setItem("login", result.login);
+                localStorage.setItem("password", result.password);
                 alert("Успешная авторизация!");
 
                 if (result.role_id == "1") {
@@ -107,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
 </script>
 </body>
 </html>

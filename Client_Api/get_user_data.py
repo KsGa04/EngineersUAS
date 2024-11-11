@@ -31,6 +31,7 @@ def get_user_info(user_id):
         "id_user": user.id_user,
         "first_name": user.first_name,
         "last_name": user.last_name,
+        "middle_name": user.middle_name,
         "birth_date": user.birth_date.strftime('%Y-%m-%d') if user.birth_date else None,
         "profile_photo": profile_photo_base64,  # Передаем фото как base64 строку
         "resume": {
