@@ -18,6 +18,7 @@ from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
     Projects, ProjectSkills
 from Models.work import Work
+from Admin.admin import is_admin
 
 
 def age_suffix(age):
@@ -35,21 +36,10 @@ resume_api = Blueprint('resume_api', __name__)
 
 @jwt_required()
 def generate_resume_func(pattern_id, user_id, login, password):
-    # user = User.query.filter_by(email=login).first()
-
-    # if not user:
-    #     return jsonify({'msg': 'User not found'}), 404
-
-    # if not check_password_hash(user.password, password):
-    #     return jsonify({'msg': 'Invalid login or password'}), 401
-
-    # if user.id_user != user_id:
-    #     return jsonify({'msg': 'User ID does not match'}), 404
-
     user = User.query.get_or_404(user_id)
     current_user = get_jwt_identity()
 
-    if user_id != current_user:
+    if user_id != current_user and not current_user == 'admin':
         return jsonify({'msg': 'User not found'}), 401
 
     # Кодирование изображения профиля в Base64
