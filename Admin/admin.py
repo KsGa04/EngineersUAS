@@ -5,7 +5,7 @@ admin_login = Blueprint('admin_login', __name__)
 
 ADMIN_USERNAME = 'admin@administrator.ru'
 ADMIN_PASSWORD = 'password'
-admin_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMTQxNDE0OSwianRpIjoiODgwYjZlNGMtYjk1Yi00ZjNjLTlhN2ItNWFhNTE4ZDljNDBkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzMxNDE0MTQ5LCJjc3JmIjoiYTM0YjNjNDQtMzFmZi00Zjg1LWI2MGQtZjc1ZTRkMTBhOWQyIiwiZXhwIjoxNzMxNDE1MDQ5LCJyb2xlX2lkIjoiYWRtaW4iLCJpc19hZG1pbiI6dHJ1ZSwibG9naW4iOiJhZG1pbiJ9.HK47Sz1qaGhG1N0M1jFol5efiGt2sz8H-mPKRn7ji9Y'
+admin_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMTQzMjkwMSwianRpIjoiYjliZjFjODgtNWMxMC00MzVhLWIzZDAtZWU1YTU5MjUxNzQ0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzMxNDMyOTAxLCJjc3JmIjoiNmIwY2JiMmUtMjA0Mi00MGQ1LWEwMDgtZWM5NzJhMTg1MmRmIiwicm9sZV9pZCI6ImFkbWluIiwiaXNfYWRtaW4iOnRydWUsImxvZ2luIjoiYWRtaW4ifQ.WGCdo7-NyLT-o3c9b-sstXpTfIEX2uat3ufkIlrKRWQ'
 
 def is_admin():
     return session.get("role") == "admin"
@@ -18,6 +18,7 @@ def get_admin_token():
             "is_admin": True,
             "login": "admin",
         },
+        expires_delta=False
     )
     return admin_token
 
