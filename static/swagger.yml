@@ -243,6 +243,29 @@ paths:
           description: "Успешная авторизация"
         401:
           description: "Неверные данные"
+  /passwordrecovery:
+    post:
+      tags:
+          - "auth"
+      summary: "Восстановление пароля"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+              required:
+                - email
+      responses:
+        200:
+          description: "Ссылка для востановления отправлена"
+        404:
+          description: "Неверный email" 
   /pattern1/{user_id}:
     get:
       tags:
