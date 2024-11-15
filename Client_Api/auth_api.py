@@ -1,13 +1,13 @@
 from datetime import timezone, datetime, timedelta, date
 
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, url_for, flash, redirect, render_template
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from Models import University, Group, Resume, Education, UserSocialNetwork
 from Models.user import User
 from flask_jwt_extended import create_access_token, set_access_cookies
-from Client_Api.extensions import db
+from Client_Api.extensions import db, send_reset_email, serializer
 
 auth_api = Blueprint('auth_api', __name__)
 
@@ -95,3 +95,40 @@ def login():
     set_access_cookies(response, authToken)
 
     return response, 200
+
+
+@auth_api.route('/passwordrecovery', methods=['POST'])
+def password_recovery():
+    email = request.json.get('email')
+    user = User.query.filter_by(email=email).first_or_404()
+
+    token = serializer.dumps(email, salt="password-recovery")
+    reset_link = url_for('auth_api.reset_password', token=token, _external=True)
+
+    send_reset_email(email, reset_link)
+    return jsonify({"msg": f"Password reset link sent to {email}"}), 200
+
+
+@auth_api.route('/resetpassword/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:    
+        email = serializer.loads(token, salt="password-recovery", max_age=3600)
+    except Exception as e:
+        flash("Invalid or expired token", "danger")
+        return redirect(url_for('auth_api.login'))
+
+    user = User.query.filter_by(email=email).first()
+
+    if request.method == 'POST':
+        new_password = request.form.get('password')
+        if not new_password:
+            flash("Password is required", "danger")
+            return render_template('reset_password.html')
+
+        user.password = generate_password_hash(new_password)
+        db.session.commit()
+
+        flash("Password reset successfully", "success")
+        return redirect(url_for('auth_api.login'))
+
+    return render_template('reset_password.html')

@@ -6,7 +6,7 @@ from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request, 
 from werkzeug.security import generate_password_hash
 
 from Client_Api.approach_to_universities import university_api
-from Client_Api.extensions import db  # Импортируем расширения
+from Client_Api.extensions import db, mail  # Импортируем расширения
 from Client_Api.auth_api import auth_api  # Подключаем API для авторизации
 from Client_Api.get_data import get_api
 from Client_Api.get_github_repositories import github_api
@@ -44,9 +44,17 @@ def create_app(config):
     app.config["JWT_ACCESS_COOKIE_NAME"] = "authToken"  # Название cookie для хранения токена
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
+    app.config['MAIL_SERVER'] = 'smtp.kiphub.ru'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'admin@kiphub.ru'
+    app.config['MAIL_PASSWORD'] = 'admin_password'
+    app.config['MAIL_DEFAULT_SENDER'] = 'admin@kiphub.ru'
+
     jwt = JWTManager(app)
     db.init_app(app)
     jwt.init_app(app)
+    mail.init_app(app)
 
     # Swagger
     SWAGGER_URL = '/swagger'
