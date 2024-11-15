@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/cv_generator.css">
+    <script src="/static/token.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -20,7 +21,7 @@
                 </div>
             </div>
             <div class="header__right">
-                <img src="static/assets/images/person_icon.svg" alt="" id="personIcon">
+                <img src="static/assets/images/person_icon.svg" alt="" id="personIcon" >
                     <div class="person-menu" id="personMenu">
                         <ul>
                             <li><a href="/userboard">Личный кабинет</a></li>
@@ -142,7 +143,7 @@
             const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
             if (confirmLoad) {
                 const id_user = localStorage.getItem("id_resume");
-                fetch(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
+                fetchWithAuth(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 })

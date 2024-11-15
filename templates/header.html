@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header>
@@ -18,9 +18,26 @@
                 </div>
             </div>
             <div class="header__right">
-                <img src="static/assets/images/person_icon.svg" alt="">
+                <img data-toggle="user__submenu__open" src="/static/assets/images/person_icon.svg" alt="">
+                <div class="users__submenu__items ">
+                    <div class="users__submenu__item"><a>Личный кабинет</a></div>
+                    <div class="users__submenu__item"><a>Генерация резюме</a></div>
+                </div>
             </div>
         </div>
     </header>
 </body>
+<script>
+    const users__submenu__items = document.querySelector(".users__submenu__items");
+
+    document.addEventListener("click", function (e) {
+        if (e.target.dataset.toggle === 'user__submenu__open') {
+            users__submenu__items.classList.add("active");
+        }else {
+            users__submenu__items.classList.remove("active");
+        }
+
+        });
+
+</script>
 </html>

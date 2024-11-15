@@ -8,17 +8,59 @@ import requests
 from PIL import Image
 from flask import render_template, Blueprint, send_file, request, jsonify
 from html2image import Html2Image
+from langchain_core.messages import SystemMessage
 from reportlab.pdfgen import canvas
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import get_jwt_identity, jwt_required
-
+from langchain_community.chat_models import GigaChat
 from Client_Api.extensions import db
 from Models import User, Education, Skills, ResumeSkills, Resume, Tasks, TaskSkills, Responsibility, \
-    Projects, ProjectSkills
+    Projects, ProjectSkills, UserSocialNetwork
 from Models.work import Work
 from Admin.admin import is_admin
+
+# Инициализация GigaChat
+giga = GigaChat(
+    credentials="N2Q2MjFiYmUtN2IwNy00ODNhLTk3MGQtOTUyNmQyYjAyNTY1Ojg4MzBkMmIwLThlMzItNDQyNi1hYzI1LTQ0ZmI0MWVkYmI2Mg==",
+    scope="GIGACHAT_API_PERS", verify_ssl_certs=False, streaming=True
+)
+
+
+def generate_description(education_list, skills, experience_list):
+    # Формируем описание образования с использованием связанных данных
+    education_descriptions = "; ".join([
+        f"{edu.degree.degree_name} по направлению {edu.direction.direction_name} в {edu.university.full_name} "
+        f"({edu.start_date.year} - {edu.end_date.year if edu.end_date else 'н.в.'})"
+        for edu in education_list
+    ])
+
+    # Формируем описание навыков
+    skill_descriptions = ", ".join([skill.skill_name for skill in skills])
+
+    # Формируем описание опыта работы с учётом организации
+    experience_descriptions = "; ".join([
+        f"{exp.position} в {', '.join([org.organization_name for org in exp.organizations])} "
+        f"({exp.start_date.year}-{exp.end_date.year if exp.end_date else 'н.в.'})"
+        for exp in experience_list
+    ])
+
+    # Создаем сообщение для модели
+    messages = [
+        SystemMessage(
+            content=(
+                f"Сгенерируй описание профиля на 15 слов на русском языке как будто ты инженер. Образование: {education_descriptions}. "
+                f"Навыки: {skill_descriptions}. Опыт работы: {experience_descriptions}. "
+            )
+        )
+    ]
+
+    # Вызов модели с сообщением
+    res = giga(messages)
+
+    # Возвращаем сгенерированный текст
+    return res.content
 
 
 def age_suffix(age):
@@ -49,6 +91,7 @@ def generate_resume_func(pattern_id, user_id, login, password):
 
     # Загрузка данных резюме и связанных элементов
     resume = Resume.query.filter_by(id_user=user_id).first_or_404()
+    telegram = UserSocialNetwork.query.filter(UserSocialNetwork.id_resume == resume.id_resume, UserSocialNetwork.network_link.startswith("https://t.me/")).first_or_404()
     education_list = Education.query.filter_by(id_resume=resume.id_resume).all()
     experience_list = Work.query.filter_by(id_resume=resume.id_resume).all()
     skills = db.session.query(Skills).join(ResumeSkills).filter(ResumeSkills.id_resume == resume.id_resume).all()
@@ -75,14 +118,18 @@ def generate_resume_func(pattern_id, user_id, login, password):
     today = date.today()
     age = today.year - user.birth_date.year - ((today.month, today.day) < (user.birth_date.month, user.birth_date.day))
     age_with_suffix = f"{age} {age_suffix(age)}"
+    if resume.about_me == "":
+        # Генерируем описание профиля
+        resume.about_me = generate_description(education_list, skills, experience_list)
+        db.session.commit()
 
     rendered_html = render_template(
-        f'pattern_resume{pattern_id}.html', user=user, profile_image=profile_image_base64,
-        education_list=education_list, experience_list=experience_list, skills=skills,
-        resume=resume, tasks_by_education=tasks_by_education, skills_by_task=skills_by_task,
-        responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
-        projects=projects, project_skills=project_skills
-    )
+            f'pattern_resume{pattern_id}.html', telegram=telegram.network_link, user=user, profile_image=profile_image_base64,
+            education_list=education_list, experience_list=experience_list, skills=skills,
+            resume=resume, tasks_by_education=tasks_by_education, skills_by_task=skills_by_task,
+            responsibilities_by_experience=responsibilities_by_experience, age=age_with_suffix,
+            projects=projects, project_skills=project_skills
+        )
     # Отправка изображения пользователю
     return rendered_html
 

@@ -4,17 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Окно генерации резюме готово">
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректированы некоторые баги">
+      <change afterPath="$PROJECT_DIR$/static/token.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_user_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/work.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models/work.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/cv_generator.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/cv_generator.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icon.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/icon.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/projects.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/work.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/work.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/analytics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/analytics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/hr_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hr_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userboard.html" afterDir="false" />
     </list>
@@ -87,7 +92,7 @@
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/python_advanced",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -97,11 +102,11 @@
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\templates" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\assets\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
     </key>
   </component>
   <component name="RunManager" selected="Python.app (1)">
@@ -412,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731305647442</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Подкорректированы некоторые баги">
+      <option name="closed" value="true" />
+      <created>1731328856760</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1731328856760</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -427,7 +440,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Изменение бд, тестов" />
     <MESSAGE value="Изменение бд, создан README.md" />
     <MESSAGE value="Изменение бд" />
     <MESSAGE value="Корректировки по API и генерации резюме" />
@@ -452,7 +464,8 @@
     <MESSAGE value="Окно просмотра студентов и корректировки по api" />
     <MESSAGE value="Добавлен тг в регистрацию и в личный кабинет, вниуз на каждой странице имеется тг ссылка на поддержку, правая иконка работает на переходы" />
     <MESSAGE value="Окно генерации резюме готово" />
-    <option name="LAST_COMMIT_MESSAGE" value="Окно генерации резюме готово" />
+    <MESSAGE value="Подкорректированы некоторые баги" />
+    <option name="LAST_COMMIT_MESSAGE" value="Подкорректированы некоторые баги" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -461,11 +474,6 @@
           <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
           <line>15</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Api/get_github_repositories.py</url>
-          <line>86</line>
-          <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/universal_api.py</url>
@@ -504,8 +512,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
-          <line>590</line>
+          <line>606</line>
           <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/generate_resume_api.py</url>
+          <line>120</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <script src="/static/token.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -122,7 +123,7 @@
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:5000/user/${userId}`, {
+        const response = await fetchWithAuth(`http://127.0.0.1:5000/user/${userId}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -175,7 +176,7 @@
         return;
     }
 
-    const response = await fetch(`http://127.0.0.1:5000/pattern_image_pdf/${userId}/${id_pattern}`, {
+    const response = await fetchWithAuth(`http://127.0.0.1:5000/pattern_image_pdf/${userId}/${id_pattern}`, {
         method: 'GET',
         credentials: 'include'
     });
@@ -218,7 +219,7 @@
         const authToken = localStorage.getItem("authToken");
 
         try {
-            const response = await fetch(`http://127.0.0.1:5000/api/user/${userId}/update_photo`, {
+            const response = await fetchWithAuth(`http://127.0.0.1:5000/api/user/${userId}/update_photo`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
@@ -255,7 +256,7 @@ async function updateDataInDB(table, fieldName, fieldValue) {
 
     try {
         if (table == "userSocialNetwork") {
-            const response = await fetch(`/universal/${table}?id_resume=${id_resume}`, {
+            const response = await fetchWithAuth(`/universal/${table}?id_resume=${id_resume}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': '*/*',
@@ -274,7 +275,7 @@ async function updateDataInDB(table, fieldName, fieldValue) {
         }
             }
         else {
-            const response = await fetch(`/universal/${table}?id_user=${userId}`, {
+            const response = await fetchWithAuth(`/universal/${table}?id_user=${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': '*/*',

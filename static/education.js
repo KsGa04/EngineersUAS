@@ -31,7 +31,7 @@ function loadExistingEducations() {
             return;
         }
 
-        fetch(`/api/educations/${id_resume}`, {
+        fetchWithAuth(`/api/educations/${id_resume}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -106,7 +106,7 @@ function loadExistingEducations() {
         alert("Начальная дата обучения должна быть раньше чем окончание");
         return;
     }
-    fetch(`/api/education/${id_user}`, {
+    fetchWithAuth(`/api/education/${id_user}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEducationData)
@@ -157,10 +157,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Call this function when the "Add/Edit" button is clicked
     function loadDropdownData() {
         Promise.all([
-            fetch('/api/universities').then(res => res.json()),
-            fetch('/api/directions').then(res => res.json()),
-            fetch('/api/groups').then(res => res.json()),
-            fetch('/api/degrees').then(res => res.json())
+            fetchWithAuth('/api/universities').then(res => res.json()),
+            fetchWithAuth('/api/directions').then(res => res.json()),
+            fetchWithAuth('/api/groups').then(res => res.json()),
+            fetchWithAuth('/api/degrees').then(res => res.json())
         ])
         .then(([universities, directions, groups, degree]) => {
             document.getElementById('degree').innerHTML = degree.map(deg => `<option value="${deg.id}">${deg.name}</option>`).join('');
@@ -234,7 +234,7 @@ function deleteSelectedEducations() {
             return;
         }
 
-        fetch(`/universal/education?id_education=${educationId}`, {
+        fetchWithAuth(`/universal/education?id_education=${educationId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -263,7 +263,7 @@ function fillEditEducationModal() {
         return;
     }
 
-    fetch(`/api/education/${id_user}/${educationId}`, {
+    fetchWithAuth(`/api/education/${id_user}/${educationId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -275,10 +275,10 @@ function fillEditEducationModal() {
     })
     .then(education => {
         return Promise.all([
-            fetch('/api/universities').then(res => res.json()),
-            fetch('/api/directions').then(res => res.json()),
-            fetch('/api/groups').then(res => res.json()),
-            fetch('/api/degrees').then(res => res.json())
+            fetchWithAuth('/api/universities').then(res => res.json()),
+            fetchWithAuth('/api/directions').then(res => res.json()),
+            fetchWithAuth('/api/groups').then(res => res.json()),
+            fetchWithAuth('/api/degrees').then(res => res.json())
         ])
         .then(([universities, directions, groups, degrees]) => {
             const degreeOptions = degrees.map(deg =>
@@ -345,7 +345,7 @@ function saveEditedEducation(educationId) {
         alert("Начальная дата обучения должна быть раньше чем окончание");
         return;
     }
-    fetch(`/api/education/${id_user}/${educationId}`, {
+    fetchWithAuth(`/api/education/${id_user}/${educationId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData)

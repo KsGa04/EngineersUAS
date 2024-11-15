@@ -8,7 +8,7 @@
 
         selectedItems.forEach(item => {
             const projectId = item.dataset.projectId;
-            fetch(`/universal/projects?id_project=${projectId}`, {
+            fetchWithAuth(`/universal/projects?id_project=${projectId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -30,11 +30,12 @@ function saveNewProject() {
             alert("Resume ID is missing.");
             return;
         }
-
+        const selectedSkills = Array.from(document.getElementById("project-skills").selectedOptions).map(opt => parseInt(opt.value));
         const newProjectData = {
             project_name: document.getElementById("project-name").value,
             project_description: document.getElementById("project-desc").value,
-            project_link: document.getElementById("project-link").value
+            project_link: document.getElementById("project-link").value,
+            skills: selectedSkills  // Include selected skills
         };
 
         for (const [key, value] of Object.entries(newProjectData)) {
@@ -44,7 +45,7 @@ function saveNewProject() {
             }
         }
 
-        fetch(`/api/project/${id_resume}`, {
+        fetchWithAuth(`/api/project/${id_resume}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProjectData)
@@ -69,7 +70,7 @@ function saveNewProject() {
             return;
         }
 
-        fetch(`/api/projects/${id_resume}`, {
+        fetchWithAuth(`/api/projects/${id_resume}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -116,6 +117,16 @@ function saveNewProject() {
             alert(`Ошибка загрузки списка проектов: ${error.message}`);
         });
     }
+function loadSkills() {
+        try {
+            const response = await fetchWithAuth('/api/skills');
+            const skills = await response.json();
+            const skillsSelect = document.getElementById("project-skills");
+            skillsSelect.innerHTML = skills.map(skill => `<option value="${skill.id_skill}">${skill.skill_name}</option>`).join('');
+        } catch (error) {
+            console.error("Error loading skills:", error);
+        }
+    }
 function editSelectedProject() {
     const selectedItem = document.querySelector('.project-item.selected');
     const id_user = localStorage.getItem("user_id");
@@ -125,7 +136,7 @@ function editSelectedProject() {
     }
 
     const projectId = selectedItem.dataset.projectId;
-    fetch(`/api/projects/${id_user}/${projectId}`, {
+    fetchWithAuth(`/api/projects/${id_user}/${projectId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -143,6 +154,9 @@ function editSelectedProject() {
             <input id="project-desc" value="${project.project_description}">
             <label for="project-link">Project Link</label>
             <input id="project-link" type="url" value="${project.project_link}">
+            <select id="project-skills" multiple>
+                ${skills.map(skill => `<option value="${skill.id_skill}" ${project.skills.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
+            </select>
             <button onclick="saveEditedProject(${projectId})">Save</button>
         `);
     })
@@ -164,7 +178,7 @@ function saveEditedProject(projectId) {
             project_link: document.getElementById("project-link").value
         };
 
-        fetch(`/api/projects/${id_user}/${projectId}`, {
+        fetchWithAuth(`/api/projects/${id_user}/${projectId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
@@ -217,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const projectId = selectedItem.dataset.projectId;
-        fetch(`/api/project/${id_user}/${projectId}`, {
+        fetchWithAuth(`/api/project/${id_user}/${projectId}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -230,6 +244,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 <input id="project-desc" value="${project.project_description}">
                 <label for="project-link">Ссылка на проект</label>
                 <input id="project-link" type="url" value="${project.project_link}">
+                <select id="project-skills" multiple>
+                ${skills.map(skill => `<option value="${skill.id_skill}" ${project.skills.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
+            </select>
                 <button onclick="saveEditedProject(${projectId})">Save</button>
             `);
         })

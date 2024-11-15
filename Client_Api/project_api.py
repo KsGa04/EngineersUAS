@@ -9,7 +9,7 @@ from sqlalchemy.orm import joinedload
 
 from Client_Api.extensions import db
 from Models import UserSocialNetwork, Education, Skills, University, Direction, Group, Degree, Organization, User, \
-    Resume, ResumeSkills, Projects, WorkOrganization
+    Resume, ResumeSkills, Projects, WorkOrganization, ProjectSkills
 from Models.work import Work
 
 modal_api = Blueprint('modal_api', __name__)
@@ -545,6 +545,8 @@ def get_projects_by_resume(id_resume):
 def get_project_detail(id_resume, id_project):
     # Ensure the user has permission to access the project
     project = Projects.query.filter_by(id_project=id_project, id_resume=id_resume).first()
+    skills = db.session.query(Skills).join(ProjectSkills).filter(ProjectSkills.id_project == id_project).all()
+    skill_list = [{"id_skill": skill.id_skill, "skill_name": skill.skill_name} for skill in skills]
     if not project:
         return jsonify({"msg": "Project not found"}), 404
 
@@ -552,7 +554,8 @@ def get_project_detail(id_resume, id_project):
         'id_project': project.id_project,
         'project_name': project.project_name,
         'project_description': project.project_description,
-        'project_link': project.project_link
+        'project_link': project.project_link,
+        'skill': skill_list
     }
 
     return jsonify(project_data), 200
@@ -560,12 +563,14 @@ def get_project_detail(id_resume, id_project):
 def add_project(id_resume):
     data = request.get_json()
 
-    required_fields = ['project_name', 'project_description', 'project_link']
+    # Ensure required fields are provided
+    required_fields = ['project_name', 'project_description', 'project_link', 'skills']
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"'{field}' is required in the request data"}), 400
 
     try:
+        # Create a new project instance
         new_project = Projects(
             id_resume=id_resume,
             project_name=data['project_name'],
@@ -573,13 +578,24 @@ def add_project(id_resume):
             project_link=data['project_link']
         )
 
+        # Add the new project to the session to get its ID
         db.session.add(new_project)
+        db.session.flush()  # Use flush to get the project ID before commit
+
+        # Associate skills with the project using the ProjectsSkills table
+        skill_ids = data.get("skills", [])
+        for skill_id in skill_ids:
+            project_skill = ProjectSkills(id_project=new_project.id_project, id_skill=skill_id)
+            db.session.add(project_skill)
+
+        # Commit the transaction
         db.session.commit()
         return jsonify({"msg": "Project added successfully", "id_project": new_project.id_project}), 201
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": f"Failed to add project: {str(e)}"}), 500
+
 
 @modal_api.route('/api/projects/<int:id_user>/<int:id_project>', methods=['PUT'])
 def update_project(id_user, id_project):

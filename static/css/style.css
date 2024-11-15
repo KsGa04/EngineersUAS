@@ -89,7 +89,7 @@ legend {
 }
 @font-face {
     font-family: 'DmSans-Bold';
-    src: url('assets/fonts/DM_Sans_Bold.otf');
+    src: url('static/assets/fonts/DM_Sans_Bold.otf');
     font-weight: normal;
     font-style: normal;
 }
@@ -101,32 +101,38 @@ legend {
     }
 @font-face {
     font-family: 'DmSans-ExtraLight';
-    src: url('/assets/fonts/DM_Sans/static/DMSans-ExtraLight.ttf');
+    src: url('/static/assets/fonts/DM_Sans/static/DMSans-ExtraLight.ttf');
     font-weight: normal;
     font-style: normal;
 }
-@font-face {
-    font-family: 'DM Sans Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('DM Sans Regular'), url('/assets/fonts/DMSans-Regular.woff') format('woff');
-    }
 
 @font-face {
     font-family: 'Montserrat-Bold';
-    src: url('/assets/fonts/Montserrat-Bold.ttf');
+    src: url('/static/assets/fonts/Montserrat-Bold.ttf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Montserrat-Regular';
-    src: url('/assets/fonts/Montserrat-Regular.ttf');
+    src: url('/static/assets/fonts/Montserrat-Regular.ttf');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Inter-Bold';
-    src: url('/assets/fonts/Inter-Bold.ttf');
+    src: url('/static/assets/fonts/Inter-Bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter-Medium';
+    src: url('/static/assets/fonts/InterTight-Medium.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Inter-Light';
+    src: url('/static/assets/fonts/InterTight-Light.ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -188,17 +194,26 @@ h1 {
     color: #FFFFFF;
     font-size: 20px;
     font-family: 'Montserrat-Regular';
+    cursor:pointer;
 }
 .auth__switch .active{
     border-radius: 46px;
     background: #FFFFFF;
     color: #4D8DDB;
+    transition: .4s;
+    transform: translateX(0px);
 }
+.auth__switch .active .emploer__switch::before {
+    transform: translateX(26px);
+    
+}
+
 .login__title h1,
 .register__title h1{
     font-family: 'Inter-Bold';
     color: #FFFFFF;
     font-size: 46px;
+    cursor: default;
 }
 .login__title {
     margin-bottom: 30px;
@@ -210,38 +225,39 @@ h1 {
 .register__form{
     display: flex;
     flex-direction: column;
-    margin-bottom: 23px;
+    margin-bottom: 20px;
+    cursor: default;
+}
+.register__form__item {
+    width: 100%;
 }
 .login__form input,
-.login__form button,
 .register__form input,
-.register__form select{
-    font-family: 'Inter-Bold';
-    font-weight: 500;
+.register__form select,
+.register__form__item__input{
+    font-family: 'Inter-Light';
+    width: 440px;
     height: 60px;
-    width: 390px;
     border-radius: 10px;
     border: 1px solid #FFFFFF;  
     padding-left: 25px;
     color: #FFFFFF;
     padding-right: 10px;
-}
-.login__form button {
-    margin-top: 20px;
-    font-size:20px;
+    
 }
 .login__form input::placeholder,
 .register__form input::placeholder {
     color: #FFFFFF;
-    font-family: 'Inter-Bold';
-    font-weight: 500;
+    font-family: 'Inter-Light';
     opacity: 1; 
 }
 .login__form label,
-.register__form label {
-    font-family: 'Inter-Bold';
+.register__form label ,
+.register__form__item__title{
+    font-family: 'Inter-Medium';
     font-weight: 300;
     color: #FFFFFF;
+    margin-top: 20px;
     margin-bottom: 4px;
     font-size: 25px;
 }
@@ -273,7 +289,9 @@ h1 {
 
 }
 .regiser__wrapper {
-    height: 840px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding: 35px 20px 35px 20px;
     width: 650px;
     background: linear-gradient( #438CD8, #808FE8); 
     border-radius: 35px; 
@@ -281,16 +299,16 @@ h1 {
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    margin-top: 10px;
 }
-#groupNumber__underText {
+.groupNumber__underText {
     font-size: 15px;
-    font-family: 'DM Sans Regular';
+    font-family: 'Inter-Light';
     opacity: 0.8;
+    color: #FFFFFF;
+    margin-top: 6px;
 }
 .student_checkbox_block {
-    margin-top: 10px ;
-    margin-bottom: 10px ;
+    margin-top: 20px ;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -300,9 +318,28 @@ h1 {
     height: 20px;
     margin-right: 10px;
 }
-.student_checkbox_block label {
+.checkbox__item__title{
     font-size: 20px;
     font-family: 'Montserrat-Regular';
+    margin-top: unset;
+    margin-bottom: unset;
+    color: #FFFFFF;
+}
+.register__form__university__item,
+.register__form__groupnumber__item, 
+.register__city__item,
+.register__company__item,
+.student__checkbox__item{
+    display: none;
+}
+.student .register__form__university__item,
+.student .register__form__groupnumber__item,
+.student .student__checkbox__item {
+    display: unset;
+}
+.emploer .register__city__item,
+.emploer .register__company__item{
+    display: unset;
 }
 /*------------------------------------------------------------------------*/
 header {
@@ -337,7 +374,34 @@ header {
 }
 .header__right {
 }
+.users__submenu__items {
+    margin-top: 6px;
+    padding: 10px 4px 10px 4px;
+    width: 180px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -60px;
+    border: 2px solid transparent;
+    background: 
+    linear-gradient(#fff, #fff) padding-box, 
+    linear-gradient(175deg, #808EE8, #5499DE) border-box;
+    border-radius: 20px;
+    visibility: hidden;
+}
+.users__submenu__items.active{
+    visibility: visible;
+}
+.users__submenu__item {
+    width: 140px;
+    height: 30px;
+}
+.users__submenu__item a{ 
+    font-family: 'Montserrat-Regular';
+    font-size: 14px;
 
+}
 /*------------------------------------------------------------------------*/
 
 .account__container {
@@ -445,7 +509,7 @@ header {
     text-wrap: nowrap;
 }
 .cv__form__input {
-    height: auto;
+    height: 44px;
     border: 1px solid #FFFFFF;
     border-radius: 10px;
     width:100%;
@@ -454,16 +518,7 @@ header {
     font-size: 20px;
     font-family: 'Inter-Bold';
     padding: 12px 20px 12px 20px;
-    overflow-wrap: break-word;
-    word-wrap: break-word; /* Поддержка для старых браузеров */
-    white-space: pre-wrap;
-    min-height: 45px;
-    max-height: 80px;
-    min-width: 350px;
-    max-width: 700px;
-
 }
-
 .cv__form__input option {
     background-color: #438CD8; /* Light blue background */
     color: #FFFFFF;
@@ -619,7 +674,7 @@ header {
 /*------------------------------------------------------------------------*/
 
 .cv__generation__container {
-    padding-top: 30px;
+    padding-top: 70px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -711,10 +766,8 @@ header {
 }
 .cv__generation__preview__item__elem img{
     height: 258px;
-    border-radius: 10%;
 }
 .cv__preview {
-margin:5px;
 }
 .cv__generation__preview__item__open{
     display: flex;
@@ -805,6 +858,7 @@ margin:5px;
 }
 .main__page__humans__image img{
     height: 100vh;
+    object-fit: cover;
 }
 
 .main__page__inner {
@@ -812,6 +866,8 @@ margin:5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 10;
 }
 
 .main__page__title {
@@ -820,23 +876,38 @@ margin:5px;
 }
 .main__page__title h1{
     font-family: 'Inter-Bold';
-    font-size: 65px;
+    font-size: 80px;
     font-weight: 700;
     background-image: linear-gradient(140deg,#428CD8,#7F8FE8);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 110%;
-    margin-bottom: 20px;
+
 
 }
+.main__page__subtitle {
+    display: flex;
+    flex-direction: row;
+}
 .main__page__subtitle h6{
-    font-family: 'Inter-Bold';
+    font-family: 'Inter-Medium';
     font-size: 40px;
-    font-weight: 700;
     color:#668EE2;
-    margin-bottom: 46px;
-    line-height: 100%;
 
+    line-height: 100%;
+}
+.main__page__subtitle__static__txt {margin-right: 6px;}
+.main__page__subtitle__dynamic__txts h6{
+    font-family: 'Inter-Medium';
+    font-size: 40px;
+    color:#668EE2;
+    line-height: 100%;
+}
+.main__page__border {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 80px;
+    border-left: 2px solid #007AFF;
 }
 .main__page__offer h6{
     font-family: 'Montserrat-Regular';
@@ -860,7 +931,53 @@ margin:5px;
     font-family: 'Montserrat-Bold';
     font-size: 20px;
 }
-/*------------------------------------------------*/
+.main__page__partners__section__container {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+.main__page__partners__section__title {
+    font-size: 60px;
+    font-family: 'Montserrat-Bold';
+    background-image: linear-gradient(140deg, #428CD8, #7F8FE8);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.main__page__partners__section__items {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 40px;
+}
+.main__page__partners__section__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    border: 1px solid rgba(33, 33, 33, 0.2);;
+}
+.main__page__partners__section__item img{
+    width: 90%;
+    object-fit: contain;
+    max-height: 190px;
+}
+.main__page__partners__section__button a{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 450px;
+height: 60px;
+border-radius: 46px;
+background: linear-gradient(90deg, #408BD7, #808EE8);
+color: #FFFFFF;
+font-family: 'Montserrat-Bold';
+font-size: 20px;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 16px 0px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 16px 0px;
+}
 .contacts__wrapper{
     position: fixed;
     right: 30px ;
@@ -888,8 +1005,8 @@ margin:5px;
     grid-column-gap: 60px;
 }
 .hr__page__filter__block {
-
-
+    
+    
 }
 .hr__page__filter {
     background: linear-gradient(90deg, #7C96E7, #5298DD);
@@ -907,7 +1024,7 @@ margin:5px;
     flex-direction: row;
     justify-content: space-between;
 }
-.filter__item select,
+.filter__item select, 
 .filter__item input{
     height: 30px;
     border: 1px solid #FFFFFF;
@@ -1034,7 +1151,8 @@ margin-bottom: 40px;
     color: #FFFFFF;
 }
 .candidate__item__photo img{
-    width: fit-content;
+    
+    object-fit: contain;
     height: 200px;
     border-radius: 20px;
 }

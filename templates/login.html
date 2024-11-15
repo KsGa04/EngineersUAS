@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.setItem("id_resume", result.id_resume);
                 localStorage.setItem("login", result.login);
                 localStorage.setItem("password", result.password);
+                localStorage.setItem("token", result.token);
                 alert("Успешная авторизация!");
 
                 if (result.role_id == "1") {
