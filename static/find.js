@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let allCandidates = [];
     try {
         // Fetch data from the API endpoint
-        const response = await fetchWithAuth('/api/candidates');
+        const response = await fetch('/api/candidates');
         allCandidates = await response.json();
 
         // Initial render of all candidates
@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         // Fetch data for the select options
         const [regionResponse, universityResponse, directionResponse, skillsResponse] = await Promise.all([
-            fetchWithAuth('/api/regions'),
-            fetchWithAuth('/api/universities'),
-            fetchWithAuth('/api/directions'),
-            fetchWithAuth('/get/skills')
+            fetch('/api/regions'),
+            fetch('/api/universities'),
+            fetch('/api/directions'),
+            fetch('/get/skills')
         ]);
 
         const regions = await regionResponse.json();
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Load candidates function
     async function loadCandidates() {
         try {
-            const response = await fetchWithAuth('/api/candidates');
+            const response = await fetch('/api/candidates');
             allCandidates = await response.json();
             renderCandidates(allCandidates);
         } catch (error) {

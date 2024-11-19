@@ -17,18 +17,13 @@
     <div class="wrapper">
         <div class="login__container _container">
             <div class="login__wrapper">
-                <div class="auth__switch">
-                    <!-- Добавлены id для элементов -->
-                    <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
-                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТОДАТЕЛЬ</a>
-                </div>
                 <div class="login__title">
                     <h1>АВТОРИЗАЦИЯ</h1>
                 </div>
                 <div class="login__form__wrapper">
                     <form action="#" class="login__form" id="loginForm">
-                        <label for="email_input">Почта</label>
-                        <input type="email" id="email_input" placeholder="kip@yandex.ru" required>
+                        <label for="email_input">Почта/Телефон</label>
+                        <input type="text" id="email_input" placeholder="kip@yandex.ru" required>
                         <label for="password_input">Пароль</label>
                         <input type="password" id="password_input" placeholder="***********" required>
                         <input type="button" value="ВОЙТИ" id="auth_btn">
@@ -49,39 +44,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     let roleId = 1; // 1 - студент, 2 - работодатель
 
-    // Получаем элементы переключателей
-    const studentSwitch = document.getElementById("studentSwitch");
-    const employerSwitch = document.getElementById("employerSwitch");
-
-    // Обработчик для переключения на "СТУДЕНТ"
-    studentSwitch.addEventListener("click", function(event) {
-        event.preventDefault();
-        roleId = 1;
-        studentSwitch.classList.add("active");
-        employerSwitch.classList.remove("active");
-    });
-
-    // Обработчик для переключения на "РАБОТАДАТЕЛЬ"
-    employerSwitch.addEventListener("click", function(event) {
-        event.preventDefault();
-        roleId = 2;
-        employerSwitch.classList.add("active");
-        studentSwitch.classList.remove("active");
-    });
-
     // Обработчик для кнопки авторизации
     document.getElementById("auth_btn").addEventListener("click", async function() {
         const email = document.getElementById("email_input").value.trim();
         const password = document.getElementById("password_input").value.trim();
-
-        // Валидация email
-        if (!email) {
-            alert("Поле электронной почты не должно быть пустым.");
-            return;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            alert("Пожалуйста, введите корректный адрес электронной почты.");
-            return;
-        }
 
         // Валидация пароля
         if (!password) {
@@ -98,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password, role_id: roleId }),
+                body: JSON.stringify({ email, password }),
                 credentials: 'include' // Передаем cookie вместе с запросом
             });
 

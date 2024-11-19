@@ -149,9 +149,8 @@
                     <h2>Проекты</h2>
                     {% for project in projects %}
                     <div class="project-item">
-                        <p><strong>{{ project.project_name }}</strong></p>
+                        <a href="{{ project.project_link }}" style="color:black;"><strong>{{ project.project_name }}</strong></a>
                         <p>{{ project.project_description }}</p>
-                        <a href="{{ project.project_link }}" style="color:black;">Ссылка</a>
                         <div class="skills-section">
                             <div class="skills-list">
                                 {% for skill in project_skills[project.id_project] %}

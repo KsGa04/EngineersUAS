@@ -9,7 +9,7 @@ function fillEditWorkModal() {
     const workId = selectedItem.dataset.workId;
 
     // Fetch details for the selected work experience
-    fetchWithAuth(`/api/works/${id_user}/${workId}`, {
+    fetch(`/api/works/${id_user}/${workId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -22,7 +22,7 @@ function fillEditWorkModal() {
     .then(work => {
         // Fetch necessary dropdown data from the API
         Promise.all([
-            fetchWithAuth('/api/organizations').then(res => res.json())
+            fetch('/api/organizations').then(res => res.json())
         ])
         .then(([organizations]) => {
             // Create organization options
@@ -84,7 +84,7 @@ function saveNewWorkExperience() {
             return;
         }
 
-        fetchWithAuth(`/api/works/${id_user}`, {
+        fetch(`/api/works/${id_user}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newWorkData)
@@ -132,7 +132,7 @@ function saveEditedWork(workId) {
             alert("Начальная дата не может быть после окончания");
             return;
         }
-        fetchWithAuth(`/api/works/${id_user}/${workId}`, {
+        fetch(`/api/works/${id_user}/${workId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
@@ -156,7 +156,7 @@ function deleteSelectedWorks() {
 
         selectedItems.forEach(item => {
             const workId = item.dataset.workId;
-            fetchWithAuth(`/universal/work?id_work=${workId}`, {
+            fetch(`/universal/work?id_work=${workId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -184,7 +184,7 @@ function loadExistingWorkExperience() {
             return;
         }
 
-        fetchWithAuth(`/api/works/${id_resume}`, {
+        fetch(`/api/works/${id_resume}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const workId = selectedItem.dataset.workId;
 
     // Fetch details for the selected work experience
-    fetchWithAuth(`/api/works/${id_user}/${workId}`, {
+    fetch(`/api/works/${id_user}/${workId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(work => {
         // Fetch necessary dropdown data from the API
         Promise.all([
-            fetchWithAuth('/api/organizations').then(res => res.json())
+            fetch('/api/organizations').then(res => res.json())
         ])
         .then(([organizations]) => {
             // Create organization options
@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loadOrganizationDropdown();
     });
     function loadOrganizationDropdown() {
-    fetchWithAuth('/api/organizations')
+    fetch('/api/organizations')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

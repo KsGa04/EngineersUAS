@@ -235,5 +235,5 @@ def post_repos():
 
 def check_repo_exists(repo_name, resume_id):
     # Function to check if a repository with the given name already exists for the resume_id
-    existing_repo = Projects.query.filter_by(project_name=repo_name, resume_id=resume_id).first()
+    existing_repo = Projects.query.filter_by(project_name=repo_name, id_resume=resume_id).first()
     return existing_repo is not None

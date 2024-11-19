@@ -10,10 +10,6 @@
     <div class="wrapper">
         <div class="regiser__container _container">
             <div class="regiser__wrapper">
-                <div class="auth__switch">
-                    <a href="#" class="student__switch active" id="studentSwitch">СТУДЕНТ</a>
-                    <a href="#" class="emploer__switch" id="employerSwitch">РАБОТОДАТЕЛЬ</a>
-                </div>
                 <div class="register__title">
                     <h1>РЕГИСТРАЦИЯ</h1>
                 </div>
@@ -21,6 +17,9 @@
                     <form action="" class="register__form" id="registerForm">
                         <label for="email_input">Почта</label>
                         <input type="email" id="email_input" placeholder="kip@yandex.ru">
+
+                        <label for="phone_input">Телефон</label>
+                        <input type="tel" id="phone_input" pattern="[0-9]{11}" placeholder="89601234567">
 
                         <label for="password_input">Пароль</label>
                         <input type="password" id="password_input" placeholder="***********">
@@ -31,10 +30,7 @@
                         <label for="surname_input">Фамилия</label>
                         <input type="text" id="surname_input" placeholder="Фамилия">
 
-                        <label for="middle_name_input">Отчество</label>
-                        <input type="text" id="middle_name_input" placeholder="Отчество">
-
-                        <label for="middle_name_input">Телеграм</label>
+                        <label for="tg_input">Телеграм</label>
                         <input type="text" id="tg_input" placeholder="KIP_support">
 
 
@@ -80,11 +76,11 @@
         const password = document.getElementById("password_input").value.trim();
         const firstName = document.getElementById("name_input").value.trim();
         const lastName = document.getElementById("surname_input").value.trim();
-        const middleName = document.getElementById("middle_name_input").value.trim();
+        const phone = document.getElementById("phone_input").value.trim();
         const tg = document.getElementById("tg_input").value.trim();
 
         // Валидация полей на пустоту
-        if (!email || !password || !firstName || !lastName || !middleName || !tg) {
+        if (!email || !password || !firstName || !lastName || !phone || !tg) {
             alert("Все поля обязательны для заполнения.");
             return;
         }
@@ -106,7 +102,7 @@
             password: password,
             first_name: firstName,
             last_name: lastName,
-            middle_name: middleName,
+            phone: phone,
             tg: tg,
             role_id: roleId
         };

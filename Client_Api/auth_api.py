@@ -1,7 +1,7 @@
 from datetime import timezone, datetime, timedelta, date
 
 from flask import Blueprint, request, jsonify, make_response
-from sqlalchemy import text
+from sqlalchemy import text, or_
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from Models import University, Group, Resume, Education, UserSocialNetwork
@@ -17,7 +17,7 @@ auth_api = Blueprint('auth_api', __name__)
 def register():
     data = request.json
 
-    required_fields = ['email', 'password', 'first_name', 'last_name', 'middle_name', 'role_id']
+    required_fields = ['email', 'password', 'first_name', 'last_name', 'phone', 'role_id']
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"{field} is required"}), 400
@@ -26,9 +26,8 @@ def register():
     password = data['password']
     first_name = data['first_name']
     last_name = data['last_name']
-    middle_name = data['middle_name']
     tg = data.get('tg')  # Optional field
-    phone = data.get('phone') # Optional
+    phone = data.get('phone')  # Optional
     role_id = data['role_id']
 
     if User.query.filter_by(email=email).first():
@@ -46,7 +45,6 @@ def register():
             last_name=last_name,
             email=email,
             password=hashed_password,
-            middle_name=middle_name,
             role_id=role_id,
             phone=phone,
         )
@@ -56,7 +54,6 @@ def register():
             last_name=last_name,
             email=email,
             password=hashed_password,
-            middle_name=middle_name,
             role_id=role_id
         )
     db.session.add(user)
@@ -89,21 +86,20 @@ def register():
 @auth_api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data.get('email')
+    emailOrphone = data.get('email')
     password = data.get('password')
-    role_id = data.get('role_id')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter(or_(User.email == emailOrphone, User.phone == emailOrphone)).first()
     bools = check_password_hash(user.password, password)
     if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Неверные учетные данные"}), 401
 
     # Генерация токена
-    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user, "login":email, "password": password,})
+    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user, "login": user.email, "password": password})
     resume = Resume.query.filter_by(id_user=user.id_user).first()
 
     # Настройка ответа с cookies
-    response = make_response(jsonify({"user_id": user.id_user,"login":email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None, "token": authToken}))
+    response = make_response(jsonify({"user_id": user.id_user, "login": user.email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None, "token": authToken}))
     set_access_cookies(response, authToken)
 
     return response, 200

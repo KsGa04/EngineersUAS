@@ -82,6 +82,10 @@ CORS(app, resources={r"/pattern_image_pdf/*": {"origins": "*"}})
 def index():
     return render_template('index.html')
 
+@app.route('/hr')
+def hr():
+    return render_template('hr_main.html')
+
 @app.route('/login')
 def login():
     return render_template('login.html')

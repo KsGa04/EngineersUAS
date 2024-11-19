@@ -43,7 +43,7 @@ document.querySelector(".cv__generation__create").addEventListener("click", func
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     const createApiUrl = `${proxyUrl}http://46.229.215.18:5000/pattern_image_pdf/${userId}/${resumePatternId}`;
 
-    fetchWithAuth(createApiUrl, {
+    fetch(createApiUrl, {
         method: 'GET',
         mode: 'cors', // Ensure CORS mode is set
         headers: {

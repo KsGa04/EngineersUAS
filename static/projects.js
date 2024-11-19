@@ -8,7 +8,7 @@
 
         selectedItems.forEach(item => {
             const projectId = item.dataset.projectId;
-            fetchWithAuth(`/universal/projects?id_project=${projectId}`, {
+            fetch(`/universal/projects?id_project=${projectId}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -45,7 +45,7 @@ function saveNewProject() {
             }
         }
 
-        fetchWithAuth(`/api/project/${id_resume}`, {
+        fetch(`/api/project/${id_resume}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProjectData)
@@ -70,7 +70,7 @@ function saveNewProject() {
             return;
         }
 
-        fetchWithAuth(`/api/projects/${id_resume}`, {
+        fetch(`/api/projects/${id_resume}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -117,9 +117,9 @@ function saveNewProject() {
             alert(`Ошибка загрузки списка проектов: ${error.message}`);
         });
     }
-function loadSkills() {
+async function loadSkills() {
         try {
-            const response = await fetchWithAuth('/api/skills');
+            const response = await fetch('/api/skills');
             const skills = await response.json();
             const skillsSelect = document.getElementById("project-skills");
             skillsSelect.innerHTML = skills.map(skill => `<option value="${skill.id_skill}">${skill.skill_name}</option>`).join('');
@@ -136,7 +136,7 @@ function editSelectedProject() {
     }
 
     const projectId = selectedItem.dataset.projectId;
-    fetchWithAuth(`/api/projects/${id_user}/${projectId}`, {
+    fetch(`/api/projects/${id_user}/${projectId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -178,7 +178,7 @@ function saveEditedProject(projectId) {
             project_link: document.getElementById("project-link").value
         };
 
-        fetchWithAuth(`/api/projects/${id_user}/${projectId}`, {
+        fetch(`/api/projects/${id_user}/${projectId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedData)
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const projectId = selectedItem.dataset.projectId;
-        fetchWithAuth(`/api/project/${id_user}/${projectId}`, {
+        fetch(`/api/project/${id_user}/${projectId}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Event listener to open the modal for adding/editing projects
-    document.querySelector(".projects__item a").addEventListener("click", function(event) {
+    document.querySelector(".projects__item textarea").addEventListener("click", () => {
         event.preventDefault();
         openModal("Проекты", `
             <div class="tab-container">

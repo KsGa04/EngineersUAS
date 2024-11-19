@@ -515,7 +515,7 @@ header {
     width:100%;
     color: #FFFFFF;
     background: linear-gradient(#5198DC, #7C95E7);
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Inter-Bold';
     padding: 12px 20px 12px 20px;
 }
@@ -605,7 +605,7 @@ header {
 .download__preview {
     border: 1px solid #5598DE;
     width: 230px;
-    height: 44px;
+    height: 50px;
     color: #5498DE;
     border-radius: 45px;
     display: flex;
@@ -613,6 +613,7 @@ header {
     font-size: 20px;
     justify-content: center;
     align-items: center;
+    text-align: center;
     
 }
 .cv__generation__preview__item__open {

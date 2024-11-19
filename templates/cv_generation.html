@@ -61,7 +61,7 @@
                                     <div class="cv__form__title">
                                         <h4>Проекты</h4>
                                     </div>
-                                    <a href="" class="cv__form__input"></a>
+                                    <textarea name="cv__projects" class="cv__form__input"></textarea>
                                 </div>
                                 <div class="skills__item cv__form__item">
                                     <div class="cv__form__title">
@@ -112,7 +112,7 @@
                     </div>
                     
                 </div>
-                <a href="" class="cv__generation__create">СОЗДАТЬ</a>
+                <a href="javascript:void(0)" id="downloadBtn" class="cv__generation__create">СОЗДАТЬ</a>
             </div>
         </div>
     </main>
@@ -143,7 +143,7 @@
             const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
             if (confirmLoad) {
                 const id_user = localStorage.getItem("id_resume");
-                fetchWithAuth(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
+                fetch(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' }
                 })
@@ -157,11 +157,93 @@
                     alert("Репозитории успешно загружены в проекты.");
                     console.log("Загруженные проекты:", data);
                     loadExistingProjects(); // Обновить список проектов
+                    updateCounts()
                 })
                 .catch(error => console.error("Ошибка загрузки репозиториев:", error));
             }
         }
+
     });
+    document.getElementById("downloadBtn").addEventListener("click", async function() {
+    const userId = localStorage.getItem("user_id");
+    const id_pattern = localStorage.getItem("id_pattern");
+    if (!userId) {
+        alert("Авторизация не выполнена.");
+        return;
+    }
+
+    const response = await fetch(`http://127.0.0.1:5000/pattern_image_pdf/${userId}/${id_pattern}`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert("Ошибка при создании PDF-файла.");
+    }
+    });
+    function updateCounts() {
+    const id_resume = localStorage.getItem("id_resume");
+    if (!id_resume) {
+        console.error("Resume ID is missing in localStorage.");
+        return;
+    }
+
+    // Запросы к API для образования, работы и проектов
+    Promise.all([
+        fetch(`/api/educations/${id_resume}`).then(response => response.json()),
+        fetch(`/api/works/${id_resume}`).then(response => response.json()),
+        fetch(`/api/projects/${id_resume}`).then(response => response.json())
+    ])
+    .then(([educations, works, projects]) => {
+        // Обновление текстовой области для образования
+        const educationTextarea = document.querySelector("[name='cv__bio']");
+        if (educationTextarea) {
+            if (educations.length > 0) {
+                educationTextarea.value = `${educations.length} записи об образовании`;
+            } else {
+                educationTextarea.value = "Образование пока не добавлено";
+            }
+        }
+
+        // Обновление текстовой области для работы
+        const workTextarea = document.querySelector("[name='cv__groupnumber']");
+        if (workTextarea) {
+            if (works.length > 0) {
+                workTextarea.value = `${works.length} записи об опыте работы`;
+            } else {
+                workTextarea.value = "Опыт работы пока не добавлен";
+            }
+        }
+
+        // Обновление текстовой области для проектов
+        const projectsTextarea = document.querySelector("[name='cv__projects']");
+        if (projectsTextarea) {
+            if (projects.length > 0) {
+                projectsTextarea.value = `${projects.length} записи о проектах`;
+            } else {
+                projectsTextarea.value = "Проекты пока не добавлены";
+            }
+        }
+    })
+    .catch(error => {
+        console.error("Ошибка при обновлении данных:", error);
+    });
+}
+
+// Вызов функции при загрузке страницы
+document.addEventListener("DOMContentLoaded", function () {
+    updateCounts();
+});
+
 </script>
 </body>
 </html>

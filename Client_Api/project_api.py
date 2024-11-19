@@ -123,7 +123,7 @@ def delete_social_link(id):
 @modal_api.route('/api/universities', methods=['GET'])
 def get_universities():
     universities = University.query.all()
-    university_list = [{"id": u.id_university, "name": u.full_name} for u in universities]
+    university_list = [{"id": u.id_university, "name": u.short_name} for u in universities]
     return jsonify(university_list)
 
 @modal_api.route('/api/organizations', methods=['GET'])

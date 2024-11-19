@@ -59,7 +59,7 @@
                     <h2 class="section-title">Проекты</h2>
                     {% for project in projects %}
                     <div class="project-item">
-                        <p><strong>{{ project.project_name }}</strong></p>
+                        <a href="{{ project.project_link }}" style="color:black;"><strong>{{ project.project_name }}</strong></a>
                         <p>{{ project.project_description }}</p>
                     </div>
                     {% endfor %}

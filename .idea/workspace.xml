@@ -4,22 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Подкорректированы некоторые баги">
-      <change afterPath="$PROJECT_DIR$/static/token.js" afterDir="false" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/generate_resume_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/cv_generator.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/cv_generator.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icon.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/icon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/find.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/find.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/pattern.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/pattern.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/projects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/token.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/work.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/work.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/analytics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/analytics.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/hr_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hr_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pattern_resume2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pattern_resume3.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume3.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userboard.html" afterDir="false" />
     </list>
@@ -67,43 +69,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
-    "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
-    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
-    "Python tests.Python tests for test_universal_api.test_client.executor": "Run",
-    "Python tests.Python tests for test_universal_api.test_get_roles.executor": "Run",
-    "Python tests.Python tests for test_universal_api.test_get_users.executor": "Debug",
-    "Python tests.Python tests for test_universal_api.test_invalid_table.executor": "Run",
-    "Python tests.Python tests in test_auth_api.py.executor": "Run",
-    "Python tests.Python tests in test_reg_api.py.executor": "Run",
-    "Python tests.Python tests in test_universal_api.py.executor": "Debug",
-    "Python.app (1).executor": "Run",
-    "Python.app.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/python_advanced",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_invalid_credentials.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_missing_required_fields.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_null_values.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_session_update_on_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_successful_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_successful_registration.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_token_expiry.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_auth_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_reg_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_universal_api.test_client.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_universal_api.test_get_roles.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests for test_universal_api.test_get_users.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.Python tests for test_universal_api.test_invalid_table.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_auth_api.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_reg_api.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_universal_api.py.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\templates" />
+      <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\static\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\assets\images" />
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\css" />
@@ -425,7 +427,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731328856760</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="корректировки багов и приветственных окон">
+      <option name="closed" value="true" />
+      <created>1731669401738</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1731669401738</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты">
+      <option name="closed" value="true" />
+      <created>1732021718430</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1732021718430</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -440,8 +458,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Изменение бд, создан README.md" />
-    <MESSAGE value="Изменение бд" />
     <MESSAGE value="Корректировки по API и генерации резюме" />
     <MESSAGE value="Шаблон резюме и наброски первой страницы" />
     <MESSAGE value="Изменение README.md" />
@@ -465,7 +481,9 @@
     <MESSAGE value="Добавлен тг в регистрацию и в личный кабинет, вниуз на каждой странице имеется тг ссылка на поддержку, правая иконка работает на переходы" />
     <MESSAGE value="Окно генерации резюме готово" />
     <MESSAGE value="Подкорректированы некоторые баги" />
-    <option name="LAST_COMMIT_MESSAGE" value="Подкорректированы некоторые баги" />
+    <MESSAGE value="корректировки багов и приветственных окон" />
+    <MESSAGE value="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
+    <option name="LAST_COMMIT_MESSAGE" value="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -519,6 +537,16 @@
           <url>file://$PROJECT_DIR$/Client_Api/generate_resume_api.py</url>
           <line>120</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/get_user_data.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Client_Api/auth_api.py</url>
+          <line>91</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
