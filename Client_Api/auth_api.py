@@ -28,6 +28,7 @@ def register():
     last_name = data['last_name']
     middle_name = data['middle_name']
     tg = data.get('tg')  # Optional field
+    phone = data.get('phone') # Optional
     role_id = data['role_id']
 
     if User.query.filter_by(email=email).first():
@@ -39,14 +40,25 @@ def register():
     # Хэшируем пароль перед сохранением
     hashed_password = generate_password_hash(password)
 
-    user = User(
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
-        password=hashed_password,
-        middle_name=middle_name,
-        role_id=role_id
-    )
+    if phone:
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=hashed_password,
+            middle_name=middle_name,
+            role_id=role_id,
+            phone=phone,
+        )
+    else:
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=hashed_password,
+            middle_name=middle_name,
+            role_id=role_id
+        )
     db.session.add(user)
     db.session.flush()  # Генерирует id для пользователя
 
