@@ -126,6 +126,13 @@ def get_universities():
     university_list = [{"id": u.id_university, "name": u.short_name} for u in universities]
     return jsonify(university_list)
 
+@modal_api.route('/api/skills', methods=['GET'])
+def get_skills():
+    universities = Skills.query.all()
+    university_list = [{"id": u.id_skill, "name": u.skill_name} for u in universities]
+    return jsonify(university_list)
+
+
 @modal_api.route('/api/organizations', methods=['GET'])
 def get_organization():
     organizations = Organization.query.all()

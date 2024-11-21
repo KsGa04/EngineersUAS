@@ -67,10 +67,8 @@
                                     <div class="cv__form__title">
                                         <h4>Навыки</h4>
                                     </div>
-                                    <select name="select_skills" id="skills" class="cv__form__input" placeholder="Выбрать из списка"> 
-                                        <option value="value1" >Python</option>
-                                        <option value="value2" >C++</option>
-                                        <option value="value3">Autocad</option>
+                                    <select name="select_skills" id="skills" class="cv__form__input" multiple>
+
                                     </select>
                                 </div>
                                 <div class="links__item cv__form__item">
@@ -137,6 +135,7 @@
 <script src="/static/work.js"></script>
 <script src="/static/projects.js"></script>
     <script src="/static/pattern.js"></script>
+    <script src="/static/skills.js"></script>
 <script>
     document.getElementById("cv__links").addEventListener("blur", function() {
         if (this.value.includes("github.com")) {

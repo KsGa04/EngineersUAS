@@ -196,6 +196,20 @@ function saveEditedProject(projectId) {
     }
 document.addEventListener("DOMContentLoaded", function() {
     // Function to open a modal
+    // Function to load available skills
+    async function loadSkills() {
+        try {
+            const response = await fetch('/api/skills');
+            const skills = await response.json();
+            const skillsSelect = document.getElementById("project-skills");
+            skillsSelect.innerHTML = skills
+                .map(skill => `<option value="${skill.id_skill}">${skill.skill_name}</option>`)
+                .join('');
+        } catch (error) {
+            console.error("Error loading skills:", error);
+        }
+    }
+
     function openModal(title, content, onSave) {
         const modalOverlay = document.getElementById("modal-overlay");
         const modalContent = document.getElementById("modal-content");

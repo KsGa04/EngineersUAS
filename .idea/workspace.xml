@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/auth_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/auth_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/find.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/find.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/pattern.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/pattern.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/projects.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/token.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/work.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/work.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pattern_resume1.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pattern_resume2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pattern_resume3.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pattern_resume3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/userboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userboard.html" afterDir="false" />
-    </list>
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +26,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="MIXED" />
+    <option name="RESET_MODE" value="SOFT" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -443,7 +423,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732021718430</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты">
+      <option name="closed" value="true" />
+      <created>1732023084451</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1732023084451</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
