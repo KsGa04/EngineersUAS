@@ -638,3 +638,58 @@ def update_project(id_user, id_project):
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": f"Failed to update project: {str(e)}"}), 500
+    
+
+@modal_api.route('/api/getall/<int:id_user>', methods=['get'])
+def get_all(id_user):
+    id_resume = Resume.query.filter_by(id_user=id_user).first().id_resume
+
+    projects = Projects.query.filter_by(id_resume=id_resume).all()
+    project_list = []
+    for project in projects:
+        project_data = {
+            'id_project': project.id_project,
+            'project_name': project.project_name,
+            'project_description': project.project_description,
+            'project_link': project.project_link
+        }
+        project_list.append(project_data)
+
+    works = Work.query.filter_by(id_resume=id_resume).all()
+    work_list = []
+    for work in works:
+        organization_names = [org.organization_name for org in work.organizations]
+
+        work_data = {
+            'id_work': work.id_work,
+            'organizations': organization_names,
+            'position': work.position,
+            'start_date': work.start_date.strftime('%Y-%m-%d') if work.start_date else None,
+            'end_date': work.end_date.strftime('%Y-%m-%d') if work.end_date else None,
+        }
+        work_list.append(work_data)
+
+    educations = Education.query.filter_by(id_resume=id_resume).all()
+    education_list = []
+    for edu in educations:
+        university_name = edu.university.full_name if edu.university else None
+        degree_name = edu.degree.degree_name if edu.degree else None
+        group_name = Group.query.filter_by(id_group=edu.group_number).first().group_name if edu.group_number else None
+
+        education_data = {
+            'id_education': edu.id_education,
+            'university_name': university_name,
+            'degree_name': degree_name,
+            'group_name': group_name,
+            'start_date': edu.start_date.strftime('%Y-%m-%d') if edu.start_date else None,
+            'end_date': edu.end_date.strftime('%Y-%m-%d') if edu.end_date else None
+        }
+        education_list.append(education_data)
+
+    response = {
+        'projects': project_list,
+        'works': work_list,
+        'educations': education_list,
+    }
+
+    return jsonify(response), 200
