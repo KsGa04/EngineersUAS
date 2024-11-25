@@ -91,7 +91,8 @@ function loadExistingEducations() {
         direction: document.getElementById("direction").value,
         group: document.getElementById("group").value,
         start_date: document.getElementById("start-year").value,
-        end_date: document.getElementById("end-year").value
+        end_date: document.getElementById("end-year").value,
+        completed: document.getElementById("completed").value
     };
 
     // Validate required fields
@@ -203,6 +204,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 <input type="date" id="start-year">
                 <label for="end-year">Окончание обучения</label>
                 <input type="date" id="end-year">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="completed" name="completed" id="completed">
+                    <label for="completed">Выпускник</label>
+                </div>
                 <button onclick="saveNewEducation()">Сохранить</button>
             </div>
         `, loadExistingEducations());
@@ -305,9 +310,13 @@ function fillEditEducationModal() {
                     <label for="group">Группа</label>
                     <select id="group">${groupOptions}</select>
                     <label for="start-year">Год начала</label>
-                    <input type="date" id="start-year" value="${new Date(education.start_date).toISOString().split('T')[0]}">
+                    <input type="number" id="start-year" value="${new Date(education.start_date).getFullYear()}">
                     <label for="end-year">Год окончания</label>
-                    <input type="date" id="end-year" value="${new Date(education.end_date).toISOString().split('T')[0]}">
+                    <input type="number" id="end-year" value="${new Date(education.end_date).getFullYear()}">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="completed" name="completed">
+                        <label for="completed">Выпускник</label>
+                    </div>
                     <button onclick="saveEditedEducation(${educationId})">Сохранить</button>
                 </div>
             `);
@@ -331,7 +340,9 @@ function saveEditedEducation(educationId) {
         direction: document.getElementById("direction").value,
         group: document.getElementById("group").value,
         start_date: document.getElementById("start-year").value,
-        end_date: document.getElementById("end-year").value
+        end_date: document.getElementById("end-year").value,
+        completed: document.getElementById("completed").value
+
     };
     // Validate required fields
     for (const [key, value] of Object.entries(updatedData)) {

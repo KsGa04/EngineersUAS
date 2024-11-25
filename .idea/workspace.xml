@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки навыкам в генерации резюме">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/modal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,35 +56,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_invalid_credentials.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_missing_required_fields.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_null_values.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_session_update_on_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_login.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_successful_registration.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_token_expiry.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_auth_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_reg_api.test_user_already_exists.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_client.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_get_roles.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_get_users.executor&quot;: &quot;Debug&quot;,
-    &quot;Python tests.Python tests for test_universal_api.test_invalid_table.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_auth_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_reg_api.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_universal_api.py.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.app (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.app.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/PycharmProjects/EngineersUAS&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python tests.Python tests for test_auth_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_invalid_credentials.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_email_or_password.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_missing_required_fields.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_null_values.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_session_update_on_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_login.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_successful_registration.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_token_expiry.executor": "Run",
+    "Python tests.Python tests for test_auth_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_reg_api.test_user_already_exists.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_client.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_roles.executor": "Run",
+    "Python tests.Python tests for test_universal_api.test_get_users.executor": "Debug",
+    "Python tests.Python tests for test_universal_api.test_invalid_table.executor": "Run",
+    "Python tests.Python tests in test_auth_api.py.executor": "Run",
+    "Python tests.Python tests in test_reg_api.py.executor": "Run",
+    "Python tests.Python tests in test_universal_api.py.executor": "Debug",
+    "Python.app (1).executor": "Run",
+    "Python.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/Kiptg",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PC\PycharmProjects\EngineersUAS\Client_Server\static\images" />
@@ -431,7 +438,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732023084451</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Корректировки навыкам в генерации резюме">
+      <option name="closed" value="true" />
+      <created>1732188635057</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1732188635057</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -446,7 +461,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Корректировки по API и генерации резюме" />
     <MESSAGE value="Шаблон резюме и наброски первой страницы" />
     <MESSAGE value="Изменение README.md" />
     <MESSAGE value="Изменение swagger.yml" />
@@ -471,7 +485,8 @@
     <MESSAGE value="Подкорректированы некоторые баги" />
     <MESSAGE value="корректировки багов и приветственных окон" />
     <MESSAGE value="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
-    <option name="LAST_COMMIT_MESSAGE" value="Корректировки по регистрации и авторизации, в шаблонах резюме подкорректированы ссылки на проекты" />
+    <MESSAGE value="Корректировки навыкам в генерации резюме" />
+    <option name="LAST_COMMIT_MESSAGE" value="Корректировки навыкам в генерации резюме" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -493,7 +508,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
-          <line>233</line>
+          <line>240</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -513,12 +528,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
-          <line>491</line>
+          <line>499</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Client_Api/project_api.py</url>
-          <line>606</line>
+          <line>614</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

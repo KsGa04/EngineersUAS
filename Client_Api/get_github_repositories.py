@@ -182,7 +182,7 @@ def add_project(repo_data, resume_id):
 def post_repos():
     github_url = request.args.get('github_url')
     resume_id = request.args.get('id_resume')
-    token = request.args.get('token', "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")
+    token = request.args.get('token', "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")
 
     if not github_url or not resume_id:
         return jsonify({"error": "GitHub URL и resume_id обязательны"}), 400

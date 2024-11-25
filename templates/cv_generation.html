@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/cv_generator.css">
+    <link rel="stylesheet" href="static/css/modal.css">
     <script src="/static/token.js"></script>
 </head>
 <body>
@@ -137,32 +138,49 @@
     <script src="/static/pattern.js"></script>
     <script src="/static/skills.js"></script>
 <script>
-    document.getElementById("cv__links").addEventListener("blur", function() {
-        if (this.value.includes("github.com")) {
-            const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
-            if (confirmLoad) {
-                const id_user = localStorage.getItem("id_resume");
-                fetch(`/api/github/add_repos?github_url=${encodeURIComponent(this.value)}&id_resume=${id_user}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Ошибка HTTP: ${response.status} - ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert("Репозитории успешно загружены в проекты.");
-                    console.log("Загруженные проекты:", data);
-                    loadExistingProjects(); // Обновить список проектов
-                    updateCounts()
-                })
-                .catch(error => console.error("Ошибка загрузки репозиториев:", error));
-            }
+    document.getElementById("cv__links").addEventListener("blur", function () {
+    const githubUrl = this.value.trim();
+
+    if (githubUrl.includes("github.com")) {
+        const loadedRepos = JSON.parse(localStorage.getItem("loadedGithubRepos")) || {};
+
+        // Проверяем, был ли уже загружен этот URL
+        if (loadedRepos[githubUrl]) {
+            console.log("Репозитории с этого URL уже загружены.");
+            return; // Если уже подгружено, ничего не делаем
         }
 
-    });
+        const confirmLoad = confirm("Подгрузить репозитории из GitHub?");
+        if (confirmLoad) {
+            const id_user = localStorage.getItem("id_resume");
+            fetch(`/api/github/add_repos?github_url=${encodeURIComponent(githubUrl)}&id_resume=${id_user}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert("Репозитории успешно загружены в проекты.");
+                console.log("Загруженные проекты:", data);
+
+                // Обновляем список проектов
+                loadExistingProjects();
+                updateCounts();
+
+                // Сохраняем в localStorage, что репозитории с этого URL уже загружены
+                loadedRepos[githubUrl] = true;
+                localStorage.setItem("loadedGithubRepos", JSON.stringify(loadedRepos));
+            })
+            .catch(error => {
+                console.error("Ошибка загрузки репозиториев:", error);
+            });
+        }
+    }
+});
     document.getElementById("downloadBtn").addEventListener("click", async function() {
     const userId = localStorage.getItem("user_id");
     const id_pattern = localStorage.getItem("id_pattern");
@@ -237,10 +255,23 @@
         console.error("Ошибка при обновлении данных:", error);
     });
 }
+function clearOldGithubRepos(days = 30) {
+    const loadedRepos = JSON.parse(localStorage.getItem("loadedGithubRepos")) || {};
+    const currentTime = new Date().getTime();
+    const cutoffTime = days * 24 * 60 * 60 * 1000;
 
+    for (const [url, timestamp] of Object.entries(loadedRepos)) {
+        if (currentTime - timestamp > cutoffTime) {
+            delete loadedRepos[url];
+        }
+    }
+
+    localStorage.setItem("loadedGithubRepos", JSON.stringify(loadedRepos));
+}
 // Вызов функции при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
     updateCounts();
+    clearOldGithubRepos();
 });
 
 </script>

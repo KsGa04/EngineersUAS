@@ -329,7 +329,7 @@ def add_education(id_user):
     data = request.get_json()
 
     # Check that all required fields are provided
-    required_fields = ['university', 'degree', 'direction', 'group', 'start_date', 'end_date']
+    required_fields = ['university', 'degree', 'direction', 'group', 'start_date', 'end_date', 'completed']
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"'{field}' is required in the request data"}), 400
@@ -341,19 +341,20 @@ def add_education(id_user):
             id_degree=int(data['degree']),
             id_direction=int(data['direction']),
             group_number=int(data['group']),
-            start_date=datetime.strptime(data['start_date'], '%Y-%m-%d'),
-            end_date=datetime.strptime(data['end_date'], '%Y-%m-%d')
+            start_date=datetime.strptime(data['start_date'], '%Y'),
+            end_date=datetime.strptime(data['end_date'], '%Y'),
+            status=data['completed']
         )
 
         db.session.add(new_education)
         db.session.commit()
-        return jsonify({"msg": "Education added successfully", "id_education": new_education.id_education}), 201
+        return jsonify({"msg": "Образование успешно добавлено", "id_education": new_education.id_education}), 201
 
     except ValueError as ve:
-        return jsonify({"msg": "Invalid date format. Use YYYY-MM-DD."}), 400
+        return jsonify({"msg": "Неправильный формат. Use YYYY-MM-DD."}), 400
     except Exception as e:
         db.session.rollback()
-        return jsonify({"msg": f"Failed to add education: {str(e)}"}), 500
+        return jsonify({"msg": f"Ошибка добавления образования: {str(e)}"}), 500
 
 
 @modal_api.route('/api/education/<int:id_user>/<int:id_education>', methods=['PUT'])
