@@ -2,124 +2,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     const candidatesContainer = document.querySelector('.candidates__items');
     const searchInput = document.getElementById('searchInput');
     const showButton = document.querySelector('.filter__button');
+    const paginationContainer = document.querySelector('.pagination');
 
     const regionSelect = document.getElementById('regionSelect');
     const directionSelect = document.getElementById('directionSelect');
     const universitySelect = document.getElementById('universitySelect');
     const skillsSelect = document.getElementById('skillsSelect');
-
-    let allCandidates = [];
-    try {
-        // Fetch data from the API endpoint
-        const response = await fetch('/api/candidates');
-        allCandidates = await response.json();
-
-        // Initial render of all candidates
-        renderCandidates(allCandidates);
-
-        // Attach input event listener for search functionality
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            const filteredCandidates = allCandidates.filter(candidate => {
-                const fullName = `${candidate.first_name} ${candidate.last_name} ${candidate.middle_name}`.toLowerCase();
-                const universityName = (candidate.resumes[0]?.educations[0]?.university_name || '').toLowerCase();
-                const directionName = (candidate.resumes[0]?.educations[0]?.direction_name || '').toLowerCase();
-                const skills = candidate.resumes[0]?.skills.map(skill => skill.skill_name.toLowerCase()).join(' ') || '';
-                const city = (candidate.resumes[0]?.educations[0]?.city || '').toLowerCase();
-                return fullName.includes(query) || universityName.includes(query) || directionName.includes(query) || skills.includes(query) || city.includes(query);
+    let currentPage = 1;
+    let totalPages = 1;
+    console.log(skillsSelect)
+    // Load and render candidates
+    async function loadCandidates(page = 1) {
+        try {
+            const queryParams = new URLSearchParams({
+                page: page,
+                limit: 10,
+                search: searchInput.value || '',
+                region: regionSelect.value || '',
+                university: universitySelect.value || '',
+                direction: directionSelect.value || '',
+                skill: document.getElementById("skillsSelect").value,
             });
 
-            // Render filtered candidates
-            renderCandidates(filteredCandidates);
-        });
-    } catch (error) {
-        console.error('Ошибка загрузки данных:', error);
-        candidatesContainer.innerHTML = '<p>Ошибка загрузки данных кандидатов</p>';
-    }
-    try {
-        // Fetch data for the select options
-        const [regionResponse, universityResponse, directionResponse, skillsResponse] = await Promise.all([
-            fetch('/api/regions'),
-            fetch('/api/universities'),
-            fetch('/api/directions'),
-            fetch('/get/skills')
-        ]);
+            const response = await fetch(`/api/candidates?${queryParams.toString()}`);
+            const data = await response.json();
 
-        const regions = await regionResponse.json();
-        const universities = await universityResponse.json();
-        const directions = await directionResponse.json();
-        const skills = await skillsResponse.json();
-
-        console.log('Regions:', regions);
-        console.log('Universities:', universities);
-        console.log('Directions:', directions);
-        console.log('Skills:', skills);
-
-        // Populate select elements
-        populateSelect(regionSelect, regions);
-        populateSelect(universitySelect, universities, 'id', 'name');
-        populateSelect(directionSelect, directions, 'id', 'name');
-        populateSelect(skillsSelect, skills, 'id', 'skill_name');
-
-        // Initial load of candidates
-        await loadCandidates();
-
-    } catch (error) {
-        console.error('Ошибка загрузки данных для фильтров:', error);
-    }
-
-    // Populate select helper function
-    function populateSelect(selectElement, data, valueKey = '', textKey = '') {
-        data.forEach(item => {
-            const option = document.createElement('option');
-            option.value = valueKey ? item[valueKey] : item;
-            option.textContent = textKey ? item[textKey] : item;
-            selectElement.appendChild(option);
-        });
-    }
-
-    // Load candidates function
-    async function loadCandidates() {
-        try {
-            const response = await fetch('/api/candidates');
-            allCandidates = await response.json();
-            renderCandidates(allCandidates);
+            totalPages = data.total_pages || 1;
+            renderCandidates(data.candidates || []);
+            updatePagination();
         } catch (error) {
             console.error('Ошибка загрузки данных кандидатов:', error);
             candidatesContainer.innerHTML = '<p>Ошибка загрузки данных кандидатов</p>';
         }
     }
 
-    // Apply filters when the 'Показать' button is clicked
-    showButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent form submission
-
-        const selectedRegion = regionSelect.value.toLowerCase();
-        const selectedDirection = directionSelect.value.toLowerCase();
-        const selectedSkill = skillsSelect.value.toLowerCase();
-        const selectedUniversity = universitySelect.value.toLowerCase();
-
-        const filteredCandidates = allCandidates.filter(candidate => {
-            const candidateRegion = candidate.address?.toLowerCase() || '';
-            const candidateEducation = candidate.resumes[0]?.educations[0] || {};
-            const candidateUniversity = candidateEducation.university_name?.toLowerCase() || '';
-            const candidateDirection = candidateEducation.direction_name?.toLowerCase() || '';
-            const candidateSkills = (candidate.resumes[0]?.skills || []).map(skill => skill.skill_name.toLowerCase());
-
-            const matchesRegion = selectedRegion ? candidateRegion.includes(selectedRegion) : true;
-            const matchesUniversity = selectedUniversity ? candidateUniversity.includes(selectedUniversity) : true;
-            const matchesDirection = selectedDirection ? candidateDirection.includes(selectedDirection) : true;
-            const matchesSkill = selectedSkill ? candidateSkills.includes(selectedSkill) : true;
-
-            return matchesRegion && matchesUniversity && matchesDirection && matchesSkill && matchesAge;
-        });
-
-        renderCandidates(filteredCandidates);
-    });
-
-    // Render function for candidates
+    // Render candidates
     function renderCandidates(candidates) {
         candidatesContainer.innerHTML = '';
+
+        if (candidates.length === 0) {
+            candidatesContainer.innerHTML = '<p>Кандидаты не найдены.</p>';
+            return;
+        }
 
         candidates.forEach(candidate => {
             const resumes = candidate.resumes || [];
@@ -145,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="candidate__skills__items">${skillsList}</div>
                 </div>
                 <div class="candidate__item__photo">
-                    <img src="${candidate.profile_photo || '/assets/images/default_avatar.jpg'}" alt="Фото кандидата">
+                    <img src="${candidate.profile_photo || 'static/assets/images/user__avatar.png'}" alt="Фото кандидата">
                 </div>
             `;
 
@@ -153,15 +77,74 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    function calculateAge(birthDate) {
-        if (!birthDate) return null;
-        const birth = new Date(birthDate);
-        const now = new Date();
-        let age = now.getFullYear() - birth.getFullYear();
-        const monthDiff = now.getMonth() - birth.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birth.getDate())) {
-            age--;
+    // Update pagination
+    function updatePagination() {
+        paginationContainer.innerHTML = '';
+
+        for (let page = 1; page <= totalPages; page++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = page;
+            pageButton.classList.add('pagination__button');
+            if (page === currentPage) {
+                pageButton.classList.add('active');
+            }
+            pageButton.addEventListener('click', () => {
+                currentPage = page;
+                loadCandidates(currentPage);
+            });
+            paginationContainer.appendChild(pageButton);
         }
-        return age;
     }
+
+    // Populate select options
+    async function populateFilters() {
+        try {
+            const [regionResponse, universityResponse, directionResponse, skillsResponse] = await Promise.all([
+                fetch('/api/regions'),
+                fetch('/api/universities'),
+                fetch('/api/directions'),
+                fetch('/get/skills')
+            ]);
+
+            const regions = await regionResponse.json();
+            const universities = await universityResponse.json();
+            const directions = await directionResponse.json();
+            const skills = await skillsResponse.json();
+
+            populateSelect(regionSelect, regions);
+            populateSelect(universitySelect, universities, 'id', 'name');
+            populateSelect(directionSelect, directions, 'id', 'name');
+            populateSelect(skillsSelect, skills, 'id', 'skill_name');
+        } catch (error) {
+            console.error('Ошибка загрузки данных для фильтров:', error);
+        }
+    }
+
+    function populateSelect(selectElement, data, valueKey = '', textKey = '') {
+        selectElement.innerHTML = '<option value="">Все</option>';
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = textKey ? item[textKey] : item; // Default to textKey if valueKey is not set
+            option.textContent = textKey ? item[textKey] : item;
+            selectElement.appendChild(option);
+        });
+    }
+
+
+    // Event listeners
+    searchInput.addEventListener('input', (event) => {
+        event.preventDefault();
+        currentPage = 1;
+        loadCandidates(currentPage);
+    });
+
+    showButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        currentPage = 1;
+        loadCandidates(currentPage);
+    });
+
+    // Initial load
+    await populateFilters();
+    loadCandidates(currentPage);
 });

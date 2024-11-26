@@ -130,7 +130,7 @@
         </div>
 
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="/static/icon.js"></script>
 <script src="/static/education.js"></script>
 <script src="/static/work.js"></script>
@@ -181,32 +181,47 @@
         }
     }
 });
-    document.getElementById("downloadBtn").addEventListener("click", async function() {
-    const userId = localStorage.getItem("user_id");
-    const id_pattern = localStorage.getItem("id_pattern");
-    if (!userId) {
-        alert("Авторизация не выполнена.");
-        return;
-    }
+    document.getElementById("downloadBtn").addEventListener("click", async function () {
+            const userId = localStorage.getItem("user_id");
+            const idPattern = localStorage.getItem("id_pattern");
 
-    const response = await fetch(`http://127.0.0.1:5000/pattern_image_pdf/${userId}/${id_pattern}`, {
-        method: 'GET',
-        credentials: 'include'
-    });
+            if (!userId || !idPattern) {
+                alert("Ошибка: Данные пользователя или шаблона не найдены.");
+                return;
+            }
 
-    if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "resume.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    } else {
-        alert("Ошибка при создании PDF-файла.");
-    }
-    });
+            try {
+                // Получаем HTML с сервера
+                const response = await fetch(`/pattern${idPattern}/${userId}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    const htmlContent = await response.text(); // Получаем HTML как текст
+
+                    // Создаем временный элемент для вставки HTML
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = htmlContent;
+
+                    // Конвертируем HTML в PDF с помощью html2pdf.js
+                    const options = {
+                        margin: 0, // Поля
+                        filename: "resume.pdf", // Имя файла
+                        html2canvas: { scale: 2 }, // Качество скриншота
+                        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }, // Формат PDF
+                    };
+
+                    html2pdf().set(options).from(tempDiv).save();
+
+                } else {
+                    alert("Ошибка получения HTML для резюме.");
+                }
+            } catch (error) {
+                console.error("Ошибка при запросе API:", error);
+                alert("Произошла ошибка при генерации PDF.");
+            }
+        });
     function updateCounts() {
     const id_resume = localStorage.getItem("id_resume");
     if (!id_resume) {

@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки навыкам в генерации резюме">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/get_github_repositories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client_Api/project_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client_Api/project_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/modal.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/education.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/education.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cv_generation.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cv_generation.html" afterDir="false" />
-    </list>
+    <list default="true" id="71be5ab0-d19f-4726-ba82-88b4eb636b1c" name="Changes" comment="Корректировки навыкам в генерации резюме" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +74,7 @@
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/PC/PycharmProjects/Kiptg",
+    "last_opened_file_path": "C:/Users/PC/PycharmProjects/EngineersUAS",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>

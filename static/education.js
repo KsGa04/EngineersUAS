@@ -90,8 +90,8 @@ function loadExistingEducations() {
         degree: document.getElementById("degree").value,
         direction: document.getElementById("direction").value,
         group: document.getElementById("group").value,
-        start_date: document.getElementById("start-year").value,
-        end_date: document.getElementById("end-year").value,
+        start_date: `${document.getElementById("start-year").value}-01-01`,
+        end_date: `${document.getElementById("end-year").value}-12-31`,
         completed: document.getElementById("completed").value
     };
 
@@ -198,12 +198,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 <select id="university"><option>Loading...</option></select>
                 <label for="direction">Направления</label>
                 <select id="direction"><option>Select a university</option></select>
-                <label for="group">Группы</label>
+                <label for="group">Курс</label>
                 <select id="group"><option>Select a direction</option></select>
                 <label for="start-year">Начало обучения</label>
-                <input type="date" id="start-year">
+                <input type="number" id="start-year" min="1990" max="2030">
                 <label for="end-year">Окончание обучения</label>
-                <input type="date" id="end-year">
+                <input type="number" id="end-year" min="1990" max="2030">
                 <div class="checkbox-container">
                     <input type="checkbox" id="completed" name="completed" id="completed">
                     <label for="completed">Выпускник</label>
@@ -298,7 +298,8 @@ function fillEditEducationModal() {
             const groupOptions = groups.map(grp =>
                 `<option value="${grp.id}" ${grp.id === education.group_id ? 'selected' : ''}>${grp.name}</option>`
             ).join('');
-
+            const startYear = new Date(education.start_date).getFullYear();
+            const endYear = new Date(education.end_date).getFullYear();
             openModal("Edit Education", `
                 <div class="tab-view">
                     <label for="degree">Уровень образования</label>
@@ -307,12 +308,12 @@ function fillEditEducationModal() {
                     <select id="university">${universityOptions}</select>
                     <label for="direction">Направление</label>
                     <select id="direction">${directionOptions}</select>
-                    <label for="group">Группа</label>
+                    <label for="group">Курс</label>
                     <select id="group">${groupOptions}</select>
                     <label for="start-year">Год начала</label>
-                    <input type="number" id="start-year" value="${new Date(education.start_date).getFullYear()}">
+                    <input type="number" id="start-year" value="${new Date(education.start_date).getFullYear()}" min="1990" max="2030">
                     <label for="end-year">Год окончания</label>
-                    <input type="number" id="end-year" value="${new Date(education.end_date).getFullYear()}">
+                    <input type="number" id="end-year" value="${new Date(education.end_date).getFullYear()}" min="1990" max="2030">
                     <div class="checkbox-container">
                         <input type="checkbox" id="completed" name="completed">
                         <label for="completed">Выпускник</label>

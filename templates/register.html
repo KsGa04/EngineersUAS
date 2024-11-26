@@ -24,6 +24,9 @@
                         <label for="password_input">Пароль</label>
                         <input type="password" id="password_input" placeholder="***********">
 
+                        <label for="password_again_input">Повторите пароль</label>
+                        <input type="password" id="password_again_input" placeholder="***********">
+
                         <label for="name_input">Имя</label>
                         <input type="text" id="name_input" placeholder="Имя">
 
@@ -53,34 +56,19 @@
 
     let roleId = 1; // 1 - студент, 2 - работодатель
 
-    // Обработчик для переключения на "СТУДЕНТ"
-    studentSwitch.addEventListener("click", function(event) {
-        event.preventDefault();
-        roleId = 1;
-        studentSwitch.classList.add("active");
-        employerSwitch.classList.remove("active");
-    });
-
-    // Обработчик для переключения на "РАБОТОДАТЕЛЬ"
-    employerSwitch.addEventListener("click", function(event) {
-        event.preventDefault();
-        roleId = 2;
-        employerSwitch.classList.add("active");
-        studentSwitch.classList.remove("active");
-    });
-
     async function handleFormSubmit(event) {
         event.preventDefault();
 
         const email = document.getElementById("email_input").value.trim();
         const password = document.getElementById("password_input").value.trim();
+        const passwordAgain = document.getElementById("password_again_input").value.trim();
         const firstName = document.getElementById("name_input").value.trim();
         const lastName = document.getElementById("surname_input").value.trim();
         const phone = document.getElementById("phone_input").value.trim();
         const tg = document.getElementById("tg_input").value.trim();
 
         // Валидация полей на пустоту
-        if (!email || !password || !firstName || !lastName || !phone || !tg) {
+        if (!email || !password  || !passwordAgain || !firstName || !lastName || !phone || !tg) {
             alert("Все поля обязательны для заполнения.");
             return;
         }
@@ -94,6 +82,11 @@
         // Валидация пароля
         if (password.length < 8) {
             alert("Пароль должен содержать не менее 8 символов.");
+            return;
+        }
+        // Проверка совпадения паролей
+        if (password !== passwordAgain) {
+            alert("Пароли не совпадают. Пожалуйста, проверьте и повторите попытку.");
             return;
         }
 

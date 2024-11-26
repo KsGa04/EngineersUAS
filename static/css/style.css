@@ -1187,3 +1187,57 @@ select[multiple]:focus {
     border: 2px solid #5198DC; /* Highlight border when focused */
     box-shadow: 0 0 8px rgba(81, 144, 220, 0.5); /* Add a glowing effect */
 }
+select option {
+    background-color: #438CD8; /* Individual option background */
+    color: #FFFFFF; /* Option text color */
+    padding: 5px; /* Spacing inside options */
+    margin: 2px 0; /* Spacing between options */
+    border-radius: 8px; /* Rounded corners for options */
+}
+/* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 5px; /* Space between pagination items */
+}
+
+/* Individual page buttons */
+.pagination .pagination__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    font-family: 'Inter-Bold';
+    font-size: 18px;
+    color: #5190DC;
+    background: #FFFFFF;
+    border: 1px solid #5190DC;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+/* Active page button */
+.pagination .pagination__button.active {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #5198DC, #7C95E7);
+    box-shadow: 0 4px 10px rgba(81, 144, 220, 0.5);
+}
+
+/* Hover effect for page buttons */
+.pagination .pagination__button:hover {
+    background: linear-gradient(135deg, #5198DC, #7C95E7);
+    color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(81, 144, 220, 0.3);
+}
+
+/* Disabled page button */
+.pagination .pagination__button.disabled {
+    color: #999;
+    background: #EEE;
+    cursor: not-allowed;
+    border: 1px solid #CCC;
+}

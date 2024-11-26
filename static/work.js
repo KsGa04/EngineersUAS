@@ -37,9 +37,9 @@ function fillEditWorkModal() {
                 <label for="position">Должность</label>
                 <input id="position" type="text" value="${work.position}">
                 <label for="start-date">Начало работы</label>
-                <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
+                <input id="start-date" type="number" value="${new Date(work.start_date).getFullYear()}" min="1990" max="2030">
                 <label for="end-date">Окончание работы</label>
-                <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
+                <input id="end-date" type="number" value="${new Date(work.end_date).getFullYear()}"  min="1990" max="2030">
                 <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities" value="${work.responsibilities || ''}">
                 <button onclick="saveEditedWork(${workId})">Сохранить</button>
@@ -65,8 +65,8 @@ function saveNewWorkExperience() {
         const newWorkData = {
             organization: document.getElementById("organization").value,
             position: document.getElementById("position").value,
-            start_date: document.getElementById("start-date").value,
-            end_date: document.getElementById("end-date").value,
+            start_date: `${document.getElementById("start-date").value}-01-01`,
+            end_date: `${document.getElementById("end-date").value}-12-31`,
             responsibilities: document.getElementById("responsibilities").value
         };
 
@@ -296,9 +296,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <label for="position">Должность</label>
                 <input id="position" type="text" value="${work.position}">
                 <label for="start-date">Начало работы</label>
-                <input id="start-date" type="date" value="${new Date(work.start_date).toISOString().split('T')[0]}">
+                <input id="start-date" type="number" value="${new Date(work.start_date).getFullYear()}" min="1990" max="2030">
                 <label for="end-date">Окончание работы</label>
-                <input id="end-date" type="date" value="${new Date(work.end_date).toISOString().split('T')[0]}">
+                <input id="end-date" type="number" value="${new Date(work.end_date).getFullYear()}" min="1990" max="2030">
                 <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities" value="${work.responsibilities || ''}">
                 <button onclick="saveEditedWork(${workId})">Save</button>
@@ -334,9 +334,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <label for="position">Должность</label>
                 <input id="position" type="text" placeholder="Напишите должность">
                 <label for="start-date">Начало работы</label>
-                <input id="start-date" type="date">
+                <input id="start-date" type="number" min="1990" max="2030">
                 <label for="end-date">Окончание работы</label>
-                <input id="end-date" type="date">
+                <input id="end-date" type="number" min="1990" max="2030">
                 <label for="responsibilities">Обязанности</label>
                 <input id="responsibilities">
                 <button onclick="saveNewWorkExperience()">Сохранить</button>
@@ -377,4 +377,4 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error(`Tab content with ID 'tab-${tabName}' not found`);
         }
     }
-});
+})

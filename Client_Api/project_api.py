@@ -5,7 +5,8 @@ from datetime import datetime
 from flask import jsonify, request, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from langfuse.api import Project
-from sqlalchemy.orm import joinedload
+from sqlalchemy import func, or_
+from sqlalchemy.orm import joinedload, selectinload
 
 from Client_Api.extensions import db
 from Models import UserSocialNetwork, Education, Skills, University, Direction, Group, Degree, Organization, User, \
@@ -178,20 +179,94 @@ def get_projects():
 
 @modal_api.route('/api/candidates', methods=['GET'])
 def get_candidates():
-    candidates = []
+    # Получение параметров запроса
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 10))
+    search_query = request.args.get('search', '').lower()
+    region_filter = request.args.get('region', '').lower()
+    university_filter = request.args.get('university', '').lower()
+    direction_filter = request.args.get('direction', '').lower()
+    skill_filter = request.args.get('skill', '').lower()
 
-    users = User.query.filter_by(role_id=1).all()
+    # Базовый запрос
+    query = db.session.query(User).filter(User.role_id == 1)
 
-    for user in users:
-        # Проверка, что поле profile_photo содержит данные
-        if user.profile_photo:
-            # Кодирование бинарных данных в base64
-            profile_photo_encoded = base64.b64encode(user.profile_photo).decode('utf-8')
-            profile_photo_data = f"data:image/jpeg;base64,{profile_photo_encoded}"
-        else:
-            profile_photo_data = None
+    # Поиск
+    if search_query:
+        query = query.filter(
+            db.or_(
+                db.func.lower(User.first_name).like(f"%{search_query}%"),
+                db.func.lower(User.last_name).like(f"%{search_query}%"),
+                db.func.lower(User.middle_name).like(f"%{search_query}%")
+            )
+        )
 
-        candidate_data = {
+    # Фильтр по региону
+    if region_filter:
+        query = query.filter(db.func.lower(User.address).like(f"%{region_filter}%"))
+
+    # Фильтры по образованию и навыкам
+    if university_filter or direction_filter or skill_filter:
+        subquery = db.session.query(Resume.id_user).distinct()
+        if university_filter:
+            subquery = subquery.join(Education).join(University).filter(
+                db.func.lower(University.short_name).like(f"%{university_filter}%")
+            )
+        if direction_filter:
+            subquery = subquery.join(Education).join(Direction).filter(
+                db.func.lower(Direction.direction_name).like(f"%{direction_filter}%")
+            )
+        if skill_filter:
+            subquery = subquery.join(ResumeSkills, Resume.id_resume == ResumeSkills.id_resume).join(
+                Skills, ResumeSkills.id_skill == Skills.id_skill
+            ).filter(db.func.lower(Skills.skill_name).like(f"%{skill_filter}%"))
+        user_ids = [row[0] for row in subquery.all()]
+        query = query.filter(User.id_user.in_(user_ids))
+
+    # Предзагрузка данных
+    candidates = query.options(
+        selectinload(User.resumes)
+        .selectinload(Resume.educations),
+        selectinload(User.resumes)
+        .selectinload(Resume.projects),
+    ).offset((page - 1) * limit).limit(limit).all()
+
+    # Сериализация данных
+    result = []
+    for user in candidates:
+        profile_photo_data = (
+            f"data:image/jpeg;base64,{base64.b64encode(user.profile_photo).decode('utf-8')}" if user.profile_photo else None
+        )
+
+        serialized_resumes = []
+        for resume in user.resumes:
+            educations = [
+                {
+                    'id_education': edu.id_education,
+                    'university_name': edu.university.full_name if edu.university else None,
+                    'direction_name': edu.direction.direction_name if edu.direction else None,
+                    'city': edu.university.location if edu.university else None,
+                }
+                for edu in Education.query.filter_by(id_resume=resume.id_resume).all()
+            ]
+
+            skills = [
+                {
+                    'id_skill': skill.id_skill,
+                    'skill_name': skill.skill_name,
+                }
+                for skill in db.session.query(Skills).join(ResumeSkills).filter(ResumeSkills.id_resume == resume.id_resume).all()
+            ]
+
+            serialized_resumes.append({
+                'id_resume': resume.id_resume,
+                'about_me': resume.about_me,
+                'id_pattern': resume.id_pattern,
+                'educations': educations,
+                'skills': skills,
+            })
+
+        result.append({
             'id_user': user.id_user,
             'first_name': user.first_name,
             'last_name': user.last_name,
@@ -201,44 +276,15 @@ def get_candidates():
             'birth_date': user.birth_date.strftime('%Y-%m-%d') if user.birth_date else None,
             'address': user.address,
             'profile_photo': profile_photo_data,
-            'resumes': []
-        }
+            'resumes': serialized_resumes,
+        })
 
-        resumes = Resume.query.filter_by(id_user=user.id_user).all()
-
-        for resume in resumes:
-            resume_data = {
-                'id_resume': resume.id_resume,
-                'about_me': resume.about_me,
-                'id_pattern': resume.id_pattern,
-                'educations': [],
-                'skills': []
-            }
-
-            educations = Education.query.filter_by(id_resume=resume.id_resume).all()
-            for edu in educations:
-                education_data = {
-                    'id_education': edu.id_education,
-                    'university_name': edu.university.full_name if edu.university else None,
-                    'direction_name': edu.direction.direction_name if edu.direction else None,
-                    'city': edu.university.location if edu.university else None,
-                }
-                resume_data['educations'].append(education_data)
-
-            resume_skills = ResumeSkills.query.filter_by(id_resume=resume.id_resume).all()
-            for rs in resume_skills:
-                skill = Skills.query.get(rs.id_skill)
-                if skill:
-                    resume_data['skills'].append({
-                        'id_skill': skill.id_skill,
-                        'skill_name': skill.skill_name
-                    })
-
-            candidate_data['resumes'].append(resume_data)
-
-        candidates.append(candidate_data)
-
-    return jsonify(candidates)
+    return jsonify({
+        'candidates': result,
+        'total_pages': (query.count() + limit - 1) // limit,
+        'current_page': page,
+        'total_count': query.count(),
+    })
 
 
 @modal_api.route('/api/regions', methods=['GET'])
@@ -335,14 +381,16 @@ def add_education(id_user):
             return jsonify({"msg": f"'{field}' is required in the request data"}), 400
 
     try:
+        start_year = data['start_date'][:4]  # Take only the first 4 characters
+        end_year = data['end_date'][:4]
         new_education = Education(
             id_resume=resume.id_resume,
             id_university=int(data['university']),
             id_degree=int(data['degree']),
             id_direction=int(data['direction']),
             group_number=int(data['group']),
-            start_date=datetime.strptime(data['start_date'], '%Y'),
-            end_date=datetime.strptime(data['end_date'], '%Y'),
+            start_date=datetime.strptime(start_year, '%Y'),
+            end_date=datetime.strptime(end_year, '%Y'),
             status=data['completed']
         )
 
@@ -383,8 +431,10 @@ def update_education(id_user, id_education):
     education.group_number = int(data['group'])
 
     try:
-        education.start_date = datetime.strptime(data['start_date'], '%Y-%m-%d')
-        education.end_date = datetime.strptime(data['end_date'], '%Y-%m-%d')
+        start_year = data['start_date'][:4]  # Take only the first 4 characters
+        end_year = data['end_date'][:4]
+        education.start_date = datetime.strptime(start_year, '%Y')
+        education.end_date = datetime.strptime(end_year, '%Y')
     except ValueError:
         return jsonify({"msg": "Invalid date format. Use YYYY-MM-DD."}), 400
 
@@ -464,11 +514,13 @@ def add_work(id_user):
             return jsonify({"msg": f"'{field}' is required in the request data"}), 400
 
     try:
+        start_year = data['start_date'][:4]  # Take only the first 4 characters
+        end_year = data['end_date'][:4]
         new_work = Work(
             id_resume=resume.id_resume,
             position=data['position'],
-            start_date=datetime.strptime(data['start_date'], '%Y-%m-%d'),
-            end_date=datetime.strptime(data['end_date'], '%Y-%m-%d'),
+            start_date=datetime.strptime(start_year, '%Y'),
+            end_date=datetime.strptime(end_year, '%Y'),
             responsibilities=data['responsibilities']
         )
 
@@ -513,8 +565,10 @@ def update_work(id_user, id_work):
     # Update fields based on provided data
     try:
         work.position = data['position']
-        work.start_date = datetime.strptime(data['start_date'], '%Y-%m-%d')
-        work.end_date = datetime.strptime(data['end_date'], '%Y-%m-%d')
+        start_year = data['start_date'][:4]  # Take only the first 4 characters
+        end_year = data['end_date'][:4]
+        work.start_date = datetime.strptime(start_year, '%Y')
+        work.end_date = datetime.strptime(end_year, '%Y')
 
         # Update the organizations (many-to-many relationship)
         if 'organization' in data:
