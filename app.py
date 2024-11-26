@@ -73,9 +73,9 @@ def create_app(config):
     app.secret_key = 'your_secret_key'
 
 
-    return app
+    return app, jwt
 
-app = create_app(Config)
+app, jwt = create_app(Config)
 CORS(app)
 CORS(app, resources={r"/pattern_image_pdf/*": {"origins": "*"}})
 @app.route('/')
@@ -135,6 +135,14 @@ def get_cookie():
 def restrict_swagger_access():
     if request.path.startswith(SWAGGER_URL) and not is_admin():
         return redirect(url_for('admin_login.admin_login_func'))
+
+@app.errorhandler(401)
+def not_logged_in_error(error):
+    return redirect(url_for('login'))
+
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run()
