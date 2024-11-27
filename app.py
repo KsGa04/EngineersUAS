@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, render_template, make_response, jsonify, request, redirect, url_for
+from flask import Flask, render_template, make_response, jsonify, request, redirect, url_for, flash
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, jwt_required, verify_jwt_in_request, get_jwt
 from werkzeug.security import generate_password_hash
@@ -27,7 +27,7 @@ def role_required(required_role_id):
             jwt_data = get_jwt()
             user_role_id = jwt_data.get("role_id")
             if user_role_id != required_role_id:
-                return jsonify({"msg": "Access forbidden: You do not have the required role"}), 403
+                return redirect(url_for('login'))
             return fn(*args, **kwargs)
         return wrapper
     return decorator
@@ -136,12 +136,12 @@ def restrict_swagger_access():
     if request.path.startswith(SWAGGER_URL) and not is_admin():
         return redirect(url_for('admin_login.admin_login_func'))
 
-@app.errorhandler(401)
-def not_logged_in_error(error):
-    return redirect(url_for('login'))
-
 @jwt.expired_token_loader
 def expired_token_callback(jwt_header, jwt_payload):
+    return redirect(url_for('login'))
+
+@app.errorhandler(401)
+def not_logged_in_error(error):
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
