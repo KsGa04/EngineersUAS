@@ -156,12 +156,21 @@ h1 {
     color: #5190DC;
 }
 /*------------------------------------------------------------------------*/
+.telegram_bot_container{
+    display: none;
+    height: 10%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .login__container {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .login__wrapper{
 
     width: 630px;
@@ -174,6 +183,7 @@ h1 {
     align-items: center;
     box-shadow: 0px 0px 35px 15px #426E9C
 }
+
 .auth__switch {
     display: flex;
     flex-direction: row;
@@ -1240,4 +1250,17 @@ select option {
     background: #EEE;
     cursor: not-allowed;
     border: 1px solid #CCC;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .telegram_bot_container{
+        display: flex;
+    }
+    .login__wrapper{
+        display: none;
+    }
+    .regiser__wrapper{
+        display: none;
+    }
 }
