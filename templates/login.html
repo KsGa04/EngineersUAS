@@ -16,7 +16,15 @@
 <body>
     <div class="wrapper">
         <div class="login__container _container">
-            <div class="login__wrapper">
+            <div class="telegram_bot_container" id="tg_alert">
+                <div class="tg_alert_title">
+                    <h1>Платформа работает в телеграме</h1>
+                </div>
+                <div class="tg_bot_link">
+                    <a href="https://t.me/KIPHubot">КИПХаб бот</a>
+                </div>
+            </div>
+            <div class="login__wrapper" id="login_wrapper">
                 <div class="login__title">
                     <h1>АВТОРИЗАЦИЯ</h1>
                 </div>
@@ -40,9 +48,19 @@
     </div>
     </div>
 
+<script src="https://unpkg.com/current-device/umd/current-device.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     let roleId = 1; // 1 - студент, 2 - работодатель
+
+    if (device.mobile() || device.tablet()){
+        const login_container = document.getElementById("login_wrapper");
+        const tg_alert = document.getElementById("tg_alert");
+        login_container.style.display = 'none';
+        tg_alert.style.display = 'flex';
+
+        console.log("Мобилка");
+    }
 
     // Обработчик для кнопки авторизации
     document.getElementById("auth_btn").addEventListener("click", async function() {
