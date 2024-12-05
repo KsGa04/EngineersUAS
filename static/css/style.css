@@ -44,7 +44,10 @@ img, svg {
 	max-width: 100%;
 	height: auto;
 }
-
+.logo {
+    width: 130px;
+    height:80px;
+}
 address {
   font-style: normal;
 }
@@ -711,7 +714,6 @@ header {
 /*------------------------------------------------------------------------*/
 
 .cv__generation__container {
-    padding-top: 70px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

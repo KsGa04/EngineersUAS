@@ -130,59 +130,174 @@ async function loadSkills() {
 function editSelectedProject() {
     const selectedItem = document.querySelector('.project-item.selected');
     const id_user = localStorage.getItem("user_id");
+
     if (!selectedItem) {
         alert("Please select a project item to edit.");
         return;
     }
 
     const projectId = selectedItem.dataset.projectId;
+
     fetch(`/api/projects/${id_user}/${projectId}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(project => {
-        openModal("Edit Project", `
-            <label for="project-name">Project Name</label>
-            <input id="project-name" type="text" value="${project.project_name}">
-            <label for="project-desc">Project Description</label>
-            <input id="project-desc" value="${project.project_description}">
-            <label for="project-link">Project Link</label>
-            <input id="project-link" type="url" value="${project.project_link}">
-            <select id="project-skills" multiple>
-                ${project.skill.map(skill => `<option value="${skill.id_skill}" ${project.skill.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
-            </select>
-            <button onclick="saveEditedProject(${projectId})">Save</button>
-        `);
-    })
-    .catch(error => {
-        console.error("Error loading project for editing:", error);
-        alert(`Error loading project: ${error.message}`);
-    });
-}
-function saveEditedProject(projectId) {
-        const id_user = localStorage.getItem("user_id");
-        if (!projectId) {
-            alert("Project ID is missing.");
-            return;
-        }
-
-        const updatedData = {
-            project_name: document.getElementById("project-name").value,
-            project_description: document.getElementById("project-desc").value,
-            project_link: document.getElementById("project-link").value
-        };
-
-        fetch(`/api/projects/${id_user}/${projectId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedData)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
         })
+        .then(project => {
+            openModal("Изменение проекта", `
+                <label for="project-name">Название</label>
+                <input id="project-name" type="text" value="${project.project_name}">
+                <label for="project-desc">Описание</label>
+                <input id="project-desc" value="${project.project_description}">
+                <label for="project-link">Ссылка</label>
+                <input id="project-link" type="url" value="${project.project_link}">
+                <div class="skills-container">
+                    <label for="skills-dropdown">Выберите навык:</label>
+                    <select id="skills-dropdown">
+                        <!-- Опции будут добавлены динамически -->
+                    </select>
+                    <button id="add-skill-btn">Добавить навык</button>
+                </div>
+                <div id="selected-skills" class="selected-skills">
+                    ${project.skill.map(skill => `
+                        <div class="skill-block" data-id="${skill.id_skill}">
+                            <span>${skill.skill_name}</span>
+                            <button onclick="removeSkill(${projectId}, ${skill.id_skill})">&times;</button>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="saveEditedProject(${projectId})">Сохранить</button>
+            `);
+
+            loadSkillsDropdown(project.skill.map(skill => skill.id_skill));
+            // Привязка события для добавления навыков
+            const addSkillBtn = document.getElementById("add-skill-btn");
+            addSkillBtn.addEventListener("click", function () {
+                addSkillToProject(projectId);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading project for editing:", error);
+            alert(`Error loading project: ${error.message}`);
+        });
+}
+
+async function loadSkillsDropdown(selectedSkills) {
+    try {
+            const response = await fetch("/api/skills");
+            if (!response.ok) throw new Error("Не удалось загрузить навыки.");
+            const skills = await response.json();
+            const skillsDropdown = document.getElementById('skills-dropdown');
+            skillsDropdown.innerHTML = ""; // Очистка существующих опций
+            skills.forEach(skill => {
+                const option = document.createElement("option");
+                option.value = skill.id;
+                option.textContent = skill.name;
+                skillsDropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Ошибка загрузки навыков:", error);
+        }
+}
+
+function addSkillToProject(projectId) {
+    const skillsDropdown = document.getElementById("skills-dropdown");
+    const selectedSkillId = skillsDropdown.value;
+    const selectedSkillName = skillsDropdown.options[skillsDropdown.selectedIndex].text;
+
+    if (!selectedSkillId) {
+        alert("Please select a skill.");
+        return;
+    }
+
+    fetch(`/api/projects/${projectId}/skills`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_skill: selectedSkillId })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to add skill to project");
+            }
+            return response.json();
+        })
+        .then(() => {
+            // Обновляем отображение навыков
+            const selectedSkillsContainer = document.getElementById('selected-skills');
+            const skillBlock = document.createElement('div');
+            skillBlock.classList.add('skill-block');
+            skillBlock.dataset.id = selectedSkillId;
+            skillBlock.innerHTML = `
+                <span>${selectedSkillName}</span>
+                <button onclick="removeSkill(${projectId}, ${selectedSkillId})">&times;</button>
+            `;
+            selectedSkillsContainer.appendChild(skillBlock);
+
+            // Перезагружаем dropdown с обновленными навыками
+            const selectedSkills = Array.from(selectedSkillsContainer.children).map(
+                skillBlock => parseInt(skillBlock.dataset.id, 10)
+            );
+            loadSkillsDropdown(selectedSkills);
+        })
+        .catch(error => {
+            console.error("Error adding skill to project:", error);
+            alert("Failed to add skill.");
+        });
+}
+
+function removeSkill(projectId, skillId) {
+    fetch(`/api/projects/${projectId}/skills/${skillId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to remove skill from project");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const skillBlock = document.querySelector(`.skill-block[data-id="${skillId}"]`);
+            if (skillBlock) {
+                skillBlock.remove();
+            }
+
+            // Обновляем dropdown
+            const skillsDropdown = document.getElementById('skills-dropdown');
+            const option = [...skillsDropdown.options].find(opt => opt.value == skillId);
+            if (option) {
+                option.disabled = false;
+            }
+        })
+        .catch(error => {
+            console.error("Error removing skill from project:", error);
+            alert("Failed to remove skill.");
+        });
+}
+
+function saveEditedProject(projectId) {
+    const id_user = localStorage.getItem("user_id");
+    if (!projectId) {
+        alert("Project ID is missing.");
+        return;
+    }
+
+    const updatedData = {
+        project_name: document.getElementById("project-name").value,
+        project_description: document.getElementById("project-desc").value,
+        project_link: document.getElementById("project-link").value
+    };
+
+    fetch(`/api/projects/${id_user}/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+    })
         .then(response => response.json())
         .then(data => {
             console.log("Project updated:", data);
@@ -193,7 +308,7 @@ function saveEditedProject(projectId) {
             console.error("Error updating project:", error);
             alert(`Error updating project: ${error.message}`);
         });
-    }
+}
 document.addEventListener("DOMContentLoaded", function() {
     // Function to open a modal
     // Function to load available skills

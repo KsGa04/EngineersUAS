@@ -12,10 +12,7 @@
             <div class="header__container _container">
                 <div class="header__left">
                     <div class="header__logo">
-                        <div class="logo__example"></div>
-                    </div>
-                    <div class="header__logo__title">
-                        <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                        <img src="static/images/КИП_2.1.svg" class="logo">
                     </div>
                 </div>
                 <div class="header__right">
@@ -83,25 +80,25 @@
                             <div class="cv__form__title">
                                 <h4>ФИО</h4>
                             </div>
-                            <input type="text" class="cv__form__input small-textarea" name="cv__name" />
+                            <input type="text" class="cv__form__input small-textarea" name="cv__name" required/>
                         </div>
                         <div class="birthDate__item cv__form__item">
                             <div class="cv__form__title">
                                 <h4>Дата рождения</h4>
                             </div>
-                            <input type="date" name="birth_date" class="cv__form__input small-textarea" />
+                            <input type="date" name="birth_date" class="cv__form__input small-textarea" required/>
                         </div>
                         <div class="university__item cv__form__item">
                             <div class="cv__form__title">
                                 <h4>Описание *</h4>
                             </div>
-                            <textarea name="about_me" class="cv__form__input large-textarea"></textarea>
+                            <textarea name="about_me" class="cv__form__input large-textarea" required></textarea>
                         </div>
                         <div class="cv_name_item cv__form__item">
                             <div class="cv__form__title">
                                 <h4>Телеграм</h4>
                             </div>
-                            <input type="text" class="cv__form__input small-textarea" name="network_link" />
+                            <input type="text" class="cv__form__input small-textarea" name="network_link" required/>
                         </div>
                     </form>
                 </div>
@@ -257,23 +254,34 @@ async function updateDataInDB(table, fieldName, fieldValue) {
 
     try {
         if (table == "userSocialNetwork") {
-            const response = await fetch(`/universal/${table}?id_resume=${id_resume}`, {
-                method: 'PUT',
-                headers: {
-                    'Accept': '*/*',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ [fieldName]: fieldValue }),
-                credentials: 'include'
-            });
-            if (!response.ok) {
-            // Проверка для отлова ошибок сервера
-            const result = await response.json();
-            console.error("Ошибка ответа сервера:", result);
-            alert(result.msg || "Ошибка при обновлении данных.");
-        } else {
-            console.log("Данные успешно обновлены.");
-        }
+        const telegramField = document.querySelector("[name='network_link']");
+
+            // Регулярное выражение для проверки формата ссылки Telegram
+            const telegramRegex = /^https:\/\/t\.me\/[a-zA-Z0-9_]{5,}$/;
+
+            if (!telegramRegex.test(telegramField)) {
+                    alert("Пожалуйста, введите корректную ссылку на Telegram в формате: https://t.me/username");
+                    telegramField.focus();
+             }
+             else {
+                    const response = await fetch(`/universal/${table}?id_resume=${id_resume}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Accept': '*/*',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ [fieldName]: fieldValue }),
+                        credentials: 'include'
+                    });
+                    if (!response.ok) {
+                    // Проверка для отлова ошибок сервера
+                    const result = await response.json();
+                    console.error("Ошибка ответа сервера:", result);
+                    alert(result.msg || "Ошибка при обновлении данных.");
+                } else {
+                    console.log("Данные успешно обновлены.");
+                }
+                }
             }
         else {
             const response = await fetch(`/universal/${table}?id_user=${userId}`, {
