@@ -57,12 +57,14 @@ def delete_work_experience(id):
 @modal_api.route('/api/skills', methods=['POST'])
 def add_skill():
     data = request.json
-    new_skill = Skills(
-        skill_name=data['skill_name']
-    )
+    if not data or not data.get('skill_name'):
+        return jsonify({"error": "skill_name is required"}), 400
+
+    new_skill = Skills(skill_name=data['skill_name'])
     db.session.add(new_skill)
     db.session.commit()
-    return jsonify({"message": "Навык добавлен"}), 201
+    return jsonify({"message": "Навык добавлен", "id": new_skill.id_skill}), 201
+
 
 
 @modal_api.route('/api/skills/<int:id>', methods=['PUT'])
@@ -78,12 +80,71 @@ def update_skill(id):
 
 @modal_api.route('/api/skills/<int:id>', methods=['DELETE'])
 def delete_skill(id):
-    skill = Skills.query.get(id)
-    if not skill:
-        return jsonify({"error": "Навык не найден"}), 404
-    db.session.delete(skill)
-    db.session.commit()
-    return jsonify({"message": "Навык удален"}), 200
+    # Проверяем, существует ли запись в ResumeSkills
+    resume_skill = ResumeSkills.query.get(id)
+    if not resume_skill:
+        return jsonify({"error": "Связь резюме и навыка не найдена"}), 404
+
+    try:
+        # Удаляем запись из ResumeSkills
+        db.session.delete(resume_skill)
+        db.session.commit()
+        return jsonify({"message": "Навык успешно удален из резюме"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Ошибка при удалении навыка из резюме: {str(e)}"}), 500
+
+@modal_api.route('/api/resume_skills', methods=['POST'])
+def add_resume_skill():
+    try:
+        data = request.get_json()
+        id_resume = data.get('id_resume')
+        id_skill = data.get('id_skill')
+
+        # Проверка наличия данных
+        if not id_resume or not id_skill:
+            return jsonify({"error": "Отсутствуют необходимые данные."}), 400
+
+        # Проверка на дублирование
+        existing_skill = ResumeSkills.query.filter_by(id_resume=id_resume, id_skill=id_skill).first()
+        if existing_skill:
+            return jsonify({"error": "Этот навык уже добавлен."}), 400
+
+        # Добавление нового навыка
+        new_resume_skill = ResumeSkills(id_resume=id_resume, id_skill=id_skill)
+        db.session.add(new_resume_skill)
+        db.session.commit()
+
+        return jsonify({"message": "Навык успешно добавлен."}), 201
+    except Exception as e:
+        return jsonify({"error": f"Ошибка при добавлении навыка: {str(e)}"}), 500
+
+@modal_api.route('/api/resume/<int:resume_id>/skills', methods=['GET'])
+def get_resume_skills(resume_id):
+    try:
+        # Находим все записи в таблице ResumeSkills, связанные с данным резюме
+        resume_skills = ResumeSkills.query.filter_by(id_resume=resume_id).all()
+
+        # Если навыков нет, возвращаем пустой список
+        if not resume_skills:
+            return jsonify({"skills": []}), 200
+
+        # Собираем данные о навыках
+        skills = []
+        for resume_skill in resume_skills:
+            skill = Skills.query.get(resume_skill.id_skill)
+            if skill:  # Если навык существует
+                skills.append({
+                    "id_resume_skill": resume_skill.id_resume_skills,
+                    "id_skill": skill.id_skill,
+                    "skill_name": skill.skill_name
+                })
+
+        return jsonify({"skills": skills}), 200
+    except Exception as e:
+        return jsonify({"error": f"Ошибка при получении навыков: {str(e)}"}), 500
+
+
 
 
 # ================= API для Ссылки на портфолио =================

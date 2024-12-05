@@ -27,7 +27,7 @@ def role_required(required_role_id):
             jwt_data = get_jwt()
             user_role_id = jwt_data.get("role_id")
             if user_role_id != required_role_id:
-                return jsonify({"msg": "Access forbidden: You do not have the required role"}), 403
+                return redirect(url_for('login'))
             return fn(*args, **kwargs)
         return wrapper
     return decorator
@@ -121,7 +121,7 @@ def candidats():
 @app.route('/set_cookie')
 def set_cookie():
     response = make_response(jsonify({"msg": "Cookie set successfully"}))
-    response.set_cookie('example_cookie', 'cookie_value', max_age=60*60*24)  # 1 день
+    response.set_cookie('example_cookie', 'cookie_value', max_age=60*60*24)
     return response
 
 @app.route('/get_cookie')
@@ -138,6 +138,10 @@ def restrict_swagger_access():
 
 @app.errorhandler(401)
 def not_logged_in_error(error):
+    return redirect(url_for('login'))
+
+@app.errorhandler(403)
+def not_role_in_error(error):
     return redirect(url_for('login'))
 
 @jwt.expired_token_loader

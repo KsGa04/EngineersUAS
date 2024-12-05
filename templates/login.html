@@ -18,10 +18,10 @@
         <div class="login__container _container">
             <div class="telegram_bot_container" id="tg_alert">
                 <div class="tg_alert_title">
-                    <h1>Платформа работает в телеграме</h1>
+                    <h1>Платформа доступна в Telegram</h1>
                 </div>
                 <div class="tg_bot_link">
-                    <a href="https://t.me/KIPHubot">КИПХаб бот</a>
+                    <a href="https://t.me/KIPHubot" target="_blank">Перейти к боту КИПХаб</a>
                 </div>
             </div>
             <div class="login__wrapper" id="login_wrapper">
@@ -62,55 +62,67 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Мобилка");
     }
 
-    // Обработчик для кнопки авторизации
-    document.getElementById("auth_btn").addEventListener("click", async function() {
-        const email = document.getElementById("email_input").value.trim();
-        const password = document.getElementById("password_input").value.trim();
+    document.getElementById("auth_btn").addEventListener("click", async function () {
+    const email = document.getElementById("email_input").value.trim();
+    const password = document.getElementById("password_input").value.trim();
 
-        // Валидация пароля
-        if (!password) {
-            alert("Поле пароля не должно быть пустым.");
-            return;
-        } else if (password.length < 8) {
-            alert("Пароль должен быть не менее 8 символов.");
+    // Проверка на пустые поля
+    if (!email || !password) {
+        alert("Все поля должны быть заполнены.");
+        return;
+    }
+
+    if (password.length < 8) {
+        alert("Пароль должен быть не менее 8 символов.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+            credentials: 'include' // Передаем cookie вместе с запросом
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            alert(error.msg || "Ошибка авторизации.");
             return;
         }
 
-        try {
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-                credentials: 'include' // Передаем cookie вместе с запросом
-            });
+        const result = await response.json();
 
-            const result = await response.json();
+        localStorage.setItem("user_id", result.user_id);
+        console.log(`result.user_id`);
+        localStorage.setItem("role_id", result.role_id);
+        console.log(`result.role_id`);
+        localStorage.setItem("id_pattern", result.id_pattern);
+        console.log(`result.id_pattern`);
+        localStorage.setItem("id_resume", result.id_resume);
+        console.log(`result.id_resume`);
+        localStorage.setItem("login", result.login);
+        console.log(`result.login`);
+        localStorage.setItem("password", result.password);
+        console.log(`result.password`);
+        localStorage.setItem("token", result.token);
+        console.log(`result.token`);
 
-            if (response.ok) {
-                localStorage.setItem("user_id", result.user_id);
-                localStorage.setItem("role_id", result.role_id);
-                localStorage.setItem("id_pattern", result.id_pattern);
-                localStorage.setItem("id_resume", result.id_resume);
-                localStorage.setItem("login", result.login);
-                localStorage.setItem("password", result.password);
-                localStorage.setItem("token", result.token);
-                alert("Успешная авторизация!");
+        alert("Успешная авторизация!");
 
-                if (result.role_id == "1") {
-                    window.location.href = "/userboard";
-                } else {
-                    window.location.href = "/analytics";
-                }
-            } else {
-                alert(result.msg || "Ошибка авторизации.");
-            }
-        } catch (error) {
-            console.error("Ошибка:", error);
-            alert("Не удалось подключиться к серверу.");
+        if (result.role_id == "1") {
+            window.location.href = "/userboard";
+        } else {
+            window.location.href = "/analytics";
         }
-    });
+    } catch (error) {
+        console.error("Ошибка:", error);
+        alert("Не удалось подключиться к серверу.");
+    }
+});
+
 });
 
 </script>

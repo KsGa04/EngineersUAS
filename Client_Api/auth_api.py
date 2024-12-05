@@ -89,17 +89,44 @@ def login():
     emailOrphone = data.get('email')
     password = data.get('password')
 
+    # Поиск пользователя
     user = User.query.filter(or_(User.email == emailOrphone, User.phone == emailOrphone)).first()
-    bools = check_password_hash(user.password, password)
+
     if not user or not check_password_hash(user.password, password):
         return jsonify({"msg": "Неверные учетные данные"}), 401
 
     # Генерация токена
-    authToken = create_access_token(identity=user.id_user, additional_claims={"role_id": user.role_id, "id_resume": user.id_user, "login": user.email, "password": password})
+    try:
+        authToken = create_access_token(
+            identity=str(user.id_user),  # Преобразуем ID в строку
+            additional_claims={
+                "role_id": user.role_id,
+                "id_resume": str(user.id_user),  # Преобразуем в строку, если это число
+                "login": user.email
+            }
+        )
+    except Exception as e:
+        print(f"Ошибка генерации токена: {str(e)}")
+        return jsonify({"msg": "Ошибка авторизации."}), 500
+
     resume = Resume.query.filter_by(id_user=user.id_user).first()
 
-    # Настройка ответа с cookies
-    response = make_response(jsonify({"user_id": user.id_user, "login": user.email, "password": password, "role_id": user.role_id, "id_resume": resume.id_resume, "id_pattern": resume.id_pattern if resume else None, "token": authToken}))
-    set_access_cookies(response, authToken)
+    # Формирование ответа
+    response_data = {
+        "user_id": user.id_user,
+        "login": user.email,
+        "role_id": user.role_id,
+        "id_resume": resume.id_resume if resume else None,
+        "id_pattern": resume.id_pattern if resume else None,
+        "token": authToken
+    }
+
+    try:
+        response = make_response(jsonify(response_data))
+        set_access_cookies(response, authToken)
+    except Exception as e:
+        print(f"Ошибка при установке cookies: {str(e)}")
+        return jsonify({"msg": "Ошибка при установке cookies"}), 500
 
     return response, 200
+

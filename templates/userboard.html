@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <script src="/static/token.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -25,7 +24,7 @@
                         <ul>
                             <li><a href="/userboard">Личный кабинет</a></li>
                             <li><a href="/cvgenerator">Генерация резюме</a></li>
-                            <li><a href="login">Выход</a></li>
+                            <li><a href="/login">Выход</a></li>
                         </ul>
                     </div>
                 </div>
@@ -33,86 +32,114 @@
         </header>
         <main>
             <div class="account__container _container">
-                <div class="account__inner__header">
-                    <div class="account__header__left">
-                        <div class="account__header__title">
-                            <h1>ЛИЧНЫЙ </h1><h1>КАБИНЕТ</h1>
+                <div class="account__content">
+                    <!-- Секция конкурса -->
+                    <div class="contest__container">
+                        <div class="contest__header">
+                            <h1>🚀 Конкурс: "Псаномалия на Марсе"</h1>
+                            <img src="static/images/image1.jpg" alt="Конкурс Псаномалия">
+                        </div>
+                        <div class="contest__content">
+                            <p><strong>Придумайте способ нейтрализации робособак</strong>, которые угрожают безопасности колонии на Марсе. Победителей ждут:</p>
+                            <ul>
+                                <li>💰 Денежные призы: до 30 000 ₽</li>
+                                <li>✨ Опыт в решении реальных задач</li>
+                                <li>🤝 Возможность сотрудничества с лидерами индустрии</li>
+                            </ul>
+                            <p><strong>Дедлайн:</strong> 15 декабря 2024</p>
+                            <p>Ваш <strong>ID:</strong> <span id="userIdDisplay" class="highlight-id">Не авторизован</span></p>
+                            <div class="button-container">
+                                <button class="submit-answer-btn" onclick="location.href='https://forms.gle/AqvLVjsp2yCkRUJ99'">Отправить ответ</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="user__avatar__wrapper">
-                        <div class="user__avatar">
-                            <img id="profilePhoto" src="static/assets/images/user__avatar.png" alt="User Avatar">
-                        </div>
-                        <div class="edit__avatar__item">
-                            <img src="static/assets/images/icon_edit_avatar.svg" alt="">
-                             <a href="javascript:void(0)">Изменить</a>
-                            <!-- Скрытое поле для выбора файла -->
-                            <input type="file" id="photoInput" accept="image/*" style="display:none"/>
-                        </div>
-                    </div>
+                    <!-- Конец секции конкурса -->
 
-                </div>
-                <div class="account__inner__content">
-                    <div class="account__cv__form__block">
-                        <form action="#" class="account__cv__form">
-                            <div class="cv_name_item cv__form__item">
-                                <div class="cv__form__title">
-                                    <h4 class="">
-                                        ФИО
-                                    </h4>
-                                </div>
-                                <input type="text" class="cv__form__input small-textarea" name="cv__name" />
-                            </div>
-                            <div class="birthDate__item cv__form__item">
-                                <div class="cv__form__title">
-                                    <h4 class="">
-                                        Дата рождения
-                                    </h4>
-                                </div>
-                                <input type="date" name="birth_date" class="cv__form__input small-textarea" />
-                            </div>
-                            <div class="university__item cv__form__item">
-                                <div class="cv__form__title">
-                                    <h4 class="">
-                                        Описание *
-                                    </h4>
-                                </div>
-                                <textarea name="about_me" class="cv__form__input large-textarea"></textarea>
-                            </div>
-                            <div class="cv_name_item cv__form__item">
-                                <div class="cv__form__title">
-                                    <h4 class="">
-                                        Телеграм
-                                    </h4>
-                                </div>
-                                <input type="text" class="cv__form__input small-textarea" name="network_link" />
-                            </div>
-                        </form>
-
-                    </div>
-                    <div class="account__cv__preview">
-                        <div class="cv__preview">
-                            <img src="static/assets/images/cv_preview.png" alt="">
-                            <div class="cv__demo">
-                                <a href="javascript:void(0)" id="previewBtn">ПРЕДПРОСМОТР</a>
-                            </div>
-                        </div>
-                        <a href="/cvgenerator" class="download__preview">СГЕНЕРИРОВАТЬ <br> РЕЗЮМЕ</a>
-                    </div>
-                </div>
-
+                    <div class="account__inner">
+    <div class="account__inner__header">
+        <div class="account__header__left">
+            <div class="account__header__title">
+                <h1>ЛИЧНЫЙ</h1><h1>КАБИНЕТ</h1>
             </div>
-
-        </main>
-        <div class="contacts__wrapper">
-        <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+        </div>
+        <div class="user__avatar__wrapper">
+            <div class="user__avatar">
+                <img id="profilePhoto" src="static/assets/images/user__avatar.png" alt="User Avatar">
+            </div>
+            <div class="edit__avatar__item">
+                <img src="static/assets/images/icon_edit_avatar.svg" alt="">
+                <a href="javascript:void(0)">Изменить</a>
+                <input type="file" id="photoInput" accept="image/*" style="display:none"/>
+            </div>
         </div>
     </div>
+
+    <!-- Контент внутри account__inner -->
+            <div class="account__inner__content">
+                <!-- Форма слева -->
+                <div class="account__cv__form__block">
+                    <form action="#" class="account__cv__form">
+                        <div class="cv_name_item cv__form__item">
+                            <div class="cv__form__title">
+                                <h4>ФИО</h4>
+                            </div>
+                            <input type="text" class="cv__form__input small-textarea" name="cv__name" />
+                        </div>
+                        <div class="birthDate__item cv__form__item">
+                            <div class="cv__form__title">
+                                <h4>Дата рождения</h4>
+                            </div>
+                            <input type="date" name="birth_date" class="cv__form__input small-textarea" />
+                        </div>
+                        <div class="university__item cv__form__item">
+                            <div class="cv__form__title">
+                                <h4>Описание *</h4>
+                            </div>
+                            <textarea name="about_me" class="cv__form__input large-textarea"></textarea>
+                        </div>
+                        <div class="cv_name_item cv__form__item">
+                            <div class="cv__form__title">
+                                <h4>Телеграм</h4>
+                            </div>
+                            <input type="text" class="cv__form__input small-textarea" name="network_link" />
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Предпросмотр справа -->
+                <div class="account__cv__preview">
+                    <div class="cv__preview">
+                        <img src="static/assets/images/cv_preview.png" alt="">
+                        <div class="cv__demo">
+                            <a href="javascript:void(0)" id="previewBtn">ПРЕДПРОСМОТР</a>
+                        </div>
+                    </div>
+                    <a href="/cvgenerator" class="download__preview">СГЕНЕРИРОВАТЬ <br> РЕЗЮМЕ</a>
+                </div>
+            </div>
+        </div>
+
+                    <!-- Конец секции личного кабинета -->
+                </div>
+            </div>
+        </main>
+        <div class="contacts__wrapper">
+            <a href="https://t.me/KIP_support"><img src="static/assets/images/telegram.png" alt=""></a>
+        </div>
+    </div>
+    <script src="/static/icon.js"></script>
 </body>
-<script src="/static/icon.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", async function() {
     const userId = localStorage.getItem("user_id");
+    const userIdDisplay = document.getElementById("userIdDisplay");
+
+    if (userId) {
+        userIdDisplay.textContent = userId;
+    } else {
+        userIdDisplay.textContent = "Не авторизован";
+    }
+    const authToken = localStorage.getItem("token");
     let resumePatternId = null;
 
     if (!userId) {
@@ -122,12 +149,14 @@
     }
 
     try {
+        console.log(`Запрашиваем данные для user_id=${userId}`);
         const response = await fetch(`/user/${userId}`, {
             method: 'GET',
             credentials: 'include'
         });
 
         const userData = await response.json();
+        console.log("Данные пользователя:", userData);
 
         if (response.ok) {
             // Заполнение полей формы
