@@ -15,10 +15,7 @@
         <div class="header__container _container">
             <div class="header__left">
                 <div class="header__logo">
-                    <div class="logo__example"></div>
-                </div>
-                <div class="header__logo__title">
-                    <h1>Карьерный<br>Инженерный<br>Портал</h1>
+                    <img src="static/images/КИП_2.1.svg" class="logo">
                 </div>
             </div>
             <div class="header__right">
@@ -139,6 +136,7 @@
     <script src="/static/pattern.js"></script>
     <script src="/static/skills.js"></script>
 <script>
+
     document.getElementById("cv__links").addEventListener("blur", function () {
     const githubUrl = this.value.trim();
 
@@ -286,8 +284,34 @@ function clearOldGithubRepos(days = 30) {
 }
 // Вызов функции при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
+    const previewButtons = document.querySelectorAll(".cv__generation__preview__item__open");
+    const userId = localStorage.getItem("user_id");
     updateCounts();
     clearOldGithubRepos();
+    previewButtons.forEach((button, index) => {
+        button.addEventListener("click", async function (event) {
+            event.preventDefault();
+
+            const idPattern = index + 1; // Индексы шаблонов (1, 2, 3)
+            try {
+                window.open(`/pattern${idPattern}/${userId}`, '_blank');
+            } catch (error) {
+                console.error(`Ошибка при загрузке шаблона ${idPattern}:`, error);
+                alert("Произошла ошибка при загрузке шаблона.");
+            }
+        });
+    });
+    const previewItems = document.querySelectorAll(".cv__generation__preview__item");
+
+    previewItems.forEach(item => {
+        item.addEventListener("click", function () {
+            // Убираем класс active у всех блоков
+            previewItems.forEach(i => i.classList.remove("active"));
+
+            // Добавляем класс active к текущему блоку
+            this.classList.add("active");
+        });
+    });
 });
 
 </script>

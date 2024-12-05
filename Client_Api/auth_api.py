@@ -30,11 +30,11 @@ def register():
     phone = data.get('phone')  # Optional
     role_id = data['role_id']
 
-    if User.query.filter_by(email=email).first():
-        return jsonify({"msg": "User with this email already exists"}), 409
+    if User.query.filter_by(email=email).first() or User.query.filter_by(phone=phone).first():
+        return jsonify({"msg": "Пользователь с данным email уже существует"}), 409
 
     if len(password) < 8:
-        return jsonify({"msg": "Password must be at least 8 characters long"}), 400
+        return jsonify({"msg": "Пароль должен состоять минимум из 8 символов"}), 400
 
     # Хэшируем пароль перед сохранением
     hashed_password = generate_password_hash(password)

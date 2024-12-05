@@ -754,6 +754,58 @@ def update_project(id_user, id_project):
         db.session.rollback()
         return jsonify({"msg": f"Failed to update project: {str(e)}"}), 500
     
+@modal_api.route('/api/projects/<int:project_id>/skills', methods=['POST'])
+def add_skill_to_project(project_id):
+    """Добавление навыка в проект."""
+    data = request.get_json()
+
+    # Проверяем наличие id_skill в запросе
+    id_skill = data.get('id_skill')
+    if not id_skill:
+        return jsonify({"msg": "'id_skill' is required in the request data"}), 400
+
+    # Проверяем, существует ли проект
+    project = Projects.query.filter_by(id_project=project_id).first()
+    if not project:
+        return jsonify({"msg": "Project not found"}), 404
+
+    # Проверяем, существует ли навык
+    skill = Skills.query.filter_by(id_skill=id_skill).first()
+    if not skill:
+        return jsonify({"msg": "Skill not found"}), 404
+
+    # Проверяем, не добавлен ли уже этот навык в проект
+    existing_entry = ProjectSkills.query.filter_by(id_project=project_id, id_skill=id_skill).first()
+    if existing_entry:
+        return jsonify({"msg": "Skill is already added to the project"}), 400
+
+    # Добавляем навык в проект
+    try:
+        new_skill = ProjectSkills(id_project=project_id, id_skill=id_skill)
+        db.session.add(new_skill)
+        db.session.commit()
+        return jsonify({"msg": "Skill added to the project successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Failed to add skill to project: {str(e)}"}), 500
+
+@modal_api.route('/api/projects/<int:project_id>/skills/<int:skill_id>', methods=['DELETE'])
+def remove_skill_from_project(project_id, skill_id):
+    """Удаление навыка из проекта."""
+    # Проверяем, существует ли запись в project_skills
+    entry = ProjectSkills.query.filter_by(id_project=project_id, id_skill=skill_id).first()
+    if not entry:
+        return jsonify({"msg": "Skill not found in the project"}), 404
+
+    # Удаляем навык из проекта
+    try:
+        db.session.delete(entry)
+        db.session.commit()
+        return jsonify({"msg": "Skill removed from the project successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": f"Failed to remove skill from project: {str(e)}"}), 500
+
 
 @modal_api.route('/api/getall/<int:id_user>', methods=['get'])
 def get_all(id_user):
