@@ -79,7 +79,7 @@ resume_api = Blueprint('resume_api', __name__)
 @jwt_required()
 def generate_resume_func(pattern_id, user_id, login, password):
     user = User.query.get_or_404(user_id)
-    current_user = get_jwt_identity()
+    current_user = int(get_jwt_identity())
 
     if user_id != current_user and not current_user == 'admin':
         return jsonify({'msg': 'User not found'}), 401

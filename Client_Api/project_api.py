@@ -371,7 +371,7 @@ def get_regions():
 @modal_api.route('/api/educations/<int:id_resume>', methods=['GET'])
 @jwt_required()  # Требуем наличие JWT
 def get_educations_by_resume(id_resume):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
 
     # Check if the resume belongs to the current user
     resume = Resume.query.filter_by(id_resume=id_resume, id_user=current_user_id).first()
@@ -401,7 +401,7 @@ def get_educations_by_resume(id_resume):
 @modal_api.route('/api/education/<int:id_user>/<int:id_education>', methods=['GET'])
 @jwt_required()  # Requires JWT for authentication
 def get_education_detail(id_user, id_education):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
 
     # Verify that the requested user matches the authenticated user
     if current_user_id != id_user:
@@ -510,7 +510,7 @@ def update_education(id_user, id_education):
 @modal_api.route('/api/works/<int:id_resume>', methods=['GET'])
 @jwt_required()  # Requires JWT for authentication
 def get_works_by_resume(id_resume):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
 
     # Check if the resume belongs to the current user
     resume = Resume.query.filter_by(id_resume=id_resume, id_user=current_user_id).first()
@@ -537,7 +537,7 @@ def get_works_by_resume(id_resume):
 @modal_api.route('/api/works/<int:id_user>/<int:id_work>', methods=['GET'])
 @jwt_required()  # Requires JWT for authentication
 def get_work_detail(id_user, id_work):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
 
     # Verify that the requested user matches the authenticated user
     if current_user_id != id_user:

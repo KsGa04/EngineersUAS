@@ -155,7 +155,7 @@ function editSelectedProject() {
             <label for="project-link">Project Link</label>
             <input id="project-link" type="url" value="${project.project_link}">
             <select id="project-skills" multiple>
-                ${skills.map(skill => `<option value="${skill.id_skill}" ${project.skills.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
+                ${project.skill.map(skill => `<option value="${skill.id_skill}" ${project.skill.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
             </select>
             <button onclick="saveEditedProject(${projectId})">Save</button>
         `);
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function to edit a selected project
-    function fillEditProjectModal() {
+    async function fillEditProjectModal() {
         const selectedItem = document.querySelector('.project-item.selected');
         const id_user = localStorage.getItem("user_id");
         if (!selectedItem) {
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const projectId = selectedItem.dataset.projectId;
-        fetch(`/api/project/${id_user}/${projectId}`, {
+        await fetch(`/api/project/${id_user}/${projectId}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <label for="project-link">Ссылка на проект</label>
                 <input id="project-link" type="url" value="${project.project_link}">
                 <select id="project-skills" multiple>
-                ${skills.map(skill => `<option value="${skill.id_skill}" ${project.skills.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
+                ${project.skill.map(skill => `<option value="${skill.id_skill}" ${project.skill.includes(skill.id_skill) ? 'selected' : ''}>${skill.skill_name}</option>`).join('')}
             </select>
                 <button onclick="saveEditedProject(${projectId})">Save</button>
             `);
